@@ -1,0 +1,1192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>CallHighlightAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>DeleteBannerPhotoAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EditUserAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>EmailHighlightAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>FreezeUserAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>LinkToSetupUserDetailAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ManagePermSetsAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>PasswordUnlockAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>ResetPasswordAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SmsHighlightAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>UpdateBannerPhotoAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>UserActivationAction</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <externalSharingModel>Private</externalSharingModel>
+    <fieldSets>
+        <fullName>Userfieldset</fullName>
+        <description>Meeting Requests</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FirstName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Username</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Department</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Department__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Phone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Userfieldset</label>
+    </fieldSets>
+    <fields>
+        <fullName>Address_Location_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( ISPICKVAL( Location__c , &quot;San Francisco&quot;), &quot;235 Montgomery St, Suite 630, San Francisco, CA 94104&quot;,
+
+IF ( ISPICKVAL( Location__c , &quot;Silicon Valley&quot;), &quot;825 Emerson St, Palo Alto, CA, 94301&quot;,
+
+IF ( ISPICKVAL( Location__c , &quot;East Bay&quot;), &quot;2041 Bancroft Way, Suite 210, Berkeley, CA 94704&quot;,
+
+IF ( ISPICKVAL( Location__c , &quot;Sacramento&quot;), &quot;1007 7th St, Sacramento, CA 95814&quot;,
+
+IF ( ISPICKVAL( Location__c , &quot;New York&quot;), &quot;54 West 40th Street, New York, NY 10018&quot;,&quot;&quot;
+)))))</formula>
+        <label>Address/Location Formula</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>App_Weekly_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>App Weekly Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Available_for_Round_Robin_Assignment__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Available for Round Robin Assignment</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>BD_Effort_Weekly_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>BD Effort Weekly Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CD_Effort_Weekly_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>CD Effort Weekly Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CI_Weekly_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>CI Weekly Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CT_Monthly_Split_100__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>CT Monthly Split 100</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CT_Team_Goal_annual__c</fullName>
+        <externalId>false</externalId>
+        <label>CT Team Goal (yearly)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>CT_Team_Goal_monthly__c</fullName>
+        <externalId>false</externalId>
+        <label>CT Team Goal (monthly)</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>CT_User_Split__c</fullName>
+        <externalId>false</externalId>
+        <label>CT User Split %</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>CV_Pop_in_Networking_Weekly_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>CV/Pop in/Networking Weekly Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Commission_Percent_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>(  CT_User_Split__c    *1 )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Commission Percent Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Comp_Plan_Effective_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Comp Plan Effective Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Comp_Plan_Note__c</fullName>
+        <externalId>false</externalId>
+        <label>Comp Plan Note</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Contact_Email_Match__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Email =  Contact.Email , TRUE, FALSE)</formula>
+        <label>Contact Email Match</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Current_Comp_Plan__c</fullName>
+        <externalId>false</externalId>
+        <label>Current Comp Plan</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Flat Base</fullName>
+                    <default>false</default>
+                    <label>Flat Base</label>
+                </value>
+                <value>
+                    <fullName>CT Recruiter Pool</fullName>
+                    <default>false</default>
+                    <label>CT Recruiter Pool</label>
+                </value>
+                <value>
+                    <fullName>CT Team Lead</fullName>
+                    <default>false</default>
+                    <label>CT Team Lead</label>
+                </value>
+                <value>
+                    <fullName>CT Manager</fullName>
+                    <default>false</default>
+                    <label>CT Manager</label>
+                </value>
+                <value>
+                    <fullName>CT SVP</fullName>
+                    <default>false</default>
+                    <label>CT SVP</label>
+                </value>
+                <value>
+                    <fullName>DH Base + Commission</fullName>
+                    <default>false</default>
+                    <label>DH Base + Commission</label>
+                </value>
+                <value>
+                    <fullName>DH Full Commission</fullName>
+                    <default>false</default>
+                    <label>DH Full Commission</label>
+                </value>
+                <value>
+                    <fullName>DH RA</fullName>
+                    <default>false</default>
+                    <label>DH RA</label>
+                </value>
+                <value>
+                    <fullName>DH Sourcer</fullName>
+                    <default>false</default>
+                    <label>DH Sourcer</label>
+                </value>
+                <value>
+                    <fullName>DH SVP</fullName>
+                    <default>false</default>
+                    <label>DH SVP</label>
+                </value>
+                <value>
+                    <fullName>DH Team Lead</fullName>
+                    <default>false</default>
+                    <label>DH Team Lead</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Date_of_Birth__c</fullName>
+        <externalId>false</externalId>
+        <label>Date of Birth</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_of_Hire__c</fullName>
+        <externalId>false</externalId>
+        <label>Date of Hire</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Department__c</fullName>
+        <externalId>false</externalId>
+        <label>Department</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Business Development</fullName>
+                    <default>false</default>
+                    <label>Business Development</label>
+                </value>
+                <value>
+                    <fullName>Contingent Workforce</fullName>
+                    <default>false</default>
+                    <label>Contingent Workforce</label>
+                </value>
+                <value>
+                    <fullName>East Bay Administrative</fullName>
+                    <default>false</default>
+                    <label>East Bay Administrative</label>
+                </value>
+                <value>
+                    <fullName>East Bay Contract/Temp</fullName>
+                    <default>false</default>
+                    <label>East Bay Contract/Temp</label>
+                </value>
+                <value>
+                    <fullName>East Bay Sales</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>East Bay Sales</label>
+                </value>
+                <value>
+                    <fullName>New York Administrative</fullName>
+                    <default>false</default>
+                    <label>New York Administrative</label>
+                </value>
+                <value>
+                    <fullName>New York Contract/Temp</fullName>
+                    <default>false</default>
+                    <label>New York Contract/Temp</label>
+                </value>
+                <value>
+                    <fullName>New York Sales</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>New York Sales</label>
+                </value>
+                <value>
+                    <fullName>PSI Corporate</fullName>
+                    <default>false</default>
+                    <label>PSI Corporate</label>
+                </value>
+                <value>
+                    <fullName>Sacramento Administrative</fullName>
+                    <default>false</default>
+                    <label>Sacramento Administrative</label>
+                </value>
+                <value>
+                    <fullName>Sacramento Contract/Temp</fullName>
+                    <default>false</default>
+                    <label>Sacramento Contract/Temp</label>
+                </value>
+                <value>
+                    <fullName>San Francisco Administrative</fullName>
+                    <default>false</default>
+                    <label>San Francisco Administrative</label>
+                </value>
+                <value>
+                    <fullName>San Francisco Contract/Temp</fullName>
+                    <default>false</default>
+                    <label>San Francisco Contract/Temp</label>
+                </value>
+                <value>
+                    <fullName>San Francisco Sales</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>San Francisco Sales</label>
+                </value>
+                <value>
+                    <fullName>Silicon Valley Administrative</fullName>
+                    <default>false</default>
+                    <label>Silicon Valley Administrative</label>
+                </value>
+                <value>
+                    <fullName>Silicon Valley Contract/Temp</fullName>
+                    <default>false</default>
+                    <label>Silicon Valley Contract/Temp</label>
+                </value>
+                <value>
+                    <fullName>Silicon Valley Sales</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Silicon Valley Sales</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Division__c</fullName>
+        <externalId>false</externalId>
+        <label>Division</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Administrative</fullName>
+                    <default>false</default>
+                    <label>Administrative</label>
+                </value>
+                <value>
+                    <fullName>Sales</fullName>
+                    <default>false</default>
+                    <label>Sales</label>
+                </value>
+                <value>
+                    <fullName>Contract/Temp</fullName>
+                    <default>false</default>
+                    <label>Contract/Temp</label>
+                </value>
+                <value>
+                    <fullName>Corporate</fullName>
+                    <default>false</default>
+                    <label>Corporate</label>
+                </value>
+                <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Email_address_from_contact_record__c</fullName>
+        <description>most recently updated email address from related contact record</description>
+        <externalId>false</externalId>
+        <formula>Contact.Email</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Email address from contact record</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Emp_Num__c</fullName>
+        <externalId>false</externalId>
+        <label>Emp Num</label>
+        <length>4</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goal_FY__c</fullName>
+        <description>The yearly goal set for this rep</description>
+        <externalId>false</externalId>
+        <label>Team Goal (yearly)</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Goal_Monthly__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Goal (monthly)</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Individual_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>Individual Goal (yearly)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Initials__c</fullName>
+        <externalId>false</externalId>
+        <label>Initials</label>
+        <length>3</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>JO_Weekly_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>JO Weekly Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Assign_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Assign Date</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Legacy_Staff_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>Legacy Staff ID</label>
+        <length>25</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>License_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Profile.UserLicense.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>License Type</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Linkedin_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Linkedin URL</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Lives_Changed_Weekly_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>Lives Changed Weekly Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Instructions__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL( Location__c , &quot;Sacramento&quot;), &quot;*Premier&apos;s Sacramento office is nestled on the 5th floor of a building located on the corner of 7th and J Street. When you arrive at the lobby, please text or call me—there&apos;s limited access to our floor, so I&apos;ll come down and escort you up to our office! &quot; +  Phone ,&quot;&quot;)
++
+IF(ISPICKVAL( Location__c , &quot;New York&quot;), &quot;*Premier is at the WeWork Bryant Park. Once you arrive please provide your name at the reception desk. Once they check you in your recruiter will come and meet you in the ground floor lobby. Please note the building does not allow unaccompanied guests.&quot;,&quot;&quot;)
++
+IF(ISPICKVAL( Location__c , &quot;East Bay&quot;), &quot;*Please use the call box when you arrive and we will buzz you into the building.&quot;,&quot;&quot;)</formula>
+        <label>Location Instructions</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Logistics__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL( Location__c , &quot;San Francisco&quot;), &quot;Logistics: We recommend taking public transportation to our downtown San Francisco office as our building does not have a dedicated parking structure and we do not validate parking. We are located a short walk away from the Montgomery BART and Muni stations.&quot;,&quot;&quot;)+
+
+IF(ISPICKVAL( Location__c , &quot;Sacramento&quot;), &quot;Logistics: Worried about parking? We&apos;re right across from the DOCO parking garage, and our building is surrounded by metered parking. As a friendly reminder though, please allow yourself enough time to get to our office. Excited to meet you!&quot;,&quot;&quot;)</formula>
+        <label>Location Logistics</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location__c</fullName>
+        <externalId>false</externalId>
+        <label>Location</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>San Francisco</fullName>
+                    <default>false</default>
+                    <label>San Francisco</label>
+                </value>
+                <value>
+                    <fullName>Silicon Valley</fullName>
+                    <default>false</default>
+                    <label>Silicon Valley</label>
+                </value>
+                <value>
+                    <fullName>East Bay</fullName>
+                    <default>false</default>
+                    <label>East Bay</label>
+                </value>
+                <value>
+                    <fullName>New York</fullName>
+                    <default>false</default>
+                    <label>New York</label>
+                </value>
+                <value>
+                    <fullName>NOT APPLICABLE</fullName>
+                    <default>false</default>
+                    <label>NOT APPLICABLE</label>
+                </value>
+                <value>
+                    <fullName>Sacramento</fullName>
+                    <default>false</default>
+                    <label>Sacramento</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ManagerId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Monthly_Base_Draw__c</fullName>
+        <externalId>false</externalId>
+        <label>Monthly Base Draw</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Monthly_Base__c</fullName>
+        <externalId>false</externalId>
+        <label>Monthly Base</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>My_User_ID_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( Id =$User.Id,1,0)</formula>
+        <label>My User ID Formula</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pod_Commission__c</fullName>
+        <externalId>false</externalId>
+        <label>Pod Commission %</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Pod_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Pod Name</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Hay Cray</fullName>
+                    <default>false</default>
+                    <label>Hay Cray</label>
+                </value>
+                <value>
+                    <fullName>MAK ATK</fullName>
+                    <default>false</default>
+                    <label>MAK ATK</label>
+                </value>
+                <value>
+                    <fullName>Bo$$y</fullName>
+                    <default>false</default>
+                    <label>Bo$$y</label>
+                </value>
+                <value>
+                    <fullName>DreamTeam</fullName>
+                    <default>false</default>
+                    <label>DreamTeam</label>
+                </value>
+                <value>
+                    <fullName>McHammer</fullName>
+                    <default>false</default>
+                    <label>McHammer</label>
+                </value>
+                <value>
+                    <fullName>Trident</fullName>
+                    <default>false</default>
+                    <label>Trident</label>
+                </value>
+                <value>
+                    <fullName>MS^2</fullName>
+                    <default>false</default>
+                    <label>MS^2</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Pod_Team__c</fullName>
+        <externalId>false</externalId>
+        <label>Pod Team #</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>8</fullName>
+                    <default>false</default>
+                    <label>8</label>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                    <label>9</label>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                    <label>10</label>
+                </value>
+                <value>
+                    <fullName>11</fullName>
+                    <default>false</default>
+                    <label>11</label>
+                </value>
+                <value>
+                    <fullName>12</fullName>
+                    <default>false</default>
+                    <label>12</label>
+                </value>
+                <value>
+                    <fullName>13</fullName>
+                    <default>false</default>
+                    <label>13</label>
+                </value>
+                <value>
+                    <fullName>14</fullName>
+                    <default>false</default>
+                    <label>14</label>
+                </value>
+                <value>
+                    <fullName>15</fullName>
+                    <default>false</default>
+                    <label>15</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Premier_Team_Member_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>Premier Team Member ID</label>
+        <length>18</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Prez_Club_Tier_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Prez Club Tier 1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Prez_Club_Tier_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Prez Club Tier 2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RA_Commission__c</fullName>
+        <externalId>false</externalId>
+        <label>RA Commission %</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RA_Team_Member_1__c</fullName>
+        <externalId>false</externalId>
+        <label>RA Team Member 1</label>
+        <relationshipName>RA_Team_Member_1</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>RA_Team_Member_2__c</fullName>
+        <externalId>false</externalId>
+        <label>RA Team Member 2</label>
+        <relationshipName>RA_Team_Member_2</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>RA_Team_Member_3__c</fullName>
+        <externalId>false</externalId>
+        <label>RA Team Member 3</label>
+        <relationshipName>RA_Team_Member_3</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>RA_Team_Members__c</fullName>
+        <externalId>false</externalId>
+        <label># RA Team Members</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Recruiting_Role__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( AND(OR(CONTAINS( UserRole.Name , &quot;Recruiter&quot;), CONTAINS(UserRole.Name, &quot;Recruiting Associate&quot;), CONTAINS(UserRole.Name, &quot;Contract/Temp Manager&quot;), CONTAINS(UserRole.Name, &quot;Administrative Manager&quot;), CONTAINS(UserRole.Name, &quot;Managing Director&quot;)),  IsActive = TRUE)  , UserRole.Name, 
+
+ IF(IsActive = FALSE, &quot;INACTIVE USER&quot;, &quot;Operations&quot;) 
+
+
+
+)</formula>
+        <label>Recruiting Role</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Referral_Fee_Percent__c</fullName>
+        <externalId>false</externalId>
+        <label>Referral Fee %</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RingCentral_Meeting_Link__c</fullName>
+        <externalId>false</externalId>
+        <label>RingCentral Meeting Link</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>SI_Weekly_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>SI Weekly Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Submittal_Weekly_Goal__c</fullName>
+        <externalId>false</externalId>
+        <label>Submittal Weekly Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>T_P_Team_Goal_monthly__c</fullName>
+        <externalId>false</externalId>
+        <label>T-P Team Goal (monthly)</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>T_P_Team_Goal_yearly__c</fullName>
+        <externalId>false</externalId>
+        <label>T-P Team Goal (yearly)</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Team_Member_10__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Member 10</label>
+        <relationshipName>Team_Member_10</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Team_Member_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Member 1</label>
+        <relationshipName>Team_Member_1</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Team_Member_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Member 2</label>
+        <relationshipName>Team_Member_2</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Team_Member_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Member 3</label>
+        <relationshipName>Team_Member_3</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Team_Member_4__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Member 4</label>
+        <relationshipName>Team_Member_4</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Team_Member_5__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Member 5</label>
+        <relationshipName>Team_Member_5</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Team_Member_6__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Member 6</label>
+        <relationshipName>Team_Member_6</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Team_Member_7__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Member 7</label>
+        <relationshipName>Team_Member_7</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Team_Member_8__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Member 8</label>
+        <relationshipName>Team_Member_8</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Team_Member_9__c</fullName>
+        <externalId>false</externalId>
+        <label>Team Member 9</label>
+        <relationshipName>Team_Member_9</relationshipName>
+        <restrictedAdminField>false</restrictedAdminField>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Team_Members__c</fullName>
+        <externalId>false</externalId>
+        <label># Team Members</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Team_Monthly_Quota__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the Quota used on Premier Team Members</inlineHelpText>
+        <label>Team Monthly Quota</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Temp_Commission__c</fullName>
+        <externalId>false</externalId>
+        <label>Temp Commission %</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Testnumber__c</fullName>
+        <externalId>false</externalId>
+        <formula>DAY(TODAY())</formula>
+        <label>Testnumber</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X0_Temp_Earn_In_Month__c</fullName>
+        <externalId>false</externalId>
+        <label>$0 Temp Earn In Month</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>X100_Commission_Earner__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( CT_User_Split__c = 1.0, TRUE,
+ FALSE)</formula>
+        <label>100% Commission Earner</label>
+        <type>Checkbox</type>
+    </fields>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CORE.USER_ROLE.NAME</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>FULL_NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CORE.USER_ROLE.NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CORE.USERS.PHONE</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CORE.USERS.EXTENSION</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CORE.USERS.CELL</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>FULL_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.TITLE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.PHONE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.EMAIL</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Read</sharingModel>
+    <validationRules>
+        <fullName>CT_Monthly_User_Split_Percent</fullName>
+        <active>true</active>
+        <description>Enforces that the CT Monthly User Split % cannot be over 100%</description>
+        <errorConditionFormula>CT_User_Split__c  &gt; 1.0</errorConditionFormula>
+        <errorDisplayField>CT_User_Split__c</errorDisplayField>
+        <errorMessage>CT Monthly User Split Percentage can&apos;t be over 100%</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Location_required</fullName>
+        <active>true</active>
+        <errorConditionFormula>Profile.Name &lt;&gt; &quot;Jobseeker Portal Profile&quot; &amp;&amp; Profile.Name &lt;&gt; &quot;Customer Community User&quot; &amp;&amp; ISPICKVAL( Location__c, &quot;&quot;)</errorConditionFormula>
+        <errorDisplayField>Location__c</errorDisplayField>
+        <errorMessage>Must enter user&apos;s location to save.</errorMessage>
+    </validationRules>
+</CustomObject>

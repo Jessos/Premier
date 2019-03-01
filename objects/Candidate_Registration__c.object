@@ -1,0 +1,1977 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Candidate_Registration_Lightning_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>Lightning_Candidate_Reg_Layout</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>Lightning_Candidate_Reg_Layout</fullName>
+        <fields>Name</fields>
+        <fields>Candidate__c</fields>
+        <fields>X1st_Location_Preference__c</fields>
+        <fields>X2nd_Location_Preference__c</fields>
+        <fields>X3rd_Location_Preference__c</fields>
+        <fields>OwnerId</fields>
+        <label>Lightning Candidate Reg Layout</label>
+    </compactLayouts>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Applicant_Source_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Source Notes</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Applicant_Source__c</fullName>
+        <externalId>false</externalId>
+        <label>Source</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Career Fair</fullName>
+                    <default>false</default>
+                    <label>Career Fair</label>
+                </value>
+                <value>
+                    <fullName>CraigsList</fullName>
+                    <default>false</default>
+                    <label>CraigsList</label>
+                </value>
+                <value>
+                    <fullName>Facebook</fullName>
+                    <default>false</default>
+                    <label>Facebook</label>
+                </value>
+                <value>
+                    <fullName>Glassdoor</fullName>
+                    <default>false</default>
+                    <label>Glassdoor</label>
+                </value>
+                <value>
+                    <fullName>Indeed</fullName>
+                    <default>false</default>
+                    <label>Indeed</label>
+                </value>
+                <value>
+                    <fullName>LinkedIn</fullName>
+                    <default>false</default>
+                    <label>LinkedIn</label>
+                </value>
+                <value>
+                    <fullName>Mogul</fullName>
+                    <default>false</default>
+                    <label>Mogul</label>
+                </value>
+                <value>
+                    <fullName>Monster</fullName>
+                    <default>false</default>
+                    <label>Monster</label>
+                </value>
+                <value>
+                    <fullName>Premier Marketing Blast</fullName>
+                    <default>false</default>
+                    <label>Premier Marketing Blast</label>
+                </value>
+                <value>
+                    <fullName>Referral</fullName>
+                    <default>false</default>
+                    <label>Referral</label>
+                </value>
+                <value>
+                    <fullName>Twitter</fullName>
+                    <default>false</default>
+                    <label>Twitter</label>
+                </value>
+                <value>
+                    <fullName>University Job Board</fullName>
+                    <default>false</default>
+                    <label>University Job Board</label>
+                </value>
+                <value>
+                    <fullName>Web Search</fullName>
+                    <default>false</default>
+                    <label>Web Search</label>
+                </value>
+                <value>
+                    <fullName>Yelp</fullName>
+                    <default>false</default>
+                    <label>Yelp</label>
+                </value>
+                <value>
+                    <fullName>ZipRecruiter</fullName>
+                    <default>false</default>
+                    <label>ZipRecruiter</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Candidate_Created_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Candidate__r.CreatedDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Candidate Created Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Candidate_First_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Candidate__r.FirstName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Candidate First Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Candidate_Pass_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Candidate Pass Notes</label>
+        <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Candidate__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Candidate</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Candidate Registrations</relationshipLabel>
+        <relationshipName>Candidate_Registrations</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Categories__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.Categories_NEW__c,&quot;Other&quot;),&quot;Other; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Categories_NEW__c,&quot;Administrative&quot;),&quot;Administrative; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Categories_NEW__c,&quot;Human Resources&quot;),&quot;Human Resources; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Categories_NEW__c,&quot;Marketing/PR&quot;),&quot;Marketing/PR; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Categories_NEW__c,&quot;Accounting/Finance&quot;),&quot;Accounting/Finance; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Categories_NEW__c,&quot;Operations&quot;),&quot;Operations; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Categories_NEW__c,&quot;Sales&quot;),&quot;Sales; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Categories</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Create_Screening_Interview__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Create Screening Interview</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Created_Date_Time__c</fullName>
+        <externalId>false</externalId>
+        <label>Created Date Time</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Created_Day_of_Week__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASE( MOD(  DATEVALUE(CreatedDate)  - DATE(1900, 1, 7), 7), 0, &quot;Sunday&quot;, 1, &quot;Monday&quot;, 2, &quot;Tuesday&quot;, 3,
+&quot;Wednesday&quot;, 4, &quot;Thursday&quot;, 5, &quot;Friday&quot;, 6, &quot;Saturday&quot;,&quot;Error&quot;)</formula>
+        <label>Created Day of Week</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date_Available__c</fullName>
+        <externalId>false</externalId>
+        <label>Date Available</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Employment_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Employment Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Unemployed</fullName>
+                    <default>false</default>
+                    <label>Unemployed</label>
+                </value>
+                <value>
+                    <fullName>Employed</fullName>
+                    <default>false</default>
+                    <label>Employed</label>
+                </value>
+                <value>
+                    <fullName>On Unemployment</fullName>
+                    <default>false</default>
+                    <label>On Unemployment</label>
+                </value>
+                <value>
+                    <fullName>On Premier Assignment</fullName>
+                    <default>false</default>
+                    <label>On Premier Assignment</label>
+                </value>
+                <value>
+                    <fullName>Placed by Premier</fullName>
+                    <default>false</default>
+                    <label>Placed by Premier</label>
+                </value>
+                <value>
+                    <fullName>Contracting w/ other Agency</fullName>
+                    <default>false</default>
+                    <label>Contracting w/ other Agency</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Employment_Status_formulafield__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT (Candidate__r.Employment_Status__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Employment Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Existing_Candidate__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Existing Candidate</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Highest_Education_Completed__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT (Candidate__r.Highest_Education_Completed__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Highest Education Completed</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Job_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.ts2__Job_Type__c,&quot;Temporary/ Contract&quot;),&quot;Temporary/ Contract; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.ts2__Job_Type__c,&quot;Contract to Hire&quot;),&quot;Contract to Hire; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.ts2__Job_Type__c,&quot;Direct Hire&quot;),&quot;Direct Hire; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Job Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Languages__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.Languages__c,&quot;NONE&quot;),&quot;NONE; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Arabic&quot;),&quot;Arabic; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Bengali&quot;),&quot;Bengali; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Cantonese&quot;),&quot;Cantonese; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Dutch/Africaans&quot;),&quot;Dutch/Africaans; &quot;,null)&amp;
+
+IF(INCLUDES(Candidate__r.Languages__c,&quot;English&quot;),&quot;English; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Farsi (Persian)&quot;),&quot;Farsi (Persian); &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;French&quot;),&quot;French; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;German&quot;),&quot;German; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Hindustani (Hindu/Urdu)&quot;),&quot;Hindustani (Hindu/Urdu); &quot;,null)&amp;
+
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Italian&quot;),&quot;Italian; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Japanese&quot;),&quot;Japanese; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Javanese&quot;),&quot;Javanese; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Korean&quot;),&quot;Korean; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Malay&quot;),&quot;Malay; &quot;,null)&amp;
+
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Mandarin&quot;),&quot;Mandarin; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Polish&quot;),&quot;Polish; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Portuguese&quot;),&quot;Portuguese; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Punjabi&quot;),&quot;Punjabi; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Russian&quot;),&quot;Russian; &quot;,null)&amp;
+
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Spanish&quot;),&quot;Spanish; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Swahili&quot;),&quot;Swahili; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Tagalog&quot;),&quot;Tagalog; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Tamil&quot;),&quot;Tamil; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Thai&quot;),&quot;Thai; &quot;,null)&amp;
+
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Turkish&quot;),&quot;Turkish; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Vietnamese&quot;),&quot;Vietnamese; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Languages__c,&quot;Other&quot;),&quot;Other; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Languages</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legacy_Referred_By__c</fullName>
+        <externalId>false</externalId>
+        <label>Referral</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Preference_1__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT (  Candidate__r.Registration_Location_Preference__c   )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Location Preference #1</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location_Preference_Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Location Preference Details</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Sacramento</fullName>
+                    <default>false</default>
+                    <label>Sacramento</label>
+                </value>
+                <value>
+                    <fullName>Folsom</fullName>
+                    <default>false</default>
+                    <label>Folsom</label>
+                </value>
+                <value>
+                    <fullName>Rocklin</fullName>
+                    <default>false</default>
+                    <label>Rocklin</label>
+                </value>
+                <value>
+                    <fullName>Roseville</fullName>
+                    <default>false</default>
+                    <label>Roseville</label>
+                </value>
+                <value>
+                    <fullName>Granite Bay</fullName>
+                    <default>false</default>
+                    <label>Granite Bay</label>
+                </value>
+                <value>
+                    <fullName>Citrus Heights</fullName>
+                    <default>false</default>
+                    <label>Citrus Heights</label>
+                </value>
+                <value>
+                    <fullName>Carmichael</fullName>
+                    <default>false</default>
+                    <label>Carmichael</label>
+                </value>
+                <value>
+                    <fullName>El Dorado Hills</fullName>
+                    <default>false</default>
+                    <label>El Dorado Hills</label>
+                </value>
+                <value>
+                    <fullName>Pocket-Greenhaven</fullName>
+                    <default>false</default>
+                    <label>Pocket-Greenhaven</label>
+                </value>
+                <value>
+                    <fullName>Gold River</fullName>
+                    <default>false</default>
+                    <label>Gold River</label>
+                </value>
+                <value>
+                    <fullName>Davis</fullName>
+                    <default>false</default>
+                    <label>Davis</label>
+                </value>
+                <value>
+                    <fullName>Alameda</fullName>
+                    <default>false</default>
+                    <label>Alameda</label>
+                </value>
+                <value>
+                    <fullName>Emeryville</fullName>
+                    <default>false</default>
+                    <label>Emeryville</label>
+                </value>
+                <value>
+                    <fullName>Oakland</fullName>
+                    <default>false</default>
+                    <label>Oakland</label>
+                </value>
+                <value>
+                    <fullName>Berkeley</fullName>
+                    <default>false</default>
+                    <label>Berkeley</label>
+                </value>
+                <value>
+                    <fullName>El Cerrito</fullName>
+                    <default>false</default>
+                    <label>El Cerrito</label>
+                </value>
+                <value>
+                    <fullName>Richmond</fullName>
+                    <default>false</default>
+                    <label>Richmond</label>
+                </value>
+                <value>
+                    <fullName>Concord</fullName>
+                    <default>false</default>
+                    <label>Concord</label>
+                </value>
+                <value>
+                    <fullName>Pleasant Hill</fullName>
+                    <default>false</default>
+                    <label>Pleasant Hill</label>
+                </value>
+                <value>
+                    <fullName>Walnut Creek</fullName>
+                    <default>false</default>
+                    <label>Walnut Creek</label>
+                </value>
+                <value>
+                    <fullName>San Ramon</fullName>
+                    <default>false</default>
+                    <label>San Ramon</label>
+                </value>
+                <value>
+                    <fullName>Lafayette</fullName>
+                    <default>false</default>
+                    <label>Lafayette</label>
+                </value>
+                <value>
+                    <fullName>Pleasanton/Dublin</fullName>
+                    <default>false</default>
+                    <label>Pleasanton/Dublin</label>
+                </value>
+                <value>
+                    <fullName>Livermore</fullName>
+                    <default>false</default>
+                    <label>Livermore</label>
+                </value>
+                <value>
+                    <fullName>San Leandro</fullName>
+                    <default>false</default>
+                    <label>San Leandro</label>
+                </value>
+                <value>
+                    <fullName>Hayward</fullName>
+                    <default>false</default>
+                    <label>Hayward</label>
+                </value>
+                <value>
+                    <fullName>Fremont</fullName>
+                    <default>false</default>
+                    <label>Fremont</label>
+                </value>
+                <value>
+                    <fullName>San Jose</fullName>
+                    <default>false</default>
+                    <label>San Jose</label>
+                </value>
+                <value>
+                    <fullName>Milpitas</fullName>
+                    <default>false</default>
+                    <label>Milpitas</label>
+                </value>
+                <value>
+                    <fullName>Campbell</fullName>
+                    <default>false</default>
+                    <label>Campbell</label>
+                </value>
+                <value>
+                    <fullName>Los Gatos</fullName>
+                    <default>false</default>
+                    <label>Los Gatos</label>
+                </value>
+                <value>
+                    <fullName>Cupertino</fullName>
+                    <default>false</default>
+                    <label>Cupertino</label>
+                </value>
+                <value>
+                    <fullName>Los Altos</fullName>
+                    <default>false</default>
+                    <label>Los Altos</label>
+                </value>
+                <value>
+                    <fullName>Mountain View</fullName>
+                    <default>false</default>
+                    <label>Mountain View</label>
+                </value>
+                <value>
+                    <fullName>Sunnyvale</fullName>
+                    <default>false</default>
+                    <label>Sunnyvale</label>
+                </value>
+                <value>
+                    <fullName>Palo Alto</fullName>
+                    <default>false</default>
+                    <label>Palo Alto</label>
+                </value>
+                <value>
+                    <fullName>Menlo Park</fullName>
+                    <default>false</default>
+                    <label>Menlo Park</label>
+                </value>
+                <value>
+                    <fullName>Atherton</fullName>
+                    <default>false</default>
+                    <label>Atherton</label>
+                </value>
+                <value>
+                    <fullName>Redwood City</fullName>
+                    <default>false</default>
+                    <label>Redwood City</label>
+                </value>
+                <value>
+                    <fullName>Half Moon Bay</fullName>
+                    <default>false</default>
+                    <label>Half Moon Bay</label>
+                </value>
+                <value>
+                    <fullName>San Carlos</fullName>
+                    <default>false</default>
+                    <label>San Carlos</label>
+                </value>
+                <value>
+                    <fullName>Belmont</fullName>
+                    <default>false</default>
+                    <label>Belmont</label>
+                </value>
+                <value>
+                    <fullName>Foster City</fullName>
+                    <default>false</default>
+                    <label>Foster City</label>
+                </value>
+                <value>
+                    <fullName>San Mateo</fullName>
+                    <default>false</default>
+                    <label>San Mateo</label>
+                </value>
+                <value>
+                    <fullName>Burlingame</fullName>
+                    <default>false</default>
+                    <label>Burlingame</label>
+                </value>
+                <value>
+                    <fullName>Hillsborough</fullName>
+                    <default>false</default>
+                    <label>Hillsborough</label>
+                </value>
+                <value>
+                    <fullName>Millbrae</fullName>
+                    <default>false</default>
+                    <label>Millbrae</label>
+                </value>
+                <value>
+                    <fullName>San Bruno</fullName>
+                    <default>false</default>
+                    <label>San Bruno</label>
+                </value>
+                <value>
+                    <fullName>South San Francisco</fullName>
+                    <default>false</default>
+                    <label>South San Francisco</label>
+                </value>
+                <value>
+                    <fullName>Pacifica</fullName>
+                    <default>false</default>
+                    <label>Pacifica</label>
+                </value>
+                <value>
+                    <fullName>Daly City</fullName>
+                    <default>false</default>
+                    <label>Daly City</label>
+                </value>
+                <value>
+                    <fullName>Brisbane</fullName>
+                    <default>false</default>
+                    <label>Brisbane</label>
+                </value>
+                <value>
+                    <fullName>Manhattan</fullName>
+                    <default>false</default>
+                    <label>Manhattan</label>
+                </value>
+                <value>
+                    <fullName>The Bronx</fullName>
+                    <default>false</default>
+                    <label>The Bronx</label>
+                </value>
+                <value>
+                    <fullName>Brooklyn</fullName>
+                    <default>false</default>
+                    <label>Brooklyn</label>
+                </value>
+                <value>
+                    <fullName>Queens</fullName>
+                    <default>false</default>
+                    <label>Queens</label>
+                </value>
+                <value>
+                    <fullName>Staten Island</fullName>
+                    <default>false</default>
+                    <label>Staten Island</label>
+                </value>
+                <value>
+                    <fullName>Long Island</fullName>
+                    <default>false</default>
+                    <label>Long Island</label>
+                </value>
+                <value>
+                    <fullName>Westchester/White Plains</fullName>
+                    <default>false</default>
+                    <label>Westchester/White Plains</label>
+                </value>
+                <value>
+                    <fullName>Jersey City</fullName>
+                    <default>false</default>
+                    <label>Jersey City</label>
+                </value>
+                <value>
+                    <fullName>Boston</fullName>
+                    <default>false</default>
+                    <label>Boston</label>
+                </value>
+                <value>
+                    <fullName>Greenwich</fullName>
+                    <default>false</default>
+                    <label>Greenwich</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>NRN_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>NRN Reason</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Not_Right_Now__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No current job matches</fullName>
+                    <default>false</default>
+                    <label>No current job matches</label>
+                </value>
+                <value>
+                    <fullName>Out of the area</fullName>
+                    <default>false</default>
+                    <label>Out of the area</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>checked</controllingFieldValue>
+                <valueName>No current job matches</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>checked</controllingFieldValue>
+                <valueName>Out of the area</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Not_Right_Now__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Not Right Now</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Open_to_Other_Locations__c</fullName>
+        <externalId>false</externalId>
+        <label>Open to Other Locations</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Other_Location_Preference__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Only applicable for Candidates who has selected &quot;Other&quot; for location preference.</inlineHelpText>
+        <label>Other Location Preference</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Owner_name__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Owner:User.LastName)), Owner:User.FirstName + &quot; &quot; + Owner:User.LastName, Owner:Queue.QueueName)</formula>
+        <label>Owner</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Positions_Accounting_Finance__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.Positions__c,&quot;Accounts Payable&quot;),&quot;Accounts Payable; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Accounts Receivable&quot;),&quot;Accounts Receivable; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Accounting Assistant&quot;),&quot;Accounting Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Accounting Manager&quot;),&quot;Accounting Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Analyst&quot;),&quot;Analyst; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Bookkeeper&quot;),&quot;Bookkeeper; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Client Services Associate&quot;),&quot;Client Services Associate; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Controller&quot;),&quot;Controller; &quot;,null)&amp;
+
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Finance Assistant&quot;),&quot;Finance Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Finance Manager&quot;),&quot;Finance Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Financial Analyst&quot;),&quot;Financial Analyst; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Fund Accountant&quot;),&quot;Fund Accountant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Payroll Assistant&quot;),&quot;Payroll Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Payroll Manager&quot;),&quot;Payroll Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sales Assistant&quot;),&quot;Sales Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Staff Accountant&quot;),&quot;Staff Accountant; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Positions - Accounting/Finance</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Positions_Administrative__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.Positions__c,&quot;Admin Assistant&quot;),&quot;Admin Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Chief of Staff&quot;),&quot;Chief of Staff; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Data Entry&quot;),&quot;Data Entry; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Executive Assistant&quot;),&quot;Executive Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;File Clerk&quot;),&quot;File Clerk; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Legal Assistant/Paralegal&quot;),&quot;Legal Assistant/Paralegal; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Office Assistant&quot;),&quot;Office Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Office Manager&quot;),&quot;Office Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Personal Assistant&quot;),&quot;Personal Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Property Assistant&quot;),&quot;Property Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Receptionist&quot;),&quot;Receptionist; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Positions - Administrative</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Positions_All__c</fullName>
+        <description>Populated with value from PB</description>
+        <externalId>false</externalId>
+        <label>Positions - All</label>
+        <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Positions_Events__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.Positions__c,&quot;Events Assistant&quot;),&quot;Events Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Events Logistics Coordinator&quot;),&quot;Events Logistics Coordinator; &quot;,null)&amp;
+
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Events Logistics Manager&quot;),&quot;Events Logistics Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Events Manager&quot;),&quot;Events Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Event Staff&quot;),&quot;Event Staff; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Positions - Events</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Positions_Human_Resources__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.Positions__c,&quot;Benefits Admin&quot;),&quot;Benefits Admin; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Head of Talent Acquisition&quot;),&quot;Head of Talent Acquisition; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;HR Assistant&quot;),&quot;HR Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;HR Coordinator&quot;),&quot;HR Coordinator; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;HR Director&quot;),&quot;HR Director; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;HR Generalist&quot;),&quot;HR Generalist; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;HRIS Specialist&quot;),&quot;HRIS Specialist; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;HR Manager&quot;),&quot;HR Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Recruiter&quot;),&quot;Recruiter; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Recruiting Coordinator&quot;),&quot;Recruiting Coordinator; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sourcer&quot;),&quot;Sourcer; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;VP of HR&quot;),&quot;VP of HR; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Positions - Human Resources</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Positions_IT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.Positions__c,&quot;Database Admin&quot;),&quot;Database Admin; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Help Desk&quot;),&quot;Help Desk; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Network Admin&quot;),&quot;Network Admin; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Quality Assurance&quot;),&quot;Quality Assurance; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Tech Support&quot;),&quot;Tech Support; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Positions - IT</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Positions_Marketing_PR__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.Positions__c,&quot;Copywriter&quot;),&quot;Copywriter; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Editor&quot;),&quot;Editor; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Events Assistant&quot;),&quot;Events Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Events Logistics Coordinator&quot;),&quot;Events Logistics Coordinator; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Events Logistics Manager&quot;),&quot;Events Logistics Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Events Manager&quot;),&quot;Events Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Event Staff&quot;),&quot;Event Staff; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Graphic Designer&quot;),&quot;Graphic Designer; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Marketing Analyst&quot;),&quot;Marketing Analyst; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Marketing Associate&quot;),&quot;Marketing Associate; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Marketing Coordinator&quot;),&quot;Marketing Coordinator; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Marketing Manager&quot;),&quot;Marketing Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Personal Assistant&quot;),&quot;Personal Assistant; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;PR Associate&quot;),&quot;PR Associate; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Product Manager&quot;),&quot;Product Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Product Marketing&quot;),&quot;Product Marketing; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Project Manager&quot;),&quot;Project Manager; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Positions - Marketing/PR</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Positions_Operations__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.Positions__c,&quot;Customer Service Manager&quot;),&quot;Customer Service Manager; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Customer Service Representative&quot;),&quot;Customer Service Representative; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Facilities Assistant&quot;),&quot;Facilities Assistant; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Facilities Manager&quot;),&quot;Facilities Manager; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Logistics Specialist&quot;),&quot;Logistics Specialist; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Operations Assistant&quot;),&quot;Operations Assistant; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Operations Manager&quot;),&quot;Operations Manager; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Product Marketing&quot;),&quot;Product Marketing; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Project Manager&quot;),&quot;Project Manager; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sales Operations Coordinator&quot;),&quot;Sales Operations Coordinator; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sales Operations Manager&quot;),&quot;Sales Operations Manager; &quot;,null)&amp; 
+
+
+
+
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Database Admin&quot;),&quot;Database Admin; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Help Desk&quot;),&quot;Help Desk; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Network Admin&quot;),&quot;Network Admin; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Quality Assurance&quot;),&quot;Quality Assurance; &quot;,null)&amp; 
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Tech Support&quot;),&quot;Tech Support; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Positions - Operations</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Positions_Other_Description__c</fullName>
+        <externalId>false</externalId>
+        <formula>Candidate__r.Positions_Other_Description__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Positions: &quot;Other&quot; Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Positions_Sales__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(INCLUDES(Candidate__r.Positions__c,&quot;Account Coordinator&quot;),&quot;Account Coordinator; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Account Executive&quot;),&quot;Account Executive; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Account Manager&quot;),&quot;Account Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Business Development&quot;),&quot;Business Development; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Customer Success Manager&quot;),&quot;Customer Success)Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Lead Generation&quot;),&quot;Lead Generation; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Product Marketing&quot;),&quot;Product Marketing; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Project Manager&quot;),&quot;Project Manager; &quot;,null)&amp;
+
+
+
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sales Development Representative&quot;),&quot;Sales Development Representative; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sales Director&quot;),&quot;Sales Director; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sales Manager&quot;),&quot;Sales Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sales Engineer&quot;),&quot;Sales Engineer; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sales Operations Coordinator&quot;),&quot;Sales Operations Coordinator; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sales Operations Manager&quot;),&quot;Sales Operations Manager; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;Sales Support&quot;),&quot;Sales Support; &quot;,null)&amp;
+IF(INCLUDES(Candidate__r.Positions__c,&quot;VP of Sales&quot;),&quot;VP of Sales; &quot;,null)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Positions - Sales</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Registration_RA_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Registration RA Notes</label>
+        <length>2000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Rejection_Reason_Note__c</fullName>
+        <externalId>false</externalId>
+        <label>Rejection Reason Note</label>
+        <length>1000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Rejection_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Rejection Reason</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Out of Wheelhouse</fullName>
+                    <default>false</default>
+                    <label>Out of Wheelhouse</label>
+                </value>
+                <value>
+                    <fullName>DNC</fullName>
+                    <default>false</default>
+                    <label>DNC</label>
+                </value>
+                <value>
+                    <fullName>Reason 1</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Reason 1</label>
+                </value>
+                <value>
+                    <fullName>Reason 2</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Reason 2</label>
+                </value>
+                <value>
+                    <fullName>Reason 3</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Reason 3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Resignation_Notice__c</fullName>
+        <externalId>false</externalId>
+        <label>Resignation Notice</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>none</fullName>
+                    <default>false</default>
+                    <label>none</label>
+                </value>
+                <value>
+                    <fullName>one week</fullName>
+                    <default>false</default>
+                    <label>one week</label>
+                </value>
+                <value>
+                    <fullName>two weeks</fullName>
+                    <default>false</default>
+                    <label>two weeks</label>
+                </value>
+                <value>
+                    <fullName>three weeks</fullName>
+                    <default>false</default>
+                    <label>three weeks</label>
+                </value>
+                <value>
+                    <fullName>four weeks</fullName>
+                    <default>false</default>
+                    <label>four weeks</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Review_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Review Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New Lead</fullName>
+                    <default>false</default>
+                    <label>New Lead</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Rejected</fullName>
+                    <default>false</default>
+                    <label>Rejected</label>
+                </value>
+                <value>
+                    <fullName>Accepted</fullName>
+                    <default>false</default>
+                    <label>Accepted</label>
+                </value>
+                <value>
+                    <fullName>Passed On</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Passed On</label>
+                </value>
+                <value>
+                    <fullName>Reviewed</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Reviewed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SI_Other_Options__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>SI = Other Options?</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SI_Record_In_System__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>SI Record In System?</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Time_In_Progress__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AND(NOT(ISBLANK( Time_Moved_To_In_Progress__c)),NOT(ISBLANK( Time_When_Accepted_Or_Rejected__c ))), 
+
+TEXT( 
+FLOOR( Time_When_Accepted_Or_Rejected__c - Time_Moved_To_In_Progress__c ) 
+) &amp; &quot; Days &quot; &amp; 
+TEXT( 
+ROUND(MOD((Time_When_Accepted_Or_Rejected__c - Time_Moved_To_In_Progress__c)*24,24),0) 
+) &amp;&quot; Hours &quot; &amp; 
+TEXT( 
+ROUND(MOD((Time_When_Accepted_Or_Rejected__c - Time_Moved_To_In_Progress__c)*1440,60),0) 
+) &amp;&quot; Minutes &quot; 
+
+, &quot;&quot;)</formula>
+        <inlineHelpText>The amount of time from when the candidate was moved to &quot;In Progress&quot; to a decision being made</inlineHelpText>
+        <label>Time In Progress</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Kept_In_Progress__c</fullName>
+        <externalId>false</externalId>
+        <formula>NOW()-Time_Moved_To_In_Progress__c</formula>
+        <label>Time Kept In Progress</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_Moved_To_In_Progress__c</fullName>
+        <externalId>false</externalId>
+        <label>Time Moved To In Progress</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Time_When_Accepted_Or_Rejected__c</fullName>
+        <externalId>false</externalId>
+        <label>Time When Accepted Or Rejected</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Time_in_Queue_NEW__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(Review_Status__c, &quot;New Lead&quot;), (floor((NOW()-Created_Date_Time__c)*24))
++
+(((((NOW()-Created_Date_Time__c)*24)-floor (ROUND((NOW()-Created_Date_Time__c),2)*24))*60)/60),
+
+
+ (floor((Time_Moved_To_In_Progress__c-Created_Date_Time__c)*24))
++
+(((((Time_Moved_To_In_Progress__c-Created_Date_Time__c)*24)-floor (ROUND((Time_Moved_To_In_Progress__c-Created_Date_Time__c),2)*24))*60)/60))</formula>
+        <label>Time in Queue</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_in_Queue__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(  ISPICKVAL(Review_Status__c, &quot;New Lead&quot;), 
+
+TEXT( 
+FLOOR( NOW() - CreatedDate ) 
+) &amp; &quot; Days &quot; &amp; 
+TEXT( 
+ROUND(MOD((NOW() - CreatedDate)*24,24),0) 
+) &amp;&quot; Hours &quot; &amp; 
+TEXT( 
+ROUND(MOD((NOW() - CreatedDate)*1440,60),0) 
+) &amp;&quot; Minutes &quot; 
+
+, &quot;&quot;)</formula>
+        <label>Time in Queue</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_to_Decision__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK(Time_When_Accepted_Or_Rejected__c)),
+
+TEXT(
+ FLOOR( Time_When_Accepted_Or_Rejected__c  -  CreatedDate )
+)  &amp; &quot; Days &quot; &amp;
+TEXT(
+ROUND(MOD((Time_When_Accepted_Or_Rejected__c - CreatedDate)*24,24),0)
+         )  &amp;&quot; Hours &quot; &amp;
+TEXT(
+ROUND(MOD((Time_When_Accepted_Or_Rejected__c - CreatedDate)*1440,60),0)
+) &amp;&quot; Minutes &quot;
+
+, &quot;&quot;)</formula>
+        <label>Time to Decision</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Time_to_In_Progress__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK( Time_Moved_To_In_Progress__c )), 
+
+TEXT( 
+FLOOR( Time_Moved_To_In_Progress__c - CreatedDate ) 
+) &amp; &quot; Days &quot; &amp; 
+TEXT( 
+ROUND(MOD((Time_Moved_To_In_Progress__c - CreatedDate)*24,24),0) 
+) &amp;&quot; Hours &quot; &amp; 
+TEXT( 
+ROUND(MOD((Time_Moved_To_In_Progress__c - CreatedDate)*1440,60),0) 
+) &amp;&quot; Minutes &quot; 
+
+, &quot;&quot;)</formula>
+        <label>Time to In Progress</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Why_Candidate_was_Accepted__c</fullName>
+        <externalId>false</externalId>
+        <label>Why was Candidate Accepted?</label>
+        <length>1000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X1st_Location_Preference_Pass_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Location Preference: Pass Reason</label>
+        <length>1000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X1st_Location_Preference_Pass__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Location Preference: Pass?</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>X1st_Location_Preference__c</fullName>
+        <externalId>false</externalId>
+        <label>1st Location Preference</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Austin</fullName>
+                    <default>false</default>
+                    <label>Austin</label>
+                </value>
+                <value>
+                    <fullName>Boston</fullName>
+                    <default>false</default>
+                    <label>Boston</label>
+                </value>
+                <value>
+                    <fullName>Chicago</fullName>
+                    <default>false</default>
+                    <label>Chicago</label>
+                </value>
+                <value>
+                    <fullName>East Bay</fullName>
+                    <default>false</default>
+                    <label>East Bay</label>
+                </value>
+                <value>
+                    <fullName>Greater New York</fullName>
+                    <default>false</default>
+                    <label>Greater New York</label>
+                </value>
+                <value>
+                    <fullName>Los Angeles</fullName>
+                    <default>false</default>
+                    <label>Los Angeles</label>
+                </value>
+                <value>
+                    <fullName>Philadelphia</fullName>
+                    <default>false</default>
+                    <label>Philadelphia</label>
+                </value>
+                <value>
+                    <fullName>Sacramento</fullName>
+                    <default>false</default>
+                    <label>Sacramento</label>
+                </value>
+                <value>
+                    <fullName>San Francisco</fullName>
+                    <default>false</default>
+                    <label>San Francisco</label>
+                </value>
+                <value>
+                    <fullName>Seattle</fullName>
+                    <default>false</default>
+                    <label>Seattle</label>
+                </value>
+                <value>
+                    <fullName>Silicon Valley</fullName>
+                    <default>false</default>
+                    <label>Silicon Valley</label>
+                </value>
+                <value>
+                    <fullName>Washington D.C.</fullName>
+                    <default>false</default>
+                    <label>Washington D.C.</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>X2nd_Location_Preference_Pass_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>2nd Location Preference: Pass Reason</label>
+        <length>1000</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X2nd_Location_Preference_Pass__c</fullName>
+        <externalId>false</externalId>
+        <label>2nd Location Preference: Pass?</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>X2nd_Location_Preference__c</fullName>
+        <externalId>false</externalId>
+        <label>2nd Location Preference</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Austin</fullName>
+                    <default>false</default>
+                    <label>Austin</label>
+                </value>
+                <value>
+                    <fullName>Boston</fullName>
+                    <default>false</default>
+                    <label>Boston</label>
+                </value>
+                <value>
+                    <fullName>Chicago</fullName>
+                    <default>false</default>
+                    <label>Chicago</label>
+                </value>
+                <value>
+                    <fullName>East Bay</fullName>
+                    <default>false</default>
+                    <label>East Bay</label>
+                </value>
+                <value>
+                    <fullName>Greater New York</fullName>
+                    <default>false</default>
+                    <label>Greater New York</label>
+                </value>
+                <value>
+                    <fullName>Philadelphia</fullName>
+                    <default>false</default>
+                    <label>Philadelphia</label>
+                </value>
+                <value>
+                    <fullName>Sacramento</fullName>
+                    <default>false</default>
+                    <label>Sacramento</label>
+                </value>
+                <value>
+                    <fullName>San Francisco</fullName>
+                    <default>false</default>
+                    <label>San Francisco</label>
+                </value>
+                <value>
+                    <fullName>Seattle</fullName>
+                    <default>false</default>
+                    <label>Seattle</label>
+                </value>
+                <value>
+                    <fullName>Silicon Valley</fullName>
+                    <default>false</default>
+                    <label>Silicon Valley</label>
+                </value>
+                <value>
+                    <fullName>Washington D.C.</fullName>
+                    <default>false</default>
+                    <label>Washington D.C.</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>X3rd_Location_Preference_Pass__c</fullName>
+        <externalId>false</externalId>
+        <label>3rd Location Preference: Pass?</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Yes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>X3rd_Location_Preference__c</fullName>
+        <externalId>false</externalId>
+        <label>3rd Location Preference</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Austin</fullName>
+                    <default>false</default>
+                    <label>Austin</label>
+                </value>
+                <value>
+                    <fullName>Boston</fullName>
+                    <default>false</default>
+                    <label>Boston</label>
+                </value>
+                <value>
+                    <fullName>Chicago</fullName>
+                    <default>false</default>
+                    <label>Chicago</label>
+                </value>
+                <value>
+                    <fullName>East Bay</fullName>
+                    <default>false</default>
+                    <label>East Bay</label>
+                </value>
+                <value>
+                    <fullName>Greater New York</fullName>
+                    <default>false</default>
+                    <label>Greater New York</label>
+                </value>
+                <value>
+                    <fullName>Philadelphia</fullName>
+                    <default>false</default>
+                    <label>Philadelphia</label>
+                </value>
+                <value>
+                    <fullName>Sacramento</fullName>
+                    <default>false</default>
+                    <label>Sacramento</label>
+                </value>
+                <value>
+                    <fullName>San Francisco</fullName>
+                    <default>false</default>
+                    <label>San Francisco</label>
+                </value>
+                <value>
+                    <fullName>Seattle</fullName>
+                    <default>false</default>
+                    <label>Seattle</label>
+                </value>
+                <value>
+                    <fullName>Silicon Valley</fullName>
+                    <default>false</default>
+                    <label>Silicon Valley</label>
+                </value>
+                <value>
+                    <fullName>Washington D.C.</fullName>
+                    <default>false</default>
+                    <label>Washington D.C.</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>utm_campaign__c</fullName>
+        <externalId>false</externalId>
+        <label>utm campaign</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>utm_content__c</fullName>
+        <externalId>false</externalId>
+        <label>utm content</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>utm_medium__c</fullName>
+        <externalId>false</externalId>
+        <label>utm medium</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>utm_source__c</fullName>
+        <externalId>false</externalId>
+        <label>utm source</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>utm_term__c</fullName>
+        <externalId>false</externalId>
+        <label>utm term</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>Candidate Registration</label>
+    <nameField>
+        <displayFormat>REG-{000000}</displayFormat>
+        <label>Candidate Registration Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Candidate Registrations</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Candidate__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Review_Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>X1st_Location_Preference__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>X2nd_Location_Preference__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>X3rd_Location_Preference__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Owner_name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LAST_UPDATE</customTabListAdditionalFields>
+        <searchFilterFields>Candidate__c</searchFilterFields>
+        <searchFilterFields>Categories__c</searchFilterFields>
+        <searchResultsAdditionalFields>Candidate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Review_Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>X1st_Location_Preference__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>X2nd_Location_Preference__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>X3rd_Location_Preference__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Owner_name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LAST_UPDATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Categories__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Positions_All__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Accepted_Outcome</fullName>
+        <active>true</active>
+        <description>Ensure that the not right now or create SI checkbox is checked upon accepted.</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Review_Status__c, &apos;Accepted&apos;),
+Not_Right_Now__c = FALSE,
+Create_Screening_Interview__c = FALSE,
+Existing_Candidate__c = FALSE)</errorConditionFormula>
+        <errorMessage>Please select whether this is an existing candidate, there is no job match or to create a screening interview before proceeding.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Accepted_Outcome_2</fullName>
+        <active>true</active>
+        <description>Ensure only one decision is made between NRN, create SI and existing candidate upon accepted.</description>
+        <errorConditionFormula>AND(
+ OR(
+  Create_Screening_Interview__c = TRUE,
+  Not_Right_Now__c = TRUE,
+  Existing_Candidate__c = TRUE),
+ OR(
+  Create_Screening_Interview__c = TRUE,
+  Not_Right_Now__c = TRUE,
+  Existing_Candidate__c = FALSE),
+ OR(
+  Create_Screening_Interview__c = TRUE,
+  Not_Right_Now__c = FALSE,
+  Existing_Candidate__c = TRUE),
+ OR(
+  Create_Screening_Interview__c = FALSE,
+  Not_Right_Now__c = TRUE,
+  Existing_Candidate__c = TRUE))</errorConditionFormula>
+        <errorMessage>Please only select one outcome between existing candidate, not right now, or create screening interview.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Enforce_Passed_On_Fields_1</fullName>
+        <active>false</active>
+        <description>Make sure that if there is a value within any location preference field, that the passed on yes/no fields have values before a lead can be accepted.</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Review_Status__c, &apos;Accepted&apos;),
+!ISPICKVAL(X1st_Location_Preference__c, &apos;&apos;),
+ISPICKVAL(X1st_Location_Preference_Pass__c, &apos;&apos;))</errorConditionFormula>
+        <errorDisplayField>X1st_Location_Preference_Pass__c</errorDisplayField>
+        <errorMessage>Please indicate whether this location preference was passed before accepting!</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Enforce_Passed_On_Fields_1_NRN</fullName>
+        <active>true</active>
+        <description>If there is a second loc pref listed, don&apos;t allow Accept - NRN to be selected if loc pref pass is null or no</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Review_Status__c, &apos;Accepted&apos;),
+(Not_Right_Now__c = TRUE),
+ISPICKVAL( NRN_Reason__c ,&apos;No current job matches&apos;),
+!ISPICKVAL(X2nd_Location_Preference__c, &apos;&apos;),
+
+(ISPICKVAL( X1st_Location_Preference_Pass__c , &apos;&apos;)|| ISPICKVAL( X1st_Location_Preference_Pass__c , &apos;No&apos;) ))</errorConditionFormula>
+        <errorDisplayField>X1st_Location_Preference_Pass__c</errorDisplayField>
+        <errorMessage>Please pass to the next location instead of selecting Not Right Now</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Enforce_Passed_On_Fields_2</fullName>
+        <active>false</active>
+        <description>Make sure that if there is a value within any location preference field, that the passed on yes/no fields have values before a lead can be accepted.</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Review_Status__c, &apos;Accepted&apos;),
+!ISPICKVAL(X2nd_Location_Preference__c, &apos;&apos;),
+ISPICKVAL(X2nd_Location_Preference_Pass__c, &apos;&apos;))</errorConditionFormula>
+        <errorDisplayField>X2nd_Location_Preference_Pass__c</errorDisplayField>
+        <errorMessage>Please indicate whether this location preference was passed before accepting!</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Enforce_Passed_On_Fields_2_NRN</fullName>
+        <active>true</active>
+        <description>If there is a third loc pref listed, don&apos;t allow Accept - NRN to be selected if loc pref pass is null or no</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Review_Status__c, &apos;Accepted&apos;),
+(Not_Right_Now__c = TRUE),
+ISPICKVAL( NRN_Reason__c ,&apos;No current job matches&apos;),
+!ISPICKVAL(X3rd_Location_Preference__c, &apos;&apos;),
+
+(ISPICKVAL( X2nd_Location_Preference_Pass__c , &apos;&apos;)|| ISPICKVAL( X2nd_Location_Preference_Pass__c , &apos;No&apos;) ))</errorConditionFormula>
+        <errorDisplayField>X2nd_Location_Preference_Pass__c</errorDisplayField>
+        <errorMessage>Please pass to the next location instead of selecting Not Right Now</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Enforce_Passed_On_Fields_3</fullName>
+        <active>false</active>
+        <description>Make sure that if there is a value within any location preference field, that the passed on yes/no fields have values before a lead can be accepted.</description>
+        <errorConditionFormula>AND( 
+ISPICKVAL(Review_Status__c, &apos;Accepted&apos;), 
+!ISPICKVAL(X3rd_Location_Preference__c, &apos;&apos;), 
+ISPICKVAL(X3rd_Location_Preference_Pass__c, &apos;&apos;))</errorConditionFormula>
+        <errorDisplayField>X3rd_Location_Preference_Pass__c</errorDisplayField>
+        <errorMessage>Please indicate whether this location preference was passed before accepting!</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Enforce_Passed_On_Fields_TESTING</fullName>
+        <active>false</active>
+        <description>Make sure that if there is a value within any location preference field, that the passed on yes/no fields have values before a lead can be accepted.</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Review_Status__c, &apos;Accepted&apos;),
+(Not_Right_Now__c = TRUE),
+!ISPICKVAL(X2nd_Location_Preference__c, &apos;&apos;),
+ISPICKVAL( X1st_Location_Preference_Pass__c , &apos;&apos;))</errorConditionFormula>
+        <errorDisplayField>X2nd_Location_Preference_Pass__c</errorDisplayField>
+        <errorMessage>Please indicate whether this location preference was passed before accepting!</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>NRN_Reason</fullName>
+        <active>true</active>
+        <description>Enforce that a NRN reason is selected if there are no job fits before accepting.</description>
+        <errorConditionFormula>AND(
+ Not_Right_Now__c = TRUE,
+ ISPICKVAL(NRN_Reason__c, &apos;&apos;))</errorConditionFormula>
+        <errorDisplayField>NRN_Reason__c</errorDisplayField>
+        <errorMessage>Please select a reason why you can&apos;t work with the candidate at this time.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Owned_by_Queue_Accept_Reject</fullName>
+        <active>true</active>
+        <description>Ensure that the record is not owned by a queue when the status reaches accept or reject</description>
+        <errorConditionFormula>AND(
+OR(
+ISPICKVAL(Review_Status__c, &apos;Accepted&apos;),
+ISPICKVAL(Review_Status__c, &apos;Rejected&apos;)),
+OR(
+OwnerId = &apos;00G0v00000173GcEAI&apos;,
+OwnerId = &apos;00G0v00000173GhEAI&apos;,
+OwnerId = &apos;00G0v0000017d10EAA&apos;,
+OwnerId = &apos;00G0v0000016ExJEAU&apos;,
+OwnerId = &apos;00G0v0000017d0vEAA&apos;,
+OwnerId = &apos;00G0v0000017d15EAA&apos;))</errorConditionFormula>
+        <errorMessage>Please remove this record from the queue before accepting or rejecting the registration!</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Rejection_Reason</fullName>
+        <active>true</active>
+        <description>Require a rejection reason when review status is set to rejected</description>
+        <errorConditionFormula>AND(
+ISPICKVAL(Review_Status__c, &apos;Rejected&apos;),
+ISPICKVAL(Rejection_Reason__c, &apos;&apos;))</errorConditionFormula>
+        <errorDisplayField>Rejection_Reason__c</errorDisplayField>
+        <errorMessage>Please select a rejection reason to set review status to rejected.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Source_Required_on_Candidate</fullName>
+        <active>true</active>
+        <description>Requires the candidate record has a source before the registration can be progressed from it&apos;s original stage.</description>
+        <errorConditionFormula>AND( 
+OR( 
+ISPICKVAL(Review_Status__c, &apos;In Progress&apos;), 
+ISPICKVAL(Review_Status__c, &apos;Rejected&apos;), 
+ISPICKVAL(Review_Status__c, &apos;Accepted&apos;)), 
+ISPICKVAL(Candidate__r.ts2__Source__c, &apos;&apos;))</errorConditionFormula>
+        <errorMessage>Please enter a source on the candidate before editing the registration record.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

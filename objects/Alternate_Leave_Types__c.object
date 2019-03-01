@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Custom Setting to store Alternate Leave Types (TimesheetEntry.tc9_ti__Type_of_Leave__c) that are excluded from Sick Ledger Accrual</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Alternate_Pay_Excluded__c</fullName>
+        <externalId>false</externalId>
+        <label>Alternate Pay Excluded</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>Alternate Leave Types</label>
+    <visibility>Public</visibility>
+</CustomObject>

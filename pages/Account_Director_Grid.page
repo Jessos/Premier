@@ -1,0 +1,69 @@
+<apex:page sidebar="false" showHeader="true" docType="html-4.01-strict">
+<div id="tabstrip" style="display:none;"> <ul> 
+<li class="k-state-active">Job Opportunities</li>
+<li>Job Orders</li>
+<li>Applications</li>
+<li>Submittals</li>
+<li>Interviews</li>
+<li>Placements</li>
+</ul>
+<!-- Job Opportunities -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="jsjo__Job_Opportunity__c" DelayLoad="false"  ViewID="" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Job Orders -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Job__c" DelayLoad="true"  ViewID="a5H400000000jMdEAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Applications -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Application__c" DelayLoad="true"  ViewID="a5H400000000jLyEAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Submittals -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Submittal__c" DelayLoad="true"  ViewID="" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Interviews -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Interview__c" DelayLoad="true"  ViewID="" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Placements -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Placement__c" DelayLoad="true"  ViewID="a5H400000000jMnEAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+</div>
+<script>
+$(document).ready(function() {
+    $("#tabstrip").kendoTabStrip({
+      activate: function(e){
+        setTimeout(function(){          $(window).resize();        });
+      }
+    });
+    $("#tabstrip").css("display", "block");
+});
+ </script>
+</apex:page>

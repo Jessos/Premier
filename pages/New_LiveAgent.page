@@ -1,0 +1,19 @@
+<apex:page >
+  
+  <img id="liveagent_button_online_57330000000DkRN" style="display: none; border: 0px none; cursor: pointer" onclick="liveagent.startChat('57330000000DkRN')" src="https://jobscience.secure.force.com/help/resource/1427054902000/Live_Chat_Online" /><img id="liveagent_button_offline_57330000000DkRN" style="display: none; border: 0px none; " src="https://jobscience.secure.force.com/help/resource/1427054893000/Live_Chat_Offline" />
+  
+  <script type="text/javascript">
+    if (!window._laq) { window._laq = []; }
+    window._laq.push(function(){liveagent.showWhenOnline('57330000000DkRN', document.getElementById('liveagent_button_online_57330000000DkRN'));
+    liveagent.showWhenOffline('57330000000DkRN', document.getElementById('liveagent_button_offline_57330000000DkRN'));
+    });
+  </script>
+  
+  <script type='text/javascript' src='https://c.la1s1.salesforceliveagent.com/content/g/js/33.0/deployment.js'>
+  </script>
+  
+  <script type='text/javascript'>
+    liveagent.init('https://d.la1s1.salesforceliveagent.com/chat', '572300000009XiS', '00D300000000c0q');
+  </script>
+  
+</apex:page>

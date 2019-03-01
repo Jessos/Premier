@@ -1,0 +1,204 @@
+<apex:page controller="CandidateReviewCls"  showHeader="false" sidebar="false" action="{!actionclass}"> 
+    <apex:includeScript value="/apexpages/fckeditor/fckeditor.js"/>
+    <apex:includeScript value="{!URLFOR($Resource.ts2extams__UIRes, 'res/js/jquery-1.6.min.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.ts2extams__UIRes, 'res/css/std_style.css')}"/>
+    <script>
+        var TextAreaObject;
+        var TextAreaConObject;
+        var AdditionalToIdObject;
+        var AdditionalToIdContObject;
+        var Additional_To_UsersObject;
+        var Additional_To_ContObject;
+        var AddToUserId;
+        var AddToContId
+        var AddToUsersName;
+        var AddToContName
+        function closeWin(refresh) {
+            parent.window.opener = self;
+            parent.window.close();
+        }
+        function SetParam(IDsInText, NamesInText) {
+            TextAreaObject.text(NamesInText);
+            AdditionalToIdObject.value = IDsInText;
+            Additional_To_UsersObject.value = NamesInText;
+            AddToUserId = IDsInText;
+            AddToUsersName = NamesInText;
+        }
+        function SetParamCon (IDsInText, NamesInText) {
+            TextAreaConObject.text(NamesInText);
+            AdditionalToIdContObject.value = IDsInText;
+            Additional_To_ContObject.value = NamesInText;
+            AddToContId = IDsInText;
+            AddToContName = NamesInText;
+        }
+    </script>
+    <style>
+        td.pbTitle { width:40% !important; }
+        .StyleForCCField { position:relative; right:42px; }
+        .StyleForOtherFields { position:relative; right:3.0em; }
+        .StyleForInputTextFields { position:relative; right:3.3em; }
+       /*Mozilla hack*/
+        html>/**/body .StyleForCCField, x:-moz-any-link, x:default { position:relative !important; right:38px !important; }
+        html>/**/body .StyleForOtherFields, x:-moz-any-link, x:default { position:relative !important; right:2.8em !important; }
+        html>/**/body .StyleForInputTextFields, x:-moz-any-link, x:default { position:relative !important; right:3.1em !important; }
+       /*IE 8 hack*/
+        @media \0screen {
+            .StyleForCCField { position:relative; right:32px; }
+            .StyleForOtherFields { position:relative; right:2.4em; }
+            .StyleForInputTextFields { position:relative; right:2.7em; }
+        }
+       /*IE 7 hack*/
+        -,.StyleForCCField { position: relative; right:46px; }
+        -,.StyleForOtherFields { position: relative; right:46px; }
+        -,.StyleForInputTextFields { position: relative; right:46px; }
+        -,.StyleForIESeven { position: relative; left:0px; }
+        -,.StyleForIESevenFields { position: relative; left:0px; }
+        -,.StyleForIESevenButton { text-indent:12em !important; }
+       /*IE 9 hack*/
+        :root .StyleForCCField{ position: relative \0/; right:32px\0/; }
+        :root .StyleForOtherFields { position: relative\0/; right:32px\0/; }
+        :root .StyleForInputTextFields { position: relative\0/; right:32px\0/; }
+       /* WYSIWYG iframe fix */
+        .data2Col iframe { position: relative; left: -42px; }
+    </style>
+    <body width="100%" style="margin:10px; ">
+        <apex:form id="frm" style="min-width:750px">
+            <apex:pageMessages id="pageMessages"/>
+            <apex:pageBlock title="Review Candidate(s)">
+                <apex:pageBlockButtons id="pbbsMainButtons" style="text-align: right;" location="bottom">
+                    <span id="pbsMainButtons_spinner" class="spinner_indicator">&nbsp;</span>
+                    <apex:commandButton value="Send To Review" title="Send" action="{!send}" rendered="{!NOT(Completed)}" onclick="setValueFromEditor({!HtmlView});jQuery('#pbsMainButtons_spinner').addClass('spinner_on');jQuery('[id$=pbSendEmail] input.btn').attr('disabled','disabled').addClass('btnDisabled');" reRender="frm"/> 
+                    <apex:commandButton value="Cancel" title="Cancel"  onclick="closeWin(false);return(false);" rendered="{!NOT(Completed)}"/>
+                    <apex:commandButton value="Close" title="Close"  onclick="closeWin(false);return(false);" rendered="{!Completed}"/> 
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection columns="2" rendered="{!NOT(Completed)}">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="To Contact: " id="to_contact_label"/>
+                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                            <apex:inputField required="false" value="{!appnn.ts2__Candidate_Contact__c}">
+                                <apex:actionSupport event="onchange" action="{!SelectTemplateAction}" reRender="pageMessages"/>
+                            </apex:inputField>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="Additional To"/>
+                        <apex:inputTextarea value="{!AdditionalTo}" style="width:300px;"/>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <apex:outputPanel id="outpanel">
+                    <apex:pageBlockSection columns="1" rendered="{!NOT(Completed)}">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="CC" styleClass="StyleForCCField"/>
+                            <apex:inputField required="false" value="{!cntct.ownerId}" styleClass="StyleForCCField"/> 
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="BCC" styleClass="StyleForCCField"/>
+                            <apex:inputField required="false" value="{!BCCCntct.ownerId}" styleClass="StyleForCCField"/>
+                        </apex:pageBlockSectionItem>  
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Folder" styleClass="StyleForOtherFields"/>
+                            <apex:selectlist id="pbsi_EmailFolder" value="{!SelectedEmailFolder}" size="1" style="width: 100%" styleClass="StyleForOtherFields">
+                                <apex:selectOptions value="{!EmailFoldersList}"/>
+                                <apex:actionSupport event="onchange" action="{!ChangeEmailFolderAction}" reRender="EmailList,ecndSubject,ecndMessage" status="EmailListLoading"/>
+                            </apex:selectlist>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="Template" for="EmailList" styleClass="StyleForOtherFields"/>
+                            <apex:actionStatus id="EmailListLoading" styleClass="StyleForOtherFields">
+                                <apex:facet name="start">
+                                    <apex:outputText value="Loading..." style="font-weight:bold; color:red;" styleClass="StyleForOtherFields"/>
+                                </apex:facet>
+                                <apex:facet name="stop">
+                                    <apex:selectlist id="EmailList" value="{!SelectedEmailTemplate}" size="1" style="width: 100%" styleClass="StyleForOtherFields">
+                                        <apex:selectOptions value="{!EmailTemplates}"/>
+                                        <apex:actionSupport event="onchange" action="{!SelectTemplateAction}" reRender="ecndSubject,ecndMessage,cmdBtn" status="TemplateLoading"/> 
+                                    </apex:selectlist>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:pageBlockSectionItem> 
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel for="ecndSubject" value="Subject" styleClass="StyleForOtherFields"/>
+                            <apex:actionStatus id="TemplateLoading">
+                                <apex:facet name="start">
+                                    <apex:outputText style="font-weight:bold; color:red;" styleClass="StyleForOtherFields" value="Loading..."/>
+                                </apex:facet>
+                                <apex:facet name="stop">
+                                    <apex:outputPanel id="ecndSubject">
+                                        <apex:inputText rendered="{!AllowEmailEdit}" value="{!EmailSubject}"  style="width: 90%" styleClass="StyleForOtherFields"/>
+                                        <apex:inputText rendered="{!NOT(AllowEmailEdit)}" value="{!EmailSubject}"  style="width: 90%" styleClass="StyleForOtherFields"/>
+                                    </apex:outputPanel>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel for="ecndMessage" value="Message" styleClass="StyleForOtherFields"/>
+                            <apex:outputPanel id="ecndMessage">
+                                <apex:inputTextArea rendered="{!AllowEmailEdit && NOT(showvf)}" id="theTextarea" value="{!EmailBody}" readonly="false" style="width: 90%;height:120px;" styleClass="StyleForOtherFields"/>
+                                <apex:inputTextArea rendered="{!NOT(AllowEmailEdit) && NOT(HtmlView) && NOT(showvf)}" value="{!EmailBody}" readonly="true" style="width: 90%;height:120px;" styleClass="StyleForOtherFields"/>
+                                <apex:outputPanel layout="none" rendered="{!HtmlView && AllowEmailEdit && NOT(showvf)}">
+                                    <script type="text/javascript">
+                                        RerenderEditor();
+                                    </script>
+                                </apex:outputPanel> 
+                                <apex:outputPanel layout="block" rendered="{!HtmlView && NOT(AllowEmailEdit) && NOT(showvf)}" style="width:450px;height:120px;color:#666666;border:1px solid #666666;overflow: auto;">
+                                    <apex:outputText rendered="{!HtmlView && NOT(AllowEmailEdit)}" value="{!EmailBody}" escape="false" style="color:#666666;"/>
+                                </apex:outputPanel> 
+                                <apex:outputPanel layout="block" rendered="{!showvf}" style="width: 90%;height:250px;" styleClass="StyleForOtherFields">
+                                    <apex:inputtextarea value="{!EmailBody}" style="width: 90%;height:200px;"/>
+                                </apex:outputPanel> 
+                            </apex:outputPanel>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value=""/>
+                            <apex:outputText value="If you select a template, Contact merge fields will be filled in with appropriate values when this email is sent." styleClass="StyleForOtherFields"/>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>
+                    <apex:pageBlockSection columns="1" title="Attachments" collapsible="false" rendered="{!NOT(Completed)}">
+                        <apex:pageMessage rendered="{!LimitAttachment}" summary="The number of attachments found is greater than 100. Only the first 100 attachments are displayed." severity="warning" strength="2"/>
+                        <apex:pageBlockTable value="{!AttachmentList}" var="item" width="100%">
+                            <apex:column headerValue="Select" rendered="{!AttachmentList.SIZE>0}">
+                                <apex:inputField value="{!item.IsPrivate}" rendered="{!AttachmentList.SIZE>0}"/>
+                            </apex:column>
+                            <apex:column headerValue="Candidate Name" value="{!item.Description}" rendered="{!AttachmentList.SIZE>0}"/>
+                            <apex:column headerValue="Name" value="{!item.Name}" rendered="{!AttachmentList.SIZE>0}"/>
+                            <apex:column headerValue="Created Date" value="{!item.CreatedDate}" rendered="{!AttachmentList.SIZE>0}"/>
+                            <apex:column headerValue="Bio" value="{!item.body}" rendered="{!AttachmentList.SIZE>0}"/>
+                            <apex:column rendered="{!AttachmentList.SIZE=0}" headerValue="no attachments" headerClass="noRowsHeader" value="{!item.Name}"/> 
+                        </apex:pageBlockTable>
+                    </apex:pageBlockSection> 
+                </apex:outputPanel>
+                <apex:pageBlockSection id="pbsCompleted" columns="1" rendered="{!Completed}">
+                    <apex:pageMessage summary="Candidates sent for Review successfully." severity="confirm" strength="2"/>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+    </body>
+    <script type="text/javascript">
+        jQuery.noConflict();
+        jQuery(document).ready(function() {
+            gfxInit();
+        });
+        function RerenderEditor() {
+            var NameEditor = jQuery('[id$=theTextarea]').attr('name');
+            var editor = new FCKeditor(NameEditor, null, 300);
+            editor.BasePath = '/apexpages/fckeditor/';
+            editor.Config['CustomConfigurationsPath'] = '/apexpages/richtext.config.js';
+            editor.ToolbarSet = 'SalesforceBasic';
+            editor.Config['SkinPath'] = editor.BasePath + 'editor/skins/sfdc/';
+            editor.Config['DefaultLanguage'] = 'en-us';
+            editor.Config['EditorAreaStyles'] = ['/sCSS/23.0/sprites/1323209069000/Theme3/default/gc/HtmlDetailElem.css'];
+            editor.Config['ImageUpload'] = true;
+            editor.Config['SitesPath'] = '';
+            editor.ReplaceTextarea();
+        }
+        function setValueFromEditor(needUpdate) {
+            if (needUpdate == false) return true;
+            var NameEditor = jQuery('[id$=theTextarea___Frame]');
+            EditorValue = NameEditor.contents().find("iframe").contents().find("body").html();
+            EditorValue = jQuery.trim(EditorValue);
+            jQuery('[id$=theTextarea]').val(EditorValue);
+            return true;
+        }
+    </script>
+</apex:page>

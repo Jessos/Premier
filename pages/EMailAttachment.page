@@ -1,0 +1,211 @@
+<apex:page controller="EmailAttachmentCls"  showHeader="false" sidebar="false">
+    <apex:includeScript value="/apexpages/fckeditor/fckeditor.js"/>
+    <apex:includeScript value="{!URLFOR($Resource.ts2__jQuery, 'jquery-1.8.2.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.ts2__stcode, 'res/js/ui-2.js')}" />
+
+    <apex:stylesheet value="{!URLFOR($Resource.ts2__stcode, 'res/css/ui-2.css')}"/> 
+
+<script language="javascript">
+function closeWin() {
+    parent.window.opener = self;
+    parent.window.close();
+}
+</script>
+
+<body width="100%" style="margin:10px;">
+
+<apex:form id="frm">
+<apex:actionRegion >
+    <apex:pageMessages id="pageMessages" />
+
+    <apex:pageBlock id="pbSendEmail" title="Forward Application " mode="details">
+        <apex:pageBlockButtons id="pbbsMainButtons" style="text-align: right;" location="bottom">
+            <span id="pbsMainButtons_spinner" class="spinner_indicator">&nbsp;</span>
+             <apex:commandButton value="Send To Review" title="Send" action="{!send}" rendered="{!NOT(Completed)}" rerender="frm" /> 
+       <!--  <apex:commandButton value="Send" title="Send" action="{!send}" rendered="{!NOT(Completed)}" onclick="setValueFromEditor({!HtmlView});jQuery('#pbsMainButtons_spinner').addClass('spinner_on');jQuery('[id$=pbSendEmail] input.btn').attr('disabled','disabled').addClass('btnDisabled');" rerender="frm"/>-->
+        <!--   <apex:commandButton value="Select Template" title="Select Template"  onclick="openTemplateSelectorWindow();return(false);" rendered="{!NOT(Completed)}"/> -->
+
+            <apex:commandButton value="Cancel" title="Cancel"  onclick="closeWin(false);return(false);" rendered="{!NOT(Completed)}"/>
+            <apex:commandButton value="Close" title="Close"  onclick="closeWin(false);return(false);" rendered="{!Completed}"/> 
+       
+        </apex:pageBlockButtons>
+
+        <apex:pageBlockSection columns="1" title="Edit Email" collapsible="false" rendered="{!NOT(Completed)}">
+          <!--  <apex:pageBlockSectionItem >
+                <apex:outputLabel value="From" />
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock" />
+                     <apex:inputField value="{!EventOnBehalfOf.ownerId}" />
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Deferred Send Date" />
+               <apex:inputField value="{!EventOnBehalfOf.StartDateTime}" /> 
+            </apex:pageBlockSectionItem> -->
+
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="To" />
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock" />
+                  <!--  <apex:inputField value="{!ContactList.ContactId}" /> -->
+                   <apex:inputField value="{!appnn.ts2__Candidate_Contact__c}" />
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Additional To" />
+              <apex:inputText value="{!AdditionalTo}" />
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="CC" />
+              <!--  <apex:inputField required="false" value="{!EventCC.ownerId}" /> -->
+              <apex:inputField required="false" value="{!cntct.ownerId}" /> 
+            </apex:pageBlockSectionItem>
+
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="BCC" />
+               <!-- <apex:inputField required="false" value="{!EventBCC.ownerId}" /> -->
+               <apex:inputField required="false" value="{!bccntct.ownerId}" /> 
+            </apex:pageBlockSectionItem>
+            
+             <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Folder" styleClass="StyleForOtherFields"/>
+                <apex:selectlist id="pbsi_EmailFolder" value="{!SelectedEmailFolder}" size="1" style="width: 100%" styleClass="StyleForOtherFields">
+                    <apex:selectOptions value="{!EmailFoldersList}" />
+                    <apex:actionSupport event="onchange" action="{!ChangeEmailFolderAction}" rerender="EmailList,ecndSubject,ecndMessage" status="EmailListLoading" />
+                    
+                </apex:selectlist>
+                
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Template" for="EmailList" styleClass="StyleForOtherFields"/>
+                <apex:actionStatus id="EmailListLoading" styleClass="StyleForOtherFields">
+                    <apex:facet name="start">
+                        <apex:outputText value="Loading..." style="font-weight:bold; color:red;" styleClass="StyleForOtherFields"/>
+                    </apex:facet>
+                    <apex:facet name="stop">
+                        <apex:selectlist id="EmailList" value="{!SelectedEmailTemplate}" size="1" style="width: 100%" styleClass="StyleForOtherFields">
+                            <apex:selectOptions value="{!EmailTemplates}" />
+                            <apex:actionSupport event="onchange" action="{!SelectTemplateAction}" rerender="ecndSubject,ecndMessage,cmdBtn" status="TemplateLoading" /> 
+                        </apex:selectlist>
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:pageBlockSectionItem> 
+            
+           <apex:pageBlockSectionItem >
+                <apex:outputLabel for="ecndSubject" value="Subject" />
+                <apex:outputPanel layout="none" id="ecndSubject">
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock" />
+                        <apex:inputText rendered="{!AllowEmailEdit}" value="{!EmailSubject}"  size="70" />
+                        <apex:inputText rendered="{!NOT(AllowEmailEdit)}" value="{!EmailSubject}"  size="70" disabled="true" />
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+          <apex:pageBlockSectionItem >
+                <apex:outputLabel for="ecndMessage" value="Message" />
+                <apex:outputPanel layout="none" id="ecndMessage">
+                <apex:inputTextArea rendered="{!AllowEmailEdit}" id="theTextarea" value="{!EmailBody}" readonly="false" style="width:450px;height:120px;color:#000000;border:1px solid #666666;"/>
+                    <apex:inputTextArea rendered="{!NOT(AllowEmailEdit) && NOT(HtmlView)}" value="{!EmailBody}" readonly="true" style="width:450px;height:120px;color:#666666;border:1px solid #666666;"/>
+
+                   <apex:outputPanel layout="none" rendered="{!HtmlView && AllowEmailEdit}">
+                        <script type="text/javascript">
+                            RerenderEditor();
+                        </script>
+                    </apex:outputPanel> 
+
+                    <apex:outputPanel layout="block" rendered="{!HtmlView && NOT(AllowEmailEdit)}" style="width:450px;height:120px;color:#666666;border:1px solid #666666;overflow: auto;">
+                        <apex:outputText rendered="{!HtmlView && NOT(AllowEmailEdit)}" value="{!EmailBody}" escape="false" style="color:#666666;"/>
+                    </apex:outputPanel>  
+
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem> 
+
+
+        </apex:pageBlockSection>
+
+      <!-- <apex:pageBlockSection columns="1" title="Attachments" collapsible="false" rendered="{!NOT(Completed)}">
+           <apex:outputPanel > 
+                   <apex:selectRadio value="{!IsSelected}" layout="pageDirection" rendered="{!AttachmentList.SIZE>0}" >
+                      <apex:selectOptions value="{!AttachmentRec}" />
+                    </apex:selectRadio>  
+                  <apex:outputText value="No Attachments" rendered="{!AttachmentList.SIZE=0}"/>
+               
+           </apex:outputPanel> 
+        </apex:pageBlockSection> -->
+        
+        <apex:pageBlockSection columns="1" title="Attachments" collapsible="false" rendered="{!NOT(Completed)}">
+            <apex:pageBlockTable value="{!AttachmentList}" var="item" width="100%" >
+                <apex:column rendered="{!AttachmentList.SIZE>0}" headerValue="{!$ObjectType.Attachment.Fields.Name.Label}" value="{!item.Name}" />
+                <apex:column rendered="{!AttachmentList.SIZE=0}" headerValue="no attachments" headerClass="noRowsHeader" value="{!item.Name}" />
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+
+       <apex:pageBlockSection id="pbsCompleted" columns="1" rendered="{!Completed}" >
+            <apex:pageMessage summary="Email has been sent successfully" severity="confirm" strength="2" />
+        </apex:pageBlockSection>
+        
+         <div style="display:none;" class="waitingSearchDiv waitingSearchDivOpacity"></div>
+        <div style="display:none;" class="waitingSearchDiv"><span class="waitingSearchHolder" style="top:16px;"><img src="/img/loading.gif" class="waitingImage"/><span class="waitingDescription"></span></span></div>
+  
+    </apex:pageBlock>
+
+
+    <!-- <apex:actionFunction name="SelectTemplateAction" action="{!SelectTemplateAction}" rerender="frm">
+        <apex:param name="var1" value="" assignTo="{!TemplateId}" />
+    </apex:actionFunction>  -->
+    </apex:actionRegion> 
+</apex:form>
+
+</body>
+
+<script type="text/javascript">
+    jQuery.noConflict();
+    jQuery(document).ready(function() {
+        gfxInit();
+    });
+    function gfxInit() {
+        a1=new Image; a1.src="{!URLFOR($Resource.ts2__stcode, 'res/img/spinner.gif')}";
+    }
+
+ <!--   function openTemplateSelectorWindow() {
+        var pageURL = '{!$Page.NewEmailTemplate}';
+        pageURL = (typeof(pageURL)=='string') ? pageURL : "/apex/NewEmailTemplate";
+        var url = pageURL;
+        var features = 'directories=no,menubar=no,titlebar=no,toolbar=no,scrollbars=yes,resizable=yes,width=600,height=300';
+        win = window.open(url, 'template', features);
+    } -->
+   <!--  function setTemplateId(templateId) {
+        LoadingElementShow(jQuery("[id$=pbSendEmail]").find("div.pbBody").get(0), 'Loading...');
+        SelectTemplateAction(templateId);
+    }
+ -->
+    function RerenderEditor() {
+   
+        var NameEditor = jQuery('[id$=theTextarea]').attr('name');
+        var editor = new FCKeditor(NameEditor, null, 300);
+            editor.BasePath = '/apexpages/fckeditor/';
+            editor.Config['CustomConfigurationsPath'] = '/apexpages/richtext.config.js';
+            editor.ToolbarSet = 'SalesforceBasic';
+            editor.Config['SkinPath'] = editor.BasePath + 'editor/skins/sfdc/';
+            editor.Config['DefaultLanguage'] = 'en-us';
+            editor.Config['EditorAreaStyles'] = ['/sCSS/23.0/sprites/1323209069000/Theme3/default/gc/HtmlDetailElem.css'];
+            editor.Config['ImageUpload'] = true;
+            editor.Config['SitesPath'] = '';
+            editor.ReplaceTextarea();
+    }
+
+    function setValueFromEditor(needUpdate) {
+        if (needUpdate == false) return true;
+        var NameEditor = jQuery('[id$=theTextarea___Frame]');
+        EditorValue = NameEditor.contents().find("iframe").contents().find("body").html();
+        EditorValue = jQuery.trim(EditorValue);
+        jQuery('[id$=theTextarea]').val(EditorValue);
+        return true;
+    }
+</script>
+
+</apex:page>

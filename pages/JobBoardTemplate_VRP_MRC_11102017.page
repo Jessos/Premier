@@ -1,0 +1,92 @@
+<apex:page docType="html-5.0" standardStyleSheets="false" showHeader="false" sidebar="false" cache="false">
+  <html class="no-js" lang="en">
+  <head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title>Premier</title>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" type="image/x-icon" href="{!URLFOR($Resource.html_template_pstaffing, 'img/favicon.ico')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.html_template_pstaffing, 'css/style.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.html_template_pstaffing, 'css/backend.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.html_template_pstaffing, 'css/calendar.css')}"/>
+  <apex:stylesheet value="{!URLFOR($Resource.html_template_pstaffing, 'css/jobboard.css')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.html_template_pstaffing, 'js/partner.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.html_template_pstaffing, 'js/modernizr-1.7.min.js')}"/>
+  <script>premierAPI.head();</script>
+  
+  <style>
+      header {
+          height: 195px;
+      }
+      header .logo {
+          background-image: url("https://pstaffing--c.na87.content.force.com/servlet/servlet.ImageServer?id=0151W000002siIK&amp;oid=00D40000000Mtzs&amp;lastMod=1509747176000");
+          width: 216px;
+          height: 157px;
+      }
+      header nav {
+          top: 155px;
+      }
+  </style>
+  
+  <!-- NF 2cloudnine, timesheet specific CSS for width setting -->
+  <c:TimesheetCSS ></c:TimesheetCSS>
+  
+  </head>
+  <body>
+  <script>premierAPI.header();</script>
+  <div id="container">
+    <div id="main">
+      <nav id="crumbs"></nav>
+      <nav id="subnav">
+      
+        <!-- NF 2cloudnine, added new component which includes timesheet links -->
+      <!-- <ts2:Menu ></ts2:Menu> -->
+        <c:MenuWithTS ></c:MenuWithTS>
+        
+      </nav>
+      <div id="content">
+        <div id="page_header">Premier Jobs</div>
+        <div id="main_content">
+          <div class="b-jobboard">
+
+            <apex:insert name="body"/>
+          </div>
+        </div>
+        <script>document.getElementById('name').focus();</script> 
+      </div>
+    </div>
+  </div>
+  
+  <apex:outputPanel rendered="{!$CurrentPage.Name == 'tc9_ti__FillTimesheet'}">
+      <p>I certify that the hours, dates and times I record here accurately and fully identify all time that I have worked during the designated pay period(s), including any overtime that I have worked. I further certify that I have taken all required breaks and meals periods during the pay period(s) covered by this (or these) timecard(s).  I agree to promptly notify my point of contact at Premier or Premier’s Payroll Team of any mistakes or corrections regarding this (or these) timecard(s).</p>
+  </apex:outputPanel>
+  
+  <script>premierAPI.footer();</script>
+  
+  <apex:outputPanel rendered="{!$CurrentPage.Name == 'tc9_ti__FillTimesheet'}">
+      <script>
+          var startText = $(".ftsHelpContentTxt:eq(0)").text();
+          var splitText = startText.split('\n');
+          
+          $(".ftsHelpContentTxt:eq(0)").text("");
+          for(i = 0; i < splitText.length; i++) {
+              $(".ftsHelpContentTxt:eq(0)").append('<p>' + splitText[i] + '</p>');
+          }
+          
+          $(".ftsHelpContentTxt:eq(1)").hide();
+          $(".ftsHelpContentTxt:eq(2)").hide();
+          $("#thePage\\:j_id1\\:j_id23").hide();
+      </script>
+  </apex:outputPanel>
+  
+  <apex:outputPanel rendered="{!$CurrentPage.Name == 'ts2__registerconfirmation'}">
+      <!-- Begin Beyond.com conversion code -->
+          <img src="https://p.beyond.com/t?eaid=ZUfAryZE6AEmHTQ3Z7oSjQ**" height="1" width="1" border="0" />
+      <!-- End Beyond.com conversion code -->
+  </apex:outputPanel>
+  
+  </body>
+  </html>
+</apex:page>

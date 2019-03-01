@@ -1,0 +1,154 @@
+<apex:page standardcontroller="Pay_Period__c" extensions="Ctrl_SFHCOPeriodEndProcessing" title="SFHCO Period End Processing">
+<style>
+    .bPageBlock .list { margin: 3%; width: 94%;}
+    .pagination { margin: -2% auto 1%; width: 20%; display: block;}
+    .vfHelpText a            {position:relative;}
+    .vfHelpText a span       {display: none;}
+    .vfHelpText a:hover span {display: block;
+                              position:absolute;
+                              top:1.25em;
+                              padding:2px 5px;
+                              left:-15em; width:15em;
+                              z-index:100;
+                              border:1px solid orange;
+                              background-color:#FEFDB9;
+                              color:black;
+                             }
+     .negativeValues {border : solid 1px red;}
+</style>
+<script>
+function newDoc(PayperiodId) {
+    var url = '/apex/SFHCOReport?id='+PayperiodId; 
+    
+     //window.location.href='/apex/SFHCOReport?id='+PayperiodId;
+     window.open(url,'_blank');
+}
+</script>
+    <apex:form id="formId">
+        <apex:PageMessages escape="false" id="messages"/>
+        <apex:pageBlock title="HCSO Benefits Management" mode="edit">
+            <apex:pageBlockButtons location="top">
+                <apex:actionStatus id="loading">        
+                    <apex:facet name="start"><apex:image width="12px" value="/img/loading.gif" title="Processing..."/></apex:facet>
+                    <apex:facet name="stop"></apex:facet>
+                </apex:actionStatus>
+                <apex:commandButton action="{!removeLedgerRecord}" value="Remove Selected Rows" rerender="formId,ledgersList, pagination, messages" status="loading"/> 
+                <apex:commandButton action="{!CreateStipends}" value="{!$Label.Create_Stipends}" rerender="ledgersList, pagination, messages" status="loading"/>
+                <apex:commandButton action="{!CreateAllocationBatch}" value="{!$Label.Create_Allocation_Batch}" rerender="formId,ledgersList, pagination, messages"  status="loading"/>
+                <apex:commandButton onclick="newDoc('{!payId}')" value="{!$Label.Period_Report}" status="loading"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Start Date" />
+                    <apex:outputField value="{!oPayPeriod.Start_Date__c}"/> 
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="End Date" />
+                    <apex:outputField value="{!oPayPeriod.End_Date__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Create Benefits" />
+                    <apex:outputField value="{!oPayPeriod.Calculate_Benefits__c}" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+            <apex:outputPanel rendered="{!listOfAllSFHCOLedgers.size > 0}" id="ledgersList">
+                <apex:pageBlockTable value="{!listOfSFHCOLedgersforPage}" var="wrap" id="theTable">
+                
+                    <apex:column >
+                        <apex:facet name="header">
+                            <span class="vfHelpText">
+                                <apex:outputLink value="javascript:return false" >
+                                    <apex:image url="{!$Resource.helporange}" width="16" height="16" />
+                                    <span> Select records &amp; click 'Remove selected rows' </span>
+                                </apex:outputLink>
+                            </span>
+                        </apex:facet>
+                        <apex:inputCheckbox value="{!wrap.removeRecord}" rendered="{!!wrap.ledger.Stipend_Posted__c}" />
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header">Name</apex:facet>
+                        <apex:outputField value="{!wrap.ledger.Candidate_Name__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Hrs This Pay Period</apex:facet>
+                        <apex:outputField value="{!wrap.ledger.Hours_This_Pay_Period__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Average Week</apex:facet>
+                        <apex:outputField value="{!wrap.ledger.Average_Hours__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Total Last 3 Months</apex:facet>
+                        <apex:outputField value="{!wrap.ledger.Last_90_Days_Hours__c}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Benefits Accrual</apex:facet>
+                        <apex:outputField value="{!wrap.ledger.Benefit_Accrual__c}"/>
+                        <span id="Ledger_benefit_{!wrap.ledger.Id}" style="visibility:hidden"> {!wrap.ledger.Benefit_Accrual__c} </span>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Stipend</apex:facet>
+                        <apex:inputText value="{!wrap.Stipend}" rendered="{!!wrap.ledger.Stipend_Posted__c}" onchange="calculateAllocation(this,'{!wrap.ledger.Id}');"/>
+                        <apex:outputField value="{!wrap.ledger.Stipend__c}" rendered="{!wrap.ledger.Stipend_Posted__c}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header">Allocation Amount</apex:facet>
+                        <apex:outputPanel rendered="{!!wrap.ledger.Stipend_Posted__c}">
+                            <span id="allocation_{!wrap.ledger.Id}" > USD {!wrap.allocation} </span>
+                        </apex:outputPanel>
+                        <apex:outputField value="{!wrap.ledger.Allocation_Amount__c}" rendered="{!wrap.ledger.Stipend_Posted__c}"/>
+                    </apex:column>
+                    
+                    <apex:column >
+                        <apex:facet name="header">Status</apex:facet>
+                        <apex:outputText value="{!wrap.status}"/>
+                    </apex:column>
+                    
+<!--                    <apex:column >-->
+<!--                        <apex:facet name="header">Exclude Allocation</apex:facet>-->
+<!--                        <apex:inputField value="{!wrap.ledger.Exclude_Allocation__c}" rendered="{!IF(AND(wrap.ledger.Allocated_Timestamp__c == NULL, NOT(wrap.ledger.Exclude_Allocation__c)), true, false)}"/>-->
+<!--                        <apex:outputField value="{!wrap.ledger.Exclude_Allocation__c}" rendered="{!IF(OR(wrap.ledger.Allocated_Timestamp__c != NULL, wrap.ledger.Exclude_Allocation__c), true, false)}"/>-->
+<!--                    </apex:column>-->
+                    
+                </apex:pageBlockTable>   
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="pagination" styleClass="pagination" rendered="{!listOfAllSFHCOLedgers.size > 0}">
+                
+                <apex:commandlink value="Previous" action="{!previousBtnClick}" rendered="{!PreviousBtnVisibility}" reRender="ledgersList,pagination" status="statusAtPage"></apex:commandlink>
+                
+                <apex:actionStatus id="statusAtPage"><apex:facet name="start"><img src="/img/loading.gif" align="right"/></apex:facet></apex:actionStatus> 
+                <font size="1pt">Page :&nbsp;<apex:outputLabel value="{!nCurrentPageNumber}"/>&nbsp;out of&nbsp;<apex:outputLabel value="{!nTotalPages}"/>&nbsp;&nbsp;&nbsp;&nbsp;</font>
+                
+                <apex:commandlink value="Next" action="{!nextBtnClick}" rendered="{!NextBtnVisibility}" reRender="ledgersList,pagination" status="statusAtPage"></apex:commandlink>
+                
+            </apex:outputPanel> 
+        </apex:pageBlock>       
+    </apex:form>
+    <script>
+        function calculateAllocation(x, ledgerId){
+            
+            //get required elements     
+            var benefitsElement = document.getElementById('Ledger_benefit_'+ledgerId);
+            var benefits        = parseFloat(benefitsElement.innerHTML);
+            var stipend         = parseFloat(x.value);
+            
+            //calculate allocations
+            var allocationAmt   = (benefits - stipend).toFixed(2);
+            document.getElementById('allocation_'+ledgerId).innerHTML = 'USD '+ allocationAmt;  
+            
+            if(allocationAmt < 0){
+                document.getElementById('allocation_'+ledgerId).style.border = 'solid 3px red';
+            }   
+            else{
+                document.getElementById('allocation_'+ledgerId).style.border = '';
+            }   
+            
+            //set stipend to two decimal places
+            x.value = stipend.toFixed(2);   
+        }
+    </script>
+</apex:page>

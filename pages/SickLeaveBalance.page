@@ -1,0 +1,38 @@
+<apex:page controller="SickLeaveBalanceController" showHeader="false">
+
+<apex:composition template="{!$Site.Template}">
+   <apex:define name="body">
+    <apex:form id="formId"  >
+<table cellspacing="0">
+						<tr>
+							<td colspan="2">
+								<u><apex:outputText value="Sick Leave Balance" /></u>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								Available Sick Leave Balance :
+							    <apex:outputLabel value="{!Contact.Available_Sick_Leave_Balance__c}"/>					     
+							</td>
+						</tr>
+						<tr>
+							<td >
+								Applied Sick Leave :
+							    <apex:outputLabel value="{!Contact.Total_Sick_Leave_Hours_Taken_Portal__c }"/>
+							</td>
+						</tr>
+						<tr>
+							<td >
+								Accrued Sick Leave :
+							    <apex:outputLabel value="{!Contact.Total_Accrued_Sick_Leave_Hours_Portal__c }"/>
+							</td>
+						</tr>
+
+</table>
+
+	
+	</apex:form>
+    
+    </apex:define>  
+	</apex:composition>
+</apex:page>

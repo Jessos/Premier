@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Close</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>DeleteSeries</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>NewTask</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ActivityDate</fullName>
+    </fields>
+    <fields>
+        <fullName>CallDisposition</fullName>
+    </fields>
+    <fields>
+        <fullName>CallDurationInSeconds</fullName>
+    </fields>
+    <fields>
+        <fullName>CallObject</fullName>
+    </fields>
+    <fields>
+        <fullName>CallType</fullName>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+    </fields>
+    <fields>
+        <fullName>Email</fullName>
+    </fields>
+    <fields>
+        <fullName>IsRecurrence</fullName>
+    </fields>
+    <fields>
+        <fullName>IsReminderSet</fullName>
+    </fields>
+    <fields>
+        <fullName>IsVisibleInSelfService</fullName>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Phone</fullName>
+    </fields>
+    <fields>
+        <fullName>Priority</fullName>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>RecurrenceInterval</fullName>
+    </fields>
+    <fields>
+        <fullName>RecurrenceRegeneratedType</fullName>
+    </fields>
+    <fields>
+        <fullName>Status</fullName>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Subject</fullName>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>TaskSubtype</fullName>
+    </fields>
+    <fields>
+        <fullName>Type</fullName>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>WhatId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>WhoId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <recordTypes>
+        <fullName>Archived_Email_Task</fullName>
+        <active>false</active>
+        <compactLayoutAssignment>LID__Tasks</compactLayoutAssignment>
+        <description>Record type for archived email tasks</description>
+        <label>Archived Email Task</label>
+        <picklistValues>
+            <picklist>Interview_Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Stage__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>12</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>13</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>15</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Waiting on someone else</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>Call</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Letter</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>BD_Efforts</fullName>
+        <active>false</active>
+        <compactLayoutAssignment>LID__Tasks</compactLayoutAssignment>
+        <label>BD Efforts</label>
+        <picklistValues>
+            <picklist>Interview_Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Stage__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>12</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>13</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>15</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Waiting on someone else</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>BD Call - Conversation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Call - Left Message</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Call - Set Appointment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Called to Interview</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Check In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Debrief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Prep Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Check In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Debrief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed Job Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Collections call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ending Assignment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Order Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Client Call In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Placement Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pop In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temp Job Offer - Declined</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>A Tagged Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Effort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CD Effort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Standard_Task</fullName>
+        <active>true</active>
+        <compactLayoutAssignment>LID__Tasks</compactLayoutAssignment>
+        <description>Standard SalesForce Task</description>
+        <label>Standard Task</label>
+        <picklistValues>
+            <picklist>Interview_Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Stage__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>12</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>13</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>15</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Waiting on someone else</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>BD Call - Conversation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Call - Left Message</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Call - Set Appointment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Send Note</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Send Note %26 Gift -</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Send Postcard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Called to Interview</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Check In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Debrief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Prep Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Check In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Debrief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed Job Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Collections call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ending Assignment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Order Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Client Call In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pitch Job</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Placement Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pop In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Referral Address Confirmation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temp Job Offer - Declined</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>A Tagged Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Effort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CD Effort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Task</fullName>
+        <active>true</active>
+        <compactLayoutAssignment>LID__Tasks</compactLayoutAssignment>
+        <label>Task</label>
+        <picklistValues>
+            <picklist>Interview_Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New York</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Priority</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Normal</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Stage__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>12</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>13</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>15</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deferred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Started</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Waiting on someone else</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Subject</picklist>
+            <values>
+                <fullName>BD Call - Conversation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Call - Left Message</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Call - Set Appointment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Send Note</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Send Note %26 Gift -</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Send Postcard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Called to Interview</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Check In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Debrief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Prep Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Check In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Client Debrief</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed Job Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Collections call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ending Assignment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Order Call</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>New Client Call In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pitch Job</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Placement Follow Up</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pop In</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Referral Address Confirmation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Send Letter</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temp Job Offer - Declined</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>A Tagged Email</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BD Effort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CD Effort</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+    <webLinks>
+        <fullName>MA_MapIt_a6K40000000PB2SEAW</fullName>
+        <availability>online</availability>
+        <description>Maps this Task with selected tooltips</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>600</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>Map It</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/apex/sma__mapanything?recordId={!Task.Id}&amp;baseObjectId=a6K40000000PB2SEAW&amp;tooltipField=Status&amp;tooltipField2=AccountId&amp;tooltipField3=CallType&amp;tooltipField4=CreatedDate&amp;tooltipField5=Priority&amp;color=%2366FF00</url>
+    </webLinks>
+</CustomObject>

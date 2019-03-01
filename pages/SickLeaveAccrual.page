@@ -1,0 +1,20 @@
+<apex:page tabStyle="ts2__Placement__c" Controller="Ctrl_SickLeaveAccrual" title="Sick Leave Accrual">
+	<apex:form id="formId">
+		<apex:PageMessages escape="false"/>
+		<apex:pageBlock title="Sick Leave Accrual" mode="edit">
+			<apex:pageBlockButtons location="bottom">
+	                <apex:commandButton action="{!InvokeBatch}" value="{!$Label.Invoke_Sick_Leave_Batch}"/>
+	        </apex:pageBlockButtons>
+			<apex:pageBlockSection columns="2">
+				<apex:pageBlockSectionItem >
+	            	<apex:outputLabel value="From Transaction Entry Date" />
+	            	<apex:inputField value="{!Plc.ts2__Start_Date__c}" required="true"/> 
+	            </apex:pageBlockSectionItem>
+	            <apex:pageBlockSectionItem >
+	                <apex:outputLabel value="To Transaction Entry Date" />
+	                <apex:inputField value="{!Plc.ts2__End_Date__c}"  required="true"/>
+	            </apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+		</apex:pageBlock>		
+	</apex:form>
+</apex:page>

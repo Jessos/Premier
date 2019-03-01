@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>submittalFieldNames__c</fullName>
+        <description>Enter the API Names of fields on the ts2__Application__c object that should be pulled into the email for each submittal used to generate an email for the given Email Template. Enter one field per line!</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Enter the API Names of fields on the ts2__Application__c object that should be pulled into the email for each submittal used to generate an email for the given Email Template. Enter one field per line!</inlineHelpText>
+        <label>Submittal Application Fields API Names</label>
+        <required>true</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>templateUniqueName__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Enter in the &quot;Template Unique Name&quot; of the email template for which you would like to map Submittal Application fields. Do not use the label name!</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>Enter in the &quot;Template Unique Name&quot; of the email template for which you would like to map Submittal Application fields. Do not use the label name!</inlineHelpText>
+        <label>Template Unique Name</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>Submittal Email Template Field Mapping</label>
+    <pluralLabel>Submittal Email Template Field Mappings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

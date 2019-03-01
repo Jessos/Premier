@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Interview_Prep_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Info pertaining to interview preparation for jobs</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Attachments_Required__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>If yes, download the attachments from Notes &amp; Attachments and attach when sending the prep email.</inlineHelpText>
+        <label>Attachments Required?</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>AttireJob__c</fullName>
+        <externalId>false</externalId>
+        <formula>Job_Order__r.Attire__c</formula>
+        <label>Attire</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Attire__c</fullName>
+        <externalId>false</externalId>
+        <label>Attire</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Client_Account_Manager__c</fullName>
+        <externalId>false</externalId>
+        <formula>Job_Order__r.ts2__Recruiter__r.FirstName &amp;&quot; &quot;&amp;  Job_Order__r.ts2__Recruiter__r.LastName</formula>
+        <label>Client Account Manager</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Client_Website__c</fullName>
+        <externalId>false</externalId>
+        <formula>Job_Order__r.Client_Website__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Client Website</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Client__c</fullName>
+        <externalId>false</externalId>
+        <formula>Job_Order__r.ts2__Account__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Client</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_1_LinkedIn__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact_1__r.LinkedIn_Profile__c</formula>
+        <label>Contact 1 LinkedIn</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_1__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact 1</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Interview Preps</relationshipLabel>
+        <relationshipName>Interview_Preps</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact_2_LinkedIn__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact_2__r.LinkedIn_Profile__c</formula>
+        <label>Contact 2 LinkedIn</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_2__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact 2</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Interview Preps (Contact 2)</relationshipLabel>
+        <relationshipName>Interview_Preps1</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact_3_LinkedIn__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact_3__r.LinkedIn_Profile__c</formula>
+        <label>Contact 3 LinkedIn</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_3__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact 3</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Interview Preps (Contact 3)</relationshipLabel>
+        <relationshipName>Interview_Preps2</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact_4_LinkedIn__c</fullName>
+        <externalId>false</externalId>
+        <formula>Contact_4__r.LinkedIn_Profile__c</formula>
+        <label>Contact 4 LinkedIn</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Contact_4__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Contact 4</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Interview Preps (Contact 4)</relationshipLabel>
+        <relationshipName>Interview_Preps3</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Interview_Round__c</fullName>
+        <externalId>false</externalId>
+        <label>Prep Type</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Client In Person 1st</fullName>
+                    <default>false</default>
+                    <label>Client In Person 1st</label>
+                </value>
+                <value>
+                    <fullName>Client In Person 2nd</fullName>
+                    <default>false</default>
+                    <label>Client In Person 2nd</label>
+                </value>
+                <value>
+                    <fullName>Client In Person 3rd</fullName>
+                    <default>false</default>
+                    <label>Client In Person 3rd</label>
+                </value>
+                <value>
+                    <fullName>Client In Person Final</fullName>
+                    <default>false</default>
+                    <label>Client In Person Final</label>
+                </value>
+                <value>
+                    <fullName>Client Phone Interview 1st</fullName>
+                    <default>false</default>
+                    <label>Client Phone Interview 1st</label>
+                </value>
+                <value>
+                    <fullName>Client Phone Interview 2nd</fullName>
+                    <default>false</default>
+                    <label>Client Phone Interview 2nd</label>
+                </value>
+                <value>
+                    <fullName>Client Video Interview</fullName>
+                    <default>false</default>
+                    <label>Client Video Interview</label>
+                </value>
+                <value>
+                    <fullName>Happy Hour</fullName>
+                    <default>false</default>
+                    <label>Happy Hour</label>
+                </value>
+                <value>
+                    <fullName>Testing</fullName>
+                    <default>false</default>
+                    <label>Testing</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Interview_specific_Details__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Details specific to this stage of the interview process.</inlineHelpText>
+        <label>Interview-specific Details</label>
+        <length>2500</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>6</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Job_Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Job Order</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>ts2__Job__c.ts2__Status__c</field>
+                <operation>equals</operation>
+                <value>Open</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>ts2__Job__c</referenceTo>
+        <relationshipName>Job_Preps</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Job_Title__c</fullName>
+        <externalId>false</externalId>
+        <formula>Job_Order__r.Name</formula>
+        <label>Job Title</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Prep_Details__c</fullName>
+        <externalId>false</externalId>
+        <label>Prep Details</label>
+        <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>12</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Prep_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Prep Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+                <value>
+                    <fullName>See Job Mgr</fullName>
+                    <default>false</default>
+                    <label>See Job Mgr</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Video_Interview_Instructions__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>How should the candidate dial into the video interview or contact the interviewer?</inlineHelpText>
+        <label>Video Interview Instructions</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>Interview Prep</label>
+    <nameField>
+        <displayFormat>IP{000000}</displayFormat>
+        <label>Interview Prep</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Interview Preps</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

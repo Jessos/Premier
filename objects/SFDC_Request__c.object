@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>SFDC_Request_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Completed_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Completed Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date_Needed__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Required for Report Requests</inlineHelpText>
+        <label>Date Needed</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Estimated_Completion_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Estimated Completion Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Estimated_Hours__c</fullName>
+        <externalId>false</externalId>
+        <label>Estimated Hours</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>&lt; 30 minutes</fullName>
+                    <default>false</default>
+                    <label>&lt; 30 minutes</label>
+                </value>
+                <value>
+                    <fullName>30 minutes</fullName>
+                    <default>false</default>
+                    <label>30 minutes</label>
+                </value>
+                <value>
+                    <fullName>1 hour</fullName>
+                    <default>false</default>
+                    <label>1 hour</label>
+                </value>
+                <value>
+                    <fullName>1-2 hours</fullName>
+                    <default>false</default>
+                    <label>1-2 hours</label>
+                </value>
+                <value>
+                    <fullName>2-3 hours</fullName>
+                    <default>false</default>
+                    <label>2-3 hours</label>
+                </value>
+                <value>
+                    <fullName>3+ hours</fullName>
+                    <default>false</default>
+                    <label>3+ hours</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Example_Link__c</fullName>
+        <externalId>false</externalId>
+        <label>Example Link</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Management_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Management Notes</label>
+        <length>10000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>My_Requests__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( $User.Id =  SFDC_Guru__r.Id, TRUE, FALSE)</formula>
+        <label>My Requests</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Notes</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>15</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Priority__c</fullName>
+        <externalId>false</externalId>
+        <label>Priority</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Low</fullName>
+                    <default>false</default>
+                    <label>Low</label>
+                </value>
+                <value>
+                    <fullName>Medium</fullName>
+                    <default>false</default>
+                    <label>Medium</label>
+                </value>
+                <value>
+                    <fullName>High</fullName>
+                    <default>false</default>
+                    <label>High</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Related_Project__c</fullName>
+        <externalId>false</externalId>
+        <label>Related Project</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Screening Interviews</fullName>
+                    <default>false</default>
+                    <label>Screening Interviews</label>
+                </value>
+                <value>
+                    <fullName>HR/Onboarding Improvements</fullName>
+                    <default>false</default>
+                    <label>HR/Onboarding Improvements</label>
+                </value>
+                <value>
+                    <fullName>Billing Object</fullName>
+                    <default>false</default>
+                    <label>Billing Object</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Request_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Request Reason</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>ActionGrid</fullName>
+                    <default>false</default>
+                    <label>ActionGrid</label>
+                </value>
+                <value>
+                    <fullName>Automation</fullName>
+                    <default>false</default>
+                    <label>Automation</label>
+                </value>
+                <value>
+                    <fullName>Business Impacting</fullName>
+                    <default>false</default>
+                    <label>Business Impacting</label>
+                </value>
+                <value>
+                    <fullName>Calendar Sync</fullName>
+                    <default>false</default>
+                    <label>Calendar Sync</label>
+                </value>
+                <value>
+                    <fullName>Email Blast</fullName>
+                    <default>false</default>
+                    <label>Email Blast</label>
+                </value>
+                <value>
+                    <fullName>Functionality Question/Problem</fullName>
+                    <default>false</default>
+                    <label>Functionality Question/Problem</label>
+                </value>
+                <value>
+                    <fullName>Groove</fullName>
+                    <default>false</default>
+                    <label>Groove</label>
+                </value>
+                <value>
+                    <fullName>Groove - Email Sync</fullName>
+                    <default>false</default>
+                    <label>Groove - Email Sync</label>
+                </value>
+                <value>
+                    <fullName>Idea/Innovation</fullName>
+                    <default>false</default>
+                    <label>Idea/Innovation</label>
+                </value>
+                <value>
+                    <fullName>Lightning</fullName>
+                    <default>false</default>
+                    <label>Lightning</label>
+                </value>
+                <value>
+                    <fullName>Marketing/Website</fullName>
+                    <default>false</default>
+                    <label>Marketing/Website</label>
+                </value>
+                <value>
+                    <fullName>New Field(s)</fullName>
+                    <default>false</default>
+                    <label>New Field(s)</label>
+                </value>
+                <value>
+                    <fullName>Other</fullName>
+                    <default>false</default>
+                    <label>Other</label>
+                </value>
+                <value>
+                    <fullName>Picklist option add/remove</fullName>
+                    <default>false</default>
+                    <label>Picklist option add/remove</label>
+                </value>
+                <value>
+                    <fullName>Project</fullName>
+                    <default>false</default>
+                    <label>Project</label>
+                </value>
+                <value>
+                    <fullName>Report/Dashboard Request/Update</fullName>
+                    <default>false</default>
+                    <label>Report/Dashboard Request/Update</label>
+                </value>
+                <value>
+                    <fullName>Sertifi Help</fullName>
+                    <default>false</default>
+                    <label>Sertifi Help</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SFDC_Guru__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>SFDC Guru</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>SFDC_Requests</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Send_Reminder__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Send Reminder</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>New</fullName>
+                    <default>true</default>
+                    <label>New</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>More Info Needed</fullName>
+                    <default>false</default>
+                    <label>More Info Needed</label>
+                </value>
+                <value>
+                    <fullName>On Hold</fullName>
+                    <default>false</default>
+                    <label>On Hold</label>
+                </value>
+                <value>
+                    <fullName>Waiting on Feedback</fullName>
+                    <default>false</default>
+                    <label>Waiting on Feedback</label>
+                </value>
+                <value>
+                    <fullName>In Testing</fullName>
+                    <default>false</default>
+                    <label>In Testing</label>
+                </value>
+                <value>
+                    <fullName>Escalated</fullName>
+                    <default>false</default>
+                    <label>Escalated</label>
+                </value>
+                <value>
+                    <fullName>Waiting on Management&apos;s Feedback</fullName>
+                    <default>false</default>
+                    <label>Waiting on Management&apos;s Feedback</label>
+                </value>
+                <value>
+                    <fullName>Closed- Captured For Future Discussions</fullName>
+                    <default>false</default>
+                    <label>Closed- Captured For Future Discussions</label>
+                </value>
+                <value>
+                    <fullName>Closed- Resolved</fullName>
+                    <default>false</default>
+                    <label>Closed- Resolved</label>
+                </value>
+                <value>
+                    <fullName>Closed- Rejected</fullName>
+                    <default>false</default>
+                    <label>Closed- Rejected</label>
+                </value>
+                <value>
+                    <fullName>Closed- Trained</fullName>
+                    <default>false</default>
+                    <label>Closed- Trained</label>
+                </value>
+                <value>
+                    <fullName>Closed - Duplicate</fullName>
+                    <default>false</default>
+                    <label>Closed - Duplicate</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>SFDC Request</label>
+    <nameField>
+        <displayFormat>SFDC{000000}</displayFormat>
+        <label>SFDC Request</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>SFDC Requests</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>SFDC_Guru__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>OWNER.FIRST_NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Request_Reason__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Priority__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Estimated_Completion_Date__c</customTabListAdditionalFields>
+        <searchResultsAdditionalFields>Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>OWNER.FIRST_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>OWNER.LAST_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>SFDC_Guru__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Priority__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Completed_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CREATEDBY_USER</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>UPDATEDBY_USER</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Date_Needed_Not_Today_or_Tomorrow</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISPICKVAL(Request_Reason__c, &quot;Report/Dashboard Request/Update&quot;) &amp;&amp;
+ ISPICKVAL( Status__c , &quot;New&quot;) &amp;&amp;
+ OR(Date_Needed__c = TODAY(),Date_Needed__c =  TODAY() + 1)</errorConditionFormula>
+        <errorDisplayField>Date_Needed__c</errorDisplayField>
+        <errorMessage>Report Requests require more than 2 days notice</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Date_Needed_for_Report_Requests</fullName>
+        <active>true</active>
+        <errorConditionFormula>ISNULL(Date_Needed__c) &amp;&amp;
+ ISPICKVAL(Request_Reason__c, &quot;Report/Dashboard Request/Update&quot;)&amp;&amp;
+ NOT(ISPICKVAL( Priority__c , &quot;Low&quot;))</errorConditionFormula>
+        <errorDisplayField>Date_Needed__c</errorDisplayField>
+        <errorMessage>Medium/High Priority Report Requests require Date Needed to be filled out</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

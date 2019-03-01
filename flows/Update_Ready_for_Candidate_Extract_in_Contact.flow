@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <interviewLabel>Update Ready for Candidate Extract in Contact {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Update Ready for Candidate Extract in Contact</label>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_the_Contact</name>
+        <label>Update the Contact</label>
+        <locationX>186</locationX>
+        <locationY>91</locationY>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Var_Contact_Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Ready_for_Candidate_Extract__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+    </recordUpdates>
+    <startElementReference>Update_the_Contact</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>Var_Contact_Id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

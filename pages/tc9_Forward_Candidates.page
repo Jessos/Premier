@@ -1,0 +1,422 @@
+<apex:page standardController="ts2__Submittal__c" tabStyle="ts2__Submittal__c" recordSetVar="AllSubmittals" extensions="SubmittalsEmailPageController" showHeader="false" sidebar="false" showQuickActionVfHeader="false">
+
+    <style>
+
+        .fieldDiv {
+
+            margin-top:10px;
+
+        }
+
+        .fieldLabel {
+
+            display:inline-block;
+
+            text-align:right;
+
+            width: 75px;
+
+            margin-top:0px;
+
+        }
+
+        .inputFieldPosition {
+
+            display:inline-block;
+
+            margin-left:10px;
+
+            margin-top:0px;
+
+        }
+
+        .inputFieldLength {
+
+            width:800px;
+
+        }
+
+    </style>
+
+    <script>
+
+        function changeStyle0() {document.getElementById("styleUpdateId").style.fontStyle = "normal";}
+
+        function changeStyle1() {document.getElementById("styleUpdateId").style.fontStyle = "italic";}
+
+    </script>   
+
+    <apex:slds />
+
+    <body>
+
+        <div>
+
+            <apex:form id="myForm">             
+
+                <div class="slds-page-header" style="width:900px;">
+                    
+                   <div class="slds-media">
+                       
+                      <div class="slds-media__body">
+                          
+                         <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="name">{!jobOrder.Name} - Email to Client</h1>
+                          
+                         <p class="slds-text-body_small slds-line-height_reset">{!jobOrder.ts2__Account__r.Name} • {!jobOrder.ts2__Contact__r.Name} • {!jobOrder.RecordType.Name}</p>
+                          
+                      </div>
+                       
+                   </div>
+                    
+                    <br></br>
+                    
+                   <div class="demo-only slds-grid">
+                       
+                        <div class="slds-panel slds-grid slds-grid_vertical slds-nowrap">
+                          
+                         <div class="slds-form slds-form_stacked slds-grow slds-scrollable_y">
+                             
+                            <div class="slds-panel__section slds-border_bottom">
+                                
+                               <div class="slds-media">
+                                   
+                                  <div class="slds-panel__section slds-p-around_none">
+                                      
+                                        <span style="float:left; margin-right:50px;">
+                                            
+                                            <div class="slds-form-element__control">
+                                                
+                                                <span class="slds-form-element__label">Job Manager</span>
+                                                
+                                            </div>
+                                            
+                                            <div class="slds-form-element__control">
+                                                
+                                                <span class="slds-form-element__static" >{!jobOrder.ts2__Recruiter__r.Name}</span>
+                                                
+                                            </div>
+                                          
+                                        </span>
+                                          
+                                        <span style="float:left; margin-right:50px;">
+                                            
+                                            <div class="slds-form-element__control">
+                                                
+                                                <span class="slds-form-element__label" >Department</span>
+                                                
+                                            </div>
+                                            
+                                            <div class="slds-form-element__control">
+                                                
+                                                <span class="slds-form-element__static" >{!jobOrder.ts2__Department__c}</span>
+                                                
+                                            </div>
+                                          
+                                        </span>
+                                      
+                                        <span style="float:left; margin-right:50px;">
+                                            
+                                            <div class="slds-form-element__control">
+                                                
+                                                <span class="slds-form-element__label" >Status</span>
+                                                
+                                            </div>
+                                            
+                                            <div class="slds-form-element__control">
+                                                
+                                                <span class="slds-form-element__static" >{!jobOrder.ts2__Status__c}</span>
+                                                
+                                            </div>
+                                          
+                                        </span>
+                                          
+                                        <span style="float:left; margin-right:50px;">
+                                            
+                                            <div class="slds-form-element__control">
+                                                
+                                                <span class="slds-form-element__label" >Stage</span>
+                                                
+                                            </div>
+                                            
+                                            <div class="slds-form-element__control">
+                                                
+                                                <span class="slds-form-element__static" >{!jobOrder.ts2__Stage__c}</span>
+                                                
+                                            </div>
+                                          
+                                        </span>                      
+                                        
+                                    </div>                   
+                                      
+                                  </div>
+                                   
+                               </div>
+                                
+                            </div>
+                             
+                       </div>
+                          
+                    </div>
+                       
+                </div>                  
+
+                <apex:pageMessages id="showmsg" />      
+
+                <apex:outputLink style="font-weight:bold; margin-left:85px; text-decoration: underline;" value="{!linkBackToJobOrder}" target="_blank">Link Back to Job Order</apex:outputLink>
+
+                <div class = "fieldDiv">
+
+                    <div class="fieldLabel slds-text-title_caps">To</div>
+
+                    <div class="inputFieldPosition">
+
+                        <apex:inputField styleClass="inputFieldLength" value="{!jobOrder.ts2__Contact__c}"/>
+
+                    </div>
+
+                </div>
+
+                <div class = "fieldDiv">
+
+                    <div class="fieldLabel slds-text-title_caps">CC</div>
+
+                    <div class="inputFieldPosition">
+
+                        <apex:inputField required="false" styleClass="inputFieldLength" value="{!ccContactJobOrder.ts2__Contact__c}"/>
+
+                    </div>
+
+                </div>
+
+                <div class = "fieldDiv">
+
+                    <div class="fieldLabel slds-text-title_caps">BCC</div>
+
+                    <div class="inputFieldPosition">
+
+                        <apex:inputField required="false" styleClass="inputFieldLength" value="{!bccContact.OwnerId}"/>
+
+                    </div>
+
+                </div>  
+
+                <div class = "fieldDiv">
+
+                    <div class="fieldLabel slds-text-title_caps">+Emails</div>
+
+                    <div class="inputFieldPosition" style="font-style:italic;" id="styleUpdateId">
+
+                        <apex:inputText id="additionalEmails" styleClass="inputFieldLength" value="{!additionalEmails}" onclick="changeStyle0();" onblur="changeStyle1();
+                        " />
+
+                    </div>
+
+                </div>                          
+
+                <div class = "fieldDiv">
+
+                    <div class="fieldLabel slds-text-title_caps">Folder</div>
+
+                    <div class="inputFieldPosition">
+
+                        <apex:selectlist styleClass="inputFieldLength" value="{!selectedEmailFolderId}" size="1" rendered="{!NOT(showEmailBodyEdit)}">
+                                
+                            <apex:selectOptions value="{!emailFolderOptions}"/>
+
+                            <apex:actionSupport event="onchange" reRender="templateOptions"/>
+
+                        </apex:selectlist>
+
+                    </div>  
+
+                </div>  
+
+                <div class = "fieldDiv">
+
+                    <div class="fieldLabel slds-text-title_caps">Template</div>
+
+                    <div class="inputFieldPosition">
+
+                        <apex:selectlist styleClass="inputFieldLength" id="templateOptions" value="{!selectedEmailTemplateId}" size="1" rendered="{!NOT(showEmailBodyEdit)}">
+
+                            <apex:selectOptions value="{!emailTemplateOptions}"/>
+
+                            <apex:actionSupport event="onchange" action="{!loadSubjectAndBody}" reRender="myForm"/>
+
+                        </apex:selectlist>  
+
+                    </div>
+                
+                </div>
+
+                <div class = "fieldDiv">
+
+                    <div class="fieldLabel slds-text-title_caps">Subject</div>
+
+                    <div class="inputFieldPosition">
+
+                        <apex:inputText id="subject" styleClass="inputFieldLength" value="{!emailSubject}"  />
+
+                    </div>
+
+                </div>  
+
+                <div style="position:relative; top:10px; margin-bottom:50px;">
+
+                    <div class="slds-text-title_caps" style="position:absolute; text-align:right; width:75px;">
+
+                        <div class="slds-text-title_caps" style="position:absolute; text-align:right; width:75px;">
+
+                            Body
+
+                        </div>
+
+                        <br/>
+
+                        <div class="slds-text-title_caps" style="position:absolute; text-align:right; width:75px;">
+
+                            <apex:commandLink id="linkId" style="font-weight: bold;" action="{!editOrSaveEmailBody}" value="{!editOrSave}"/>
+
+                        </div>
+
+                    </div>
+
+                    <apex:variable value="foo" var="foo" rendered="{!NOT(showEmailBodyEdit)}" id="outputTextDiv">
+
+                        <div class="inputFieldLength" style="border:solid; border-width:thin;margin-left:88px;" id="emailBody">
+
+                            <apex:outputText escape="false" id="emailBody" value="{!emailBody}" />
+
+                        </div>
+
+                    </apex:variable>
+                            
+
+                </div>
+
+                <apex:variable value="foo" var="foo" rendered="{!showEmailBodyEdit}" id="inputEmailBodyDiv">
+
+                    <div class="slds-rich-text-editor" style="position:relative: top:30px; width:900px; margin-left:10px;">
+
+                        <apex:inputTextarea cols="0" rows="20" value="{!emailBody}" richText="true" rendered="{!showEmailBodyEdit}" id="inputEmailBodyDiv1"/>
+
+                    </div>
+
+                </apex:variable>
+
+                <div style="margin-left:300px;">
+
+                    <apex:commandButton reRender="myForm" styleClass="slds-button slds-button_brand" value="Send Email" action="{!sendEmail}" rendered="{!showSendEmailButton}" id="buttonId"/>
+
+                    <apex:commandButton reRender="myForm" styleClass="slds-button slds-button_brand" value="select all attachments" action="{!selectAllAttachments}" rendered="{!showSelectAll}"/>
+
+                    <apex:commandButton reRender="myForm" styleClass="slds-button slds-button_brand" value="unselect all attachments" action="{!unselectAllAttachments}" rendered="{!showUnselectAll}"/>
+
+                </div>
+
+                <br/>
+
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer" style="table-layout:fixed;width:900px;">
+                    
+                    <thead>
+                        
+                        <tr class="slds-text-title_caps">
+                            
+                            <th scope="col">
+                                
+                                <div class="slds-truncate" title="isSelected">Attach?</div>
+                                
+                            </th>    
+
+                            <th scope="col">
+                                
+                                <div class="slds-truncate" title="Candidate">Candidate</div>
+                                
+                            </th>
+                            
+                            <th scope="col" style="width:40%;">
+                                
+                                <div class="slds-truncate" title="File">File</div>
+                                
+                            </th>   
+        
+                            <th scope="col">
+                                
+                                <div class="slds-truncate" title="Created Date">Created Date</div>
+                                
+                            </th>                                          
+                            
+                        </tr>
+                        
+                    </thead>
+                    
+                    <tbody>
+                        
+                        <apex:repeat value="{!attachmentWrappers}" var="aw">
+                        
+                            <tr> 
+                                
+                                <td data-label="isSelected">
+                                    
+                                    <div class="demo-only slds-size_1-of-2">
+
+                                      <div class="slds-form-element">
+
+                                        <label class="slds-checkbox_toggle slds-grid">
+
+                                          <span class="slds-form-element__label slds-m-bottom_none"></span>
+
+                                          <apex:inputCheckbox value="{!aw.attach}"/>
+
+                                          <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+
+                                            <span class="slds-checkbox_faux"></span>
+
+                                            <span class="slds-checkbox_on">Attach</span>
+
+                                            <span class="slds-checkbox_off">Don't Attach</span>
+
+                                          </span>
+
+                                        </label>
+
+                                      </div>
+
+                                    </div>
+                                    
+                                </td>  
+
+                                <td data-label="Candidate">
+                                    
+                                    <div class="slds-truncate" title="{!aw.candidateName}">{!aw.candidateName}</div>
+                                    
+                                </td>   
+
+                                <td data-label="File">
+                                    
+                                    <div class="slds-truncate" title="{!aw.fileName}">{!aw.fileName}</div>
+                                    
+                                </td> 
+
+                                <td data-label="Created Date">
+                                    
+                                    <div class="slds-truncate" title="{!aw.createdDateString}">{!aw.createdDateString}</div>
+                                    
+                                </td>   
+                            
+                            </tr>
+                        
+                        </apex:repeat>
+                        
+                        
+                    </tbody>
+                    
+                </table> 
+
+            </apex:form>
+
+        </div>
+
+    </body>
+
+</apex:page>

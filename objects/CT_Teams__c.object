@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Commission_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Month</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Create_Monthly_Bills__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Create Monthly Bills</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Monthly_Team_Bills_to_Calculate__c</fullName>
+        <externalId>false</externalId>
+        <label>Monthly Team Bills to Calculate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Team_Earnings__c</fullName>
+        <externalId>false</externalId>
+        <formula>Monthly_Team_Bills_to_Calculate__c   *  Team_User__r.CT_User_Split__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Team Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Team_Members_100__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Team_User__r.Team_Member_1__r.CT_User_Split__c =1.0,1,0)
++
+IF( Team_User__r.Team_Member_2__r.CT_User_Split__c =1.0,1,0)
++
+IF( Team_User__r.Team_Member_3__r.CT_User_Split__c =1.0,1,0)
++
+IF( Team_User__r.Team_Member_4__r.CT_User_Split__c =1.0,1,0)
++
+IF( Team_User__r.Team_Member_5__r.CT_User_Split__c =1.0,1,0)
++
+IF( Team_User__r.Team_Member_6__r.CT_User_Split__c =1.0,1,0)
++
+IF( Team_User__r.Team_Member_7__r.CT_User_Split__c =1.0,1,0)
++
+IF( Team_User__r.Team_Member_8__r.CT_User_Split__c =1.0,1,0)
++
+IF( Team_User__r.Team_Member_9__r.CT_User_Split__c =1.0,1,0)
++
+IF( Team_User__r.Team_Member_10__r.CT_User_Split__c =1.0,1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label># Team Members (100)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Team_Members_All__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NOT(ISBLANK( Team_User__r.Team_Member_1__c )),1,0)
++
+IF(NOT(ISBLANK( Team_User__r.Team_Member_2__c )),1,0)
++
+IF(NOT(ISBLANK( Team_User__r.Team_Member_3__c )),1,0)
++
+IF(NOT(ISBLANK( Team_User__r.Team_Member_4__c )),1,0)
++
+IF(NOT(ISBLANK( Team_User__r.Team_Member_5__c )),1,0)
++
+IF(NOT(ISBLANK( Team_User__r.Team_Member_6__c )),1,0)
++
+IF(NOT(ISBLANK( Team_User__r.Team_Member_7__c )),1,0)
++
+IF(NOT(ISBLANK( Team_User__r.Team_Member_8__c )),1,0)
++
+IF(NOT(ISBLANK( Team_User__r.Team_Member_9__c )),1,0)
++
+IF(NOT(ISBLANK( Team_User__r.Team_Member_10__c )),1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label># Team Members All</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Team_Members_Non_100__c</fullName>
+        <externalId>false</externalId>
+        <formula>Team_Members_All__c -  Team_Members_100__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label># Team Members Non 100</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Team_User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Team User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>CT_Teams</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Total_100_Earnings__c</fullName>
+        <externalId>false</externalId>
+        <formula>Team_Earnings__c -  Total_Non_100_Earnings__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total 100 Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Total_Non_100_Earnings__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Non 100 Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Update_Non_100_Earnings__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Update Non 100 Earnings</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>X18_Digit_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASESAFEID(Id)</formula>
+        <label>18 Digit ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>CT Team</label>
+    <nameField>
+        <label>CT Teams Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>CT Teams</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

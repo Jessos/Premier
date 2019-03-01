@@ -1,0 +1,9 @@
+<apex:page standardStyleSheets="false" showHeader="false" sidebar="false" cache="false">
+
+<apex:composition template="{!$Site.Template}">
+<apex:define name="body">
+You cannot access this site directly, please select the LOG IN link on the left hand menu.
+</apex:define>
+</apex:composition>
+
+</apex:page>

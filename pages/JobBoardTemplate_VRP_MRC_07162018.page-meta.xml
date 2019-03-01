@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>26.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>7/16/18 - updated static resource &amp; favicon image</description>
+    <label>JobBoardTemplate_VRP_MRC_07162018</label>
+</ApexPage>

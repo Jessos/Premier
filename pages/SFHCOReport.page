@@ -1,0 +1,80 @@
+<apex:page standardController="Pay_Period__c" extensions="SFHRAReport_Ctrl" showHeader="false" sidebar="false" standardstylesheets="false" readOnly="false" contenttype="application/vnd.ms-excel#Report.xls"  cache="true" applyHtmlTag="false">
+
+ <apex:pageBlock >
+ <apex:pageBlockTable value="{!listOfWrap}" var="d"> 
+ <apex:column headerValue="Employee's SSN">  
+      {!d.candidate.ts2__Social_Security__c}  
+    </apex:column> 
+    <apex:column headerValue="Employee's Last Name">  
+      {!d.candidate.LastName}  
+    </apex:column> 
+    <apex:column headerValue="Employee's First Name">  
+      {!d.candidate.FirstName}  
+    </apex:column>
+    <apex:column headerValue="Initial">  
+      
+    </apex:column>
+      <apex:column headerValue="Email">  
+       {!d.candidate.Email}  
+    </apex:column>
+      <apex:column headerValue="Mobile">  
+       {!d.candidate.Mobilephone}  
+    </apex:column>
+    <apex:column headerValue="Address 1">  
+      {!d.candidate.MailingStreet}  
+    </apex:column>
+    <apex:column headerValue="Address 2">  
+      
+    </apex:column> 
+    <apex:column headerValue="City">  
+      {!d.candidate.MailingCity}
+    </apex:column>
+    <apex:column headerValue="State">  
+      {!d.candidate.MailingState}
+    </apex:column>
+    <apex:column headerValue="Zip Code">  
+      {!d.candidate.MailingpostalCode}
+    </apex:column>
+    <apex:column headerValue="Gender">  
+      {!d.candidate.ts2__EEO_Gender__c}
+    </apex:column>
+    <apex:column headerValue="Date Of Birth">  
+       
+    {!d.birthDate}
+        
+    </apex:column>
+    <apex:column headerValue="Date Of Hire">  
+    
+    {!d.hireDate}
+       
+    </apex:column>
+    <apex:column headerValue="Effective Date For Coverage">  
+    
+    {!d.coverageDate}
+     </apex:column>
+    <apex:column headerValue="Benifit Name">  
+     {!d.benefitName} 
+    </apex:column>
+    <apex:column headerValue="Tier Type">  
+       EE
+    </apex:column>
+    <apex:column headerValue="Termination Date">  
+    
+    {!d.terminationDate}
+        
+       
+    </apex:column>
+    <apex:column headerValue="Hours Paid This Quarter">  
+       {!d.sumOfHours}
+    </apex:column>
+    <apex:column headerValue="Hourly Minimum">  
+       {!rate}
+    </apex:column>
+    <apex:column headerValue="Allocated To PDC HRA">  
+       {!d.prodOfhours}
+    </apex:column>
+ </apex:pageBlockTable>   
+</apex:pageblock>
+
+
+</apex:page>

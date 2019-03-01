@@ -1,0 +1,42 @@
+<apex:page controller="CandidateAttachmentcls"  showHeader="false" sidebar="false">
+<!-- <script type="text/javascript">
+      window.close();
+    </script>   -->
+<script language="javascript">
+function closeWin() {
+    parent.window.close();
+}
+</script>
+
+<body width="100%" style="margin:10px;">
+
+<apex:form id="frm">
+<apex:actionRegion >
+    <apex:pageMessages id="pageMessages" />
+    
+    <apex:pageBlock mode="details" id="mainpage">
+    <apex:pageBlockButtons style="text-align: right;" location="bottom">
+            <span id="pbsMainButtons_spinner" class="spinner_indicator">&nbsp;</span>
+          <!--   <apex:commandButton value="Cancel" title="Cancel"  onclick="closeWin(false);return(false);" /> -->
+           <apex:commandButton value="Cancel" title="Cancel"  onclick="closeWin()" rendered="{!isclose <> true}"/>
+            <apex:commandButton value="Save Attachment" title="Save Attachment" action="{!save}" rendered="{!isclose <> true}"/>
+            <apex:commandButton value="Close" title="Close"  onclick="closeWin()" rendered="{!isclose}"/>
+        </apex:pageBlockButtons>
+     
+        
+     <apex:pageBlockSection columns="1" title="Attachments" collapsible="false">
+           <apex:outputPanel > 
+                   <apex:selectRadio value="{!IsSelected}" layout="pageDirection" rendered="{!AttachmentList.SIZE>0}" >
+                      <apex:selectOptions value="{!AttachmentRec}" />
+                    </apex:selectRadio>  
+                  <apex:outputText value="No Attachments" rendered="{!AttachmentList.SIZE=0}"/>
+               
+           </apex:outputPanel> 
+        </apex:pageBlockSection> 
+    </apex:pageBlock>
+    </apex:actionRegion> 
+</apex:form>
+
+</body>
+
+</apex:page>

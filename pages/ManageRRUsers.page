@@ -1,0 +1,146 @@
+<apex:page controller="ManageRRUsers" tabStyle="User">
+<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"/>
+
+<style type="text/css">
+   .highlight2{background-color:#ffffcc;}
+</style>
+
+<script type="text/javascript">
+ 
+   $(document).ready(function(){
+      
+   });
+   
+   function selectAll(chkbox)
+   {
+      if($(chkbox).attr('id').indexOf('available') > -1)
+      {
+         $('[id$=available]').each(function(){
+            var $chkbox = $(this).find('input').first();
+            $chkbox.attr('checked',$(chkbox).is(':checked'));
+            highlight($chkbox);
+         });
+      }else
+      {
+         $('[id$=selected]').each(function(){
+            var $chkbox = $(this).find('input').first();
+            $chkbox.attr('checked',$(chkbox).is(':checked'));
+            highlight($chkbox);
+         });
+      }
+   }
+   
+   function highlight()
+   {
+      $('[id$=available]').each(function(){
+         
+         highlight($chkbox);
+      });
+      $('[id$=selected]').each(function(){
+         var $chkbox = $(this).find('input').first();
+      });
+   }
+   
+   function highlight($chkbox)
+   {
+      console.log($chkbox.is(':checked'));
+      if($chkbox.is(':checked'))
+      {
+         $chkbox.parent().parent().parent().addClass('highlight2');
+      }else
+      {
+         $chkbox.parent().parent().parent().removeClass('highlight2');
+      }
+   }
+</script>
+
+<apex:sectionHeader title="Manage Round Robin Users"/>
+
+<apex:form >
+
+   <apex:actionFunction name="filter" action="{!filter}" status="resultsStatus" rerender="pb"/>
+   <apex:actionFunction name="addRemoveUsers" action="{!addRemoveUsers}" status="resultsStatus" rerender="pb"/>
+   
+   <apex:pageBlock id="pb">
+      <apex:pageMessages />
+         <div style="position: relative;">
+            <apex:outputpanel >
+               <apex:actionstatus id="resultsStatus">
+                  <apex:facet name="start">
+                     <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;height: 100%;opacity:0.7;width:100%;"> 
+                        <div class="waitingHolder" style="top: 74.2px; width: 91px; color:#5d5d5d">
+                           <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                           <span class="waitingDescription">Loading...</span>
+                        </div>
+                     </div>
+                  </apex:facet>
+               </apex:actionstatus>
+            </apex:outputpanel>
+            <table class="layout" width="100%">
+            <tr>
+               <td width="45%" align="center" style="font-size:150%;font-weight:bold;">Available Users</td>
+               <td width="10%"></td>
+               <td align="center" style="font-size:150%;font-weight:bold;">Selected Users</td>
+            </tr>
+            <tr>
+               <td class="selectCell" width="45%">
+                  <apex:outputPanel >
+                     <apex:outputLabel value="Department" style="font-weight:bold;padding-right:5px;"/>
+                     <apex:selectList value="{!availableDepartment}" multiselect="false" size="1" id="availableDepartment" onchange="filter();">
+                        <apex:selectOptions value="{!departments}"/>
+                     </apex:selectList>
+                     
+                  </apex:outputPanel>
+                  <apex:pageBlockTable value="{!availableUsers}" var="au">
+                    <apex:column >
+                        <span id="!au.usr.Id}_available"><apex:inputCheckbox value="{!au.selected}"  onclick="highlight($(this));"/></span>
+                        <apex:facet name="header">
+                           <input type="checkbox" id="available_all" onclick="selectAll(this);"/>
+                        </apex:facet>
+                    </apex:column>
+                    <apex:column value="{!au.usr.Name}" headerValue="Name"/>
+                    <apex:column value="{!au.usr.Last_Assign_Date__c}" headerValue="Last Assignment Date"/>
+                  </apex:pageBlockTable>
+               </td>
+               <td class="buttonCell" width="10%" align="center"  style="vertical-align:middle">
+                 <div>
+                     <apex:outputPanel layout="block" styleClass="text"><b>Add</b></apex:outputPanel>
+                     <apex:outputPanel layout="block" styleClass="text">
+                       <apex:outputLink id="btnRight" onclick="addRemoveUsers();return false;">
+                         <apex:image value="/s.gif" alt="Add" styleClass="rightArrowIcon" title="Add" />
+                       </apex:outputLink>
+                     </apex:outputPanel>
+                     <apex:outputPanel layout="block" styleClass="text" style="padding-top:5px;">
+                       <apex:outputLink id="btnLeft" onclick="addRemoveUsers();return false;">
+                         <apex:image value="/s.gif" alt="Remove" styleClass="leftArrowIcon" title="Remove" />
+                       </apex:outputLink>
+                     </apex:outputPanel>
+                     <apex:outputPanel layout="block" styleClass="duelingText"><b>Remove</b></apex:outputPanel>
+                  </div>
+               </td>
+               <td class="selectCell">
+                  <apex:outputPanel >
+                     <apex:outputLabel value="Department" style="font-weight:bold;padding-right:5px;"/>
+                     <apex:selectList value="{!unavailableDepartment}" multiselect="false" size="1" id="unavailableDepartment"  onchange="filter();">
+                        <apex:selectOptions value="{!departments}"/>
+                     </apex:selectList>
+                     
+                  </apex:outputPanel>
+                  <apex:pageBlockTable value="{!selectedUsers}" var="au">
+                    <apex:column >
+                        <span id="{!au.usr.Id}_selected"><apex:inputCheckbox value="{!au.selected}" onclick="highlight($(this));"/></span>
+                        <apex:facet name="header">
+                           <input type="checkbox" id="selected_all" onclick="selectAll(this);"/>
+                        </apex:facet>
+                    </apex:column> 
+                    <apex:column value="{!au.usr.Name}" headerValue="Name"/>
+                    <apex:column value="{!au.usr.Last_Assign_Date__c}" headerValue="Last Assignment Date"/>
+                  </apex:pageBlockTable>
+               </td>
+            </tr>
+          </table>
+       </div>
+   </apex:pageBlock>
+</apex:form>
+
+</apex:page>

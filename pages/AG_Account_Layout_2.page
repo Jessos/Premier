@@ -1,0 +1,60 @@
+<apex:page standardController="Account" showHeader="true" docType="html-4.01-strict">
+<div id="tabstrip" style="display:none;"> <ul> 
+<li class="k-state-active">Applications</li>
+<li>Placements</li>
+<li>Archived Attachments</li>
+<li>Agreements</li>
+<li>DocuSign Status</li>
+</ul>
+<!-- Applications -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Application__c" FKName="ts2__Account__c" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jMhEAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Placements -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Placement__c" FKName="ts2__Client__c" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jMmEAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Archived Attachments -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="Task_Attachment__c" FKName="Company_del__c" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jMrEAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Agreements -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="echosign_dev1__SIGN_Agreement__c" FKName="echosign_dev1__Account__c" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jN1EAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- DocuSign Status -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="dsfs__DocuSign_Status__c" FKName="dsfs__Company__c" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jN6EAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+</div>
+<script>
+$(document).ready(function() {
+    $("#tabstrip").kendoTabStrip({
+      activate: function(e){
+        setTimeout(function(){          $(window).resize();        });
+      }
+    });
+    $("#tabstrip").css("display", "block");
+});
+ </script>
+</apex:page>

@@ -1,0 +1,87 @@
+<apex:page standardController="Account" showHeader="true" docType="html-4.01-strict">
+<div id="tabstrip" style="display:none;"> <ul> 
+<li class="k-state-active">Account Team</li>
+<li>Contact Roles</li>
+<li>Contacts</li>
+<li>Notes</li>
+<li>Attachments</li>
+<li>Tasks</li>
+<li>Events</li>
+<li>Job Orders</li>
+</ul>
+<!-- Account Team -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="AccountTeamMember" FKName="AccountId" FKValue="{!Account.Id}"  DelayLoad="false"  ViewID="a5H400000000jM8EAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Contact Roles -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="AccountContactRole" FKName="AccountId" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jMDEAY" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Contacts -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="Contact" FKName="AccountId" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jMIEAY" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Notes -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="Note" FKName="ParentId" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jMwEAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Attachments -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="Attachment" FKName="ParentId" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jMNEAY" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Tasks -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="Task" FKName="AccountId" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jMSEAY" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Events -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="Event" FKName="AccountId" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jMXEAY" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Job Orders -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Job__c" FKName="ts2__Account__c" FKValue="{!Account.Id}"  DelayLoad="true"  ViewID="a5H400000000jMcEAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+</div>
+<script>
+$(document).ready(function() {
+    $("#tabstrip").kendoTabStrip({
+      activate: function(e){
+        setTimeout(function(){          $(window).resize();        });
+      }
+    });
+    $("#tabstrip").css("display", "block");
+});
+ </script>
+</apex:page>

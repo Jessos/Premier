@@ -1,0 +1,267 @@
+<apex:page showHeader="false" sidebar="false" standardController="ts2__Application__c"  extensions="SelectResumeController" showQuickActionVfHeader="false">
+
+  <apex:slds />
+
+  <script>
+
+    var attachmentJsObjects = [];
+
+    window.onload = setTimeout(function(){onLoad();}, 100);
+
+    function onLoad() {
+
+      console.log('onLoad() function started');
+
+      var attachmentWrappers = JSON.parse('{!wrapperJsonObject}');
+
+      for(var i = 0; i < attachmentWrappers.length; i++) {
+
+        var aw = attachmentWrappers[i];
+
+        var isSelected;
+
+        if(aw.attach == true || aw.attach == "true") {isSelected = true;}
+
+        else {isSelected = false;}
+
+        attachmentJsObjects.push({jsId:aw.jsId, isSelected:isSelected});
+
+        console.log('aw: ' + aw);
+
+      }
+
+      showOrHideAttachButton();
+
+      console.log('onLoad() function finished');
+
+    }
+
+    function showOrHideAttachButton(jsId) {
+
+      console.log('showOrHideAttachButton(jsId) called, jsId: ' + jsId);
+
+      var showAttachButton = false;
+
+      for(var i = 0; i < attachmentJsObjects.length; i++) {
+
+        var a = attachmentJsObjects[i];
+
+        if(a.jsId == jsId) {
+
+          console.log('matching attachmentJsObject found, Id: ' + jsId + ' i: ' + i);
+
+          console.log('this jsObject initially has an isSelected value of: ' + a.isSelected);
+
+          if(a.isSelected == true) {
+
+            console.log('the true if statement code was run');
+
+            a.isSelected = false
+
+          }
+
+          else {
+
+            console.log('the false if statement code was run');
+
+            a.isSelected = true;
+
+            console.log('a.isSelected: ' + a.isSelected);
+
+            showAttachButton = true;
+
+          }
+
+          console.log('this jsObject should now be set to an isSelected value of: ' + a.isSelected);
+
+          break;
+
+        }
+
+      }
+
+      if(!showAttachButton) {
+
+        for(var i = 0; i < attachmentJsObjects.length; i++) {
+
+          var a = attachmentJsObjects[i];
+
+          if(a.isSelected) {showAttachButton = true; console.log('a different attachment seems to be selected here');}
+
+        }
+
+      }
+
+      if(showAttachButton) {
+
+        console.log('it appears one or more attachments are selected... showing attach button');
+
+        showAttachButt0n();
+
+      }
+
+      else {
+
+        console.log('it appears no attachments are selected... hiding attach button');
+
+        hideAttachButton();
+
+      }
+        
+      console.log('showOrHideAttachButton(jsId) finished');
+
+    }
+
+    function showAttachButt0n() {
+
+      document.getElementById("attachButtonId").style.visibility = "visible";
+
+    }
+
+    function hideAttachButton() {
+
+      document.getElementById("attachButtonId").style.visibility = "hidden";
+
+    }
+
+  </script>
+
+  <body>
+
+    <div class="slds-scope">
+
+      <apex:form id="form">  
+
+        <apex:variable value="foo" var="foo" rendered="{!NOT(ISNULL(errorMessage))}" id="errorMessageId">
+
+          <div class="demo-only" style="height: 4rem;">
+
+            <div class="slds-notify_container slds-is-relative">
+
+              <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+
+                <div class="slds-notify__content">
+
+                  <h2 class="slds-text-heading_small ">{!errorMessage}</h2>
+
+                </div>
+
+              </div>
+
+            </div>
+            
+          </div>          
+
+        </apex:variable>        
+
+        <div class="slds-page-header">
+
+          <div class="slds-media">
+
+            <div class="slds-media__body">
+
+              <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Rohde Corp - 80,000 Widgets">{!application.ts2__Candidate_Contact__r.Name} • Candidate   Attachments</h1>
+
+            </div>
+
+          </div>
+
+        </div>       
+
+        <table class="slds-table slds-table_bordered" style="table-layout:fixed;">
+
+          <thead>
+
+            <tr class="slds-text-title_caps">
+
+              <th scope="col" width="16%">
+
+                <div class="slds-truncate" title="isSelected">Attach?</div>
+
+              </th>
+
+              <th scope="col" width="50%">
+
+                <div class="slds-truncate" title="File">File</div>
+
+              </th>
+
+              <th scope="col">
+
+                <div class="slds-truncate" title="Created Date">Created Date</div>
+
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <apex:repeat value="{!attachmentWrappers}" var="aw">
+
+              <tr>
+
+                <td data-label="isSelected">
+
+                  <div class="demo-only slds-size_1-of-2">
+
+                    <div class="slds-form-element">
+
+                      <label class="slds-checkbox_toggle slds-grid">
+
+                        <span class="slds-form-element__label slds-m-bottom_none"></span>
+
+                        <apex:inputCheckbox value="{!aw.attach}" onclick="showOrHideAttachButton('{!aw.jsId}');"/>
+
+                        <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+
+                          <span class="slds-checkbox_faux"></span>
+
+                          <span class="slds-checkbox_on">Attach</span>
+
+                          <span class="slds-checkbox_off">Don't Attach</span>
+
+                        </span>
+
+                      </label>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+                <td data-label="File">
+
+                  <div class="slds-truncate" title="{!aw.fileName}">{!aw.fileName}</div>
+
+                </td>
+
+                <td data-label="Created Date">
+
+                  <div class="slds-truncate" title="{!aw.createdDateString}">{!aw.createdDateString}</div>
+
+                </td>
+
+              </tr>
+
+            </apex:repeat>
+
+          </tbody>
+
+        </table>  
+        
+        <div class="slds-align_absolute-center" id="attachButtonId" style="visibility:visible;">
+
+          <apex:commandButton styleClass="slds-button slds-button_brand" value="Attach" action="{!insertAttachments}" reRender="form" id="buttonId"/>
+
+        </div>
+          
+      </apex:form>
+
+      </div>
+
+  </body>
+
+</apex:page>

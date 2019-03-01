@@ -1,0 +1,9 @@
+<apex:page standardController="Task" extensions="bat_TaskAttachemntViewCtrl" sidebar="false" showHeader="false">
+<apex:pageBlock >
+<apex:pageblocktable value="{!TaskAtts}" var="att">
+<apex:column >
+<apex:outputlink value="{!att.File_Location__c}" target="_blank">{!att.File_name__c}</apex:outputlink>
+</apex:column> 
+</apex:pageblocktable>
+</apex:pageBlock>
+</apex:page>

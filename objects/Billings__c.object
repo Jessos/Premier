@@ -1,0 +1,1879 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object holds all billings.; tied to placements</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableLicensing>false</enableLicensing>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Adjustment_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Adjustment Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Credits__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Billing Credits</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Notes__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Owner_Active__c</fullName>
+        <externalId>false</externalId>
+        <formula>Billing_Owner__r.IsActive</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing Owner Active?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Owner_Dept__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing Owner Dept</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Owner_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Billing_Owner__r.Id</formula>
+        <label>Billing Owner ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Owner_Role__c</fullName>
+        <externalId>false</externalId>
+        <formula>Billing_Owner__r.UserRole.Name</formula>
+        <label>Billing Owner Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Owner_User_ID_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF($User.Id = Billing_Owner_ID__c, 1, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Billing Owner User ID Formula</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Billing_Owner__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Billing Owner</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Commissions</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Percentage__c</fullName>
+        <externalId>false</externalId>
+        <label>Billing %</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Billing_Status__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>This is equal to the Earning Status</inlineHelpText>
+        <label>Billing Status</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Paid</fullName>
+                    <default>true</default>
+                    <label>Not Paid</label>
+                </value>
+                <value>
+                    <fullName>Paid in Full</fullName>
+                    <default>false</default>
+                    <label>Paid in Full</label>
+                </value>
+                <value>
+                    <fullName>Fall Off Adjustment Needed</fullName>
+                    <default>false</default>
+                    <label>Fall Off Adjustment Needed</label>
+                </value>
+                <value>
+                    <fullName>TBA</fullName>
+                    <default>false</default>
+                    <label>TBA</label>
+                </value>
+                <value>
+                    <fullName>Fall Off Adjustment Completed</fullName>
+                    <default>false</default>
+                    <label>Fall Off Adjustment Completed</label>
+                </value>
+                <value>
+                    <fullName>Wash</fullName>
+                    <default>false</default>
+                    <label>Wash</label>
+                </value>
+                <value>
+                    <fullName>Waiting for Guarantee</fullName>
+                    <default>false</default>
+                    <label>Waiting for Guarantee</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>CT_Fall_Off__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>CT Fall Off</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CT_Individual_Earnings__c</fullName>
+        <externalId>false</externalId>
+        <label>CT Individual Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>CT_Team_Earnings__c</fullName>
+        <externalId>false</externalId>
+        <label>CT Team Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>CT_Team__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>CT Team</label>
+        <referenceTo>CT_Teams__c</referenceTo>
+        <relationshipLabel>Billings</relationshipLabel>
+        <relationshipName>Billings</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Calculate_100_Bills__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Calculate 100 Bills</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Calculate_Draw__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Calculate Draw %</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Calculate_Monthly_Commission__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Calculate Monthly Commission</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Calculate_Non_100_Bills__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Calculate Non 100 Bills</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Client__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.ts2__Client__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Client</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Commission_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Commission__c</fullName>
+        <externalId>false</externalId>
+        <label>Commission %</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Connected_Billing__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Connected Billing #</label>
+        <referenceTo>Billings__c</referenceTo>
+        <relationshipLabel>Billings</relationshipLabel>
+        <relationshipName>Commissions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Create_Fall_Off_Bill__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Create Fall-Off Bill</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Current_Month_Number__c</fullName>
+        <externalId>false</externalId>
+        <formula>VALUE(TEXT(MONTH(TODAY())-1)) + VALUE(TEXT(DAY(TODAY())/30))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current Month Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Department__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.Department__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Department</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Draw_Deduction__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <label>Draw Deduction</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Earnings_Amount_Paid__c</fullName>
+        <externalId>false</externalId>
+        <label>Earnings Amount Paid</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Earnings__c</fullName>
+        <externalId>false</externalId>
+        <label>Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Employee__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.ts2__Employee__r.Contact_Name__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Employee</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fall_Off_Adjusted_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>Fall- Off Adjusted Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Fall_Off_Billings__c</fullName>
+        <externalId>false</externalId>
+        <label>Fall Off Billings</label>
+        <precision>7</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Fall_Off_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.ts2__Fall_Off_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Fall Off Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Fall_Off_Earnings__c</fullName>
+        <externalId>false</externalId>
+        <label>Fall Off Earnings</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Fall_Off_Reason__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.Fall_Off_Reason__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Fall Off Reason</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fall_Off__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Fall Off</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Guarantee_Exp_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.Guarantee_Expiration_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Guarantee Exp. Date from Placement</inlineHelpText>
+        <label>Guarantee Exp. Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Guarantee_Expired__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Guarantee Expired</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Guarantee_Num_Days__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Placement__r.Guarantee_Days__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Guarantee # of days from Placement</inlineHelpText>
+        <label>Guarantee # Days</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Guarantee_Terms__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT( Placement__r.Guarantee_Terms__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Guarantee Terms</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Invoice_Due_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.Invoice_Due_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Invoice Due Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice_Paid_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.Invoice_Paid_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Invoice Paid Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Invoice__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.InvoiceNumber__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Invoice #</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Job__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.ts2__Job__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Job</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Location__c</fullName>
+        <externalId>false</externalId>
+        <label>Location</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>East Bay</fullName>
+                    <default>false</default>
+                    <label>East Bay</label>
+                </value>
+                <value>
+                    <fullName>San Francisco</fullName>
+                    <default>false</default>
+                    <label>San Francisco</label>
+                </value>
+                <value>
+                    <fullName>Silicon Valley</fullName>
+                    <default>false</default>
+                    <label>Silicon Valley</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>MY_CT_Individual_Earnings__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Billing_Owner__r.Id = $User.Id,  CT_Individual_Earnings__c  ,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MY CT Individual Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>MY_CT_Team_Earnings__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Billing_Owner__r.Id = $User.Id,  CT_Team_Earnings__c  ,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MY CT Team Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Manager_Annual_Goal__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL( Role__c , &quot;Job Manager&quot;), Placement__r.ts2__Filled_By__r.Individual_Goal__c , 
+
+IF(ISPICKVAL( Role__c , &quot;Candidate Manager&quot;), Placement__r.ts2__Filled_By_2__r.Individual_Goal__c , 
+
+IF(ISPICKVAL( Role__c , &quot;Job Referral 1&quot;),  Placement__r.ts2__Taken_By__r.Individual_Goal__c , 
+
+IF(ISPICKVAL( Role__c , &quot;Candidate Referral 1&quot;),  Placement__r.ts2__Taken_By_2__r.Individual_Goal__c , 
+
+0))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Manager Annual Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Manager_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL( Role__c , &quot;Job Manager&quot;), Placement__r.ts2__Filled_By__r.Id,
+IF(ISPICKVAL( Role__c , &quot;Candidate Manager&quot;),  Placement__r.ts2__Filled_By_2__r.Id, 
+IF(ISPICKVAL( Role__c , &quot;Job Referral 1&quot;),    Placement__r.ts2__Taken_By__r.Id ,
+IF(ISPICKVAL( Role__c , &quot;Candidate Referral 1&quot;),     Placement__r.ts2__Taken_By_2__r.Id  ,
+&quot;&quot;))))</formula>
+        <label>Manager ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manager_User_ID_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF($User.Id =  Manager_ID__c, 1, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Manager User ID Formula</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manager__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ISPICKVAL( Role__c , &quot;Job Manager&quot;),Placement__r.ts2__Filled_By__r.FirstName&amp;&quot; &quot;&amp; Placement__r.ts2__Filled_By__r.LastName,
+
+IF(ISPICKVAL( Role__c , &quot;Candidate Manager&quot;), Placement__r.ts2__Filled_By_2__r.FirstName &amp;&quot; &quot;&amp; Placement__r.ts2__Filled_By_2__r.LastName,
+
+IF(ISPICKVAL( Role__c , &quot;Job Referral 1&quot;), Placement__r.ts2__Taken_By__r.FirstName &amp;&quot; &quot;&amp; Placement__r.ts2__Taken_By__r.LastName,
+
+IF(ISPICKVAL( Role__c , &quot;Candidate Referral 1&quot;),  Placement__r.ts2__Taken_By_2__r.FirstName  &amp;&quot; &quot;&amp; Placement__r.ts2__Taken_By_2__r.LastName,
+
+&quot;&quot;))))</formula>
+        <label>Manager</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>My_Earnings_Amount_Paid__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Billing_Owner__r.Id = $User.Id, Earnings_Amount_Paid__c ,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>My Earnings Amount Paid</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>My_Earnings__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Billing_Owner__r.Id = $User.Id  ,Earnings__c, 0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>My Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>My_Net_Earnings_NEW__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Billing_Owner__r.Id = $User.Id &amp;&amp; RecordType.Name = &quot;Fall Off&quot;, Earnings__c, 
+IF( Billing_Owner__r.Id = $User.Id &amp;&amp; RecordType.Name = &quot;Minimum Wage Pay Back&quot;, Earnings__c, 
+IF( Billing_Owner__r.Id = $User.Id &amp;&amp; RecordType.Name = &quot;Minimum Wage Pay Out&quot;, Earnings__c, 
+IF( Billing_Owner__r.Id = $User.Id &amp;&amp; RecordType.Name = &quot;Adjustment&quot;, Earnings__c, 
+IF( Billing_Owner__r.Id = $User.Id &amp;&amp; RecordType.Name = &quot;Billing for this Placement&quot; &amp;&amp; (Earnings__c &gt; Draw_Deduction__c),( Earnings__c - Draw_Deduction__c ), 
+IF( Billing_Owner__r.Id = $User.Id &amp;&amp; RecordType.Name = &quot;Billing for this Placement&quot; &amp;&amp; (Earnings__c = -50),( Earnings__c), 
+
+0))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>My Net Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>My_Outstanding_Earnings_Due__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Billing_Owner__r.Id = $User.Id, Outstanding_Earnings_Due__c ,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>My Outstanding Earnings Due</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>My_Team_User_ID_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(  Billing_Owner_Dept__c  =  TEXT($User.Department__c) , 1, 0)</formula>
+        <label>My Team User ID Formula</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Net_Billing__c</fullName>
+        <externalId>false</externalId>
+        <formula>Billing_Credits__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Net Billing</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Net_Earnings_NEW__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( RecordType.Name = &quot;Fall Off&quot;, Earnings__c, 
+IF( RecordType.Name = &quot;Minimum Wage Pay Back&quot;, Earnings__c, 
+IF( RecordType.Name = &quot;Minimum Wage Pay Out&quot;, Earnings__c, 
+IF( RecordType.Name = &quot;Adjustment&quot;, Earnings__c, 
+IF( RecordType.Name = &quot;Billing for this Placement&quot; &amp;&amp; (Earnings__c  &gt;  Draw_Deduction__c),( Earnings__c - Draw_Deduction__c ),
+IF( RecordType.Name = &quot;Billing for this Placement&quot; &amp;&amp; (Earnings__c = -50),( Earnings__c), 
+IF( RecordType.Name = &quot;Billing for this Placement&quot; &amp;&amp; (Earnings__c &lt; 0) &amp;&amp; (TEXT( Role__c)= &quot;CT Monthly Bill&quot;) ,( Earnings__c), 
+
+0)))))))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Net Earnings</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Original_Commission_Notes__c</fullName>
+        <externalId>false</externalId>
+        <formula>Connected_Billing__r.Billing_Notes__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Original Billing Notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Outside_Referral_Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Outside Referral Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipName>Commissions</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Outstanding_Earnings_Due__c</fullName>
+        <externalId>false</externalId>
+        <formula>Earnings__c  -  Earnings_Amount_Paid__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Outstanding Earnings Due</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Paid_Date__c</fullName>
+        <description>Date earnings were paid or fall-offs were paid back.</description>
+        <externalId>false</externalId>
+        <label>Paid Date</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Placement_Comments__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Add placement comments here</inlineHelpText>
+        <label>Placement Comments</label>
+        <length>1000</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Placement_Date_Last_Month__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(MONTH(Placement__r.ts2__Closed_Date__c) = 12 &amp;&amp; MONTH(TODAY()) = 1 &amp;&amp; YEAR(TODAY()-1) = YEAR(Placement__r.ts2__Closed_Date__c), TRUE,
+
+IF(MONTH(TODAY())-1 = MONTH(Placement__r.ts2__Closed_Date__c) &amp;&amp; YEAR(TODAY()) = YEAR(Placement__r.ts2__Closed_Date__c), TRUE, FALSE))</formula>
+        <label>Placement Date Last Month</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Placement_Fall_Off_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Fall_Off__c == TRUE,   Fall_Off_Date__c   ,   
+IF(NOT(ISBLANK( Adjustment_Date__c)), Adjustment_Date__c, Placement__r.ts2__Closed_Date__c ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Placement/Fall Off/Adjustment Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Placement_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.Id</formula>
+        <label>Placement ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement_Notes__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.Placement_Notes__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Placement Notes</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement_Record_Type__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.RecordType.Name</formula>
+        <label>Placement Record Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Placement__c</fullName>
+        <externalId>false</externalId>
+        <label>Placement</label>
+        <referenceTo>ts2__Placement__c</referenceTo>
+        <relationshipName>Commissions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Premier_Team_Member_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>Premier_Team_Member__r.OwnerId</formula>
+        <label>Premier Team Member ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Premier_Team_Member__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Premier Team Member</label>
+        <referenceTo>Premier_Team_Member__c</referenceTo>
+        <relationshipLabel>Billings</relationshipLabel>
+        <relationshipName>Billings</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Referral_Deduction_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF((Billing_Owner_ID__c = Placement__r.ts2__Filled_By__r.Id) &amp;&amp; NOT(ISBLANK(Placement__r.ReferredBy2__c)) &amp;&amp; ISPICKVAL(Role__c,&quot;Job Manager&quot;) &amp;&amp;  RecordType.Name = &quot;Billing for this Placement&quot;, 50,
+IF((Billing_Owner_ID__c =  Placement__r.ts2__Filled_By_2__r.Id ) &amp;&amp; NOT(ISBLANK( Placement__r.Referred_By_Name__c )) &amp;&amp; ISPICKVAL(Role__c,&quot;Candidate Manager&quot;) &amp;&amp;  RecordType.Name = &quot;Billing for this Placement&quot;, 50,
+0
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Referral Deduction Formula</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Referral_Fee__c</fullName>
+        <externalId>false</externalId>
+        <label>Referral Fee</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Referred_By_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.ts2__Employee__r.Legacy_Referred_By__c</formula>
+        <label>Referred By Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Referred_by_Candidate__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.Referred_By_Name__c</formula>
+        <label>Referred by Candidate</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Referred_by_Job__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.ReferredBy2__c</formula>
+        <label>Referred by Job</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Related_App_Created__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.ts2__Related_Application__r.CreatedDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Related App Created</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Related_App__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.ts2__Related_Application__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Related App</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Job Manager</fullName>
+                    <default>false</default>
+                    <label>Job Manager</label>
+                </value>
+                <value>
+                    <fullName>Job Referral 1</fullName>
+                    <default>false</default>
+                    <label>Job Referral 1</label>
+                </value>
+                <value>
+                    <fullName>Job Referral 2</fullName>
+                    <default>false</default>
+                    <label>Job Referral 2</label>
+                </value>
+                <value>
+                    <fullName>Candidate Manager</fullName>
+                    <default>false</default>
+                    <label>Candidate Manager</label>
+                </value>
+                <value>
+                    <fullName>Candidate Referral 1</fullName>
+                    <default>false</default>
+                    <label>Candidate Referral 1</label>
+                </value>
+                <value>
+                    <fullName>Candidate Referral 2</fullName>
+                    <default>false</default>
+                    <label>Candidate Referral 2</label>
+                </value>
+                <value>
+                    <fullName>Outside Candidate Referral</fullName>
+                    <default>false</default>
+                    <label>Outside Candidate Referral</label>
+                </value>
+                <value>
+                    <fullName>Outside Client Referral</fullName>
+                    <default>false</default>
+                    <label>Outside Client Referral</label>
+                </value>
+                <value>
+                    <fullName>Job Mgr CT</fullName>
+                    <default>false</default>
+                    <label>Job Mgr CT</label>
+                </value>
+                <value>
+                    <fullName>Candidate Mgr CT</fullName>
+                    <default>false</default>
+                    <label>Candidate Mgr CT</label>
+                </value>
+                <value>
+                    <fullName>CT Monthly Bill</fullName>
+                    <default>false</default>
+                    <label>CT Monthly Bill</label>
+                </value>
+                <value>
+                    <fullName>Candidate Team</fullName>
+                    <default>false</default>
+                    <label>Candidate Team</label>
+                </value>
+                <value>
+                    <fullName>Job Team</fullName>
+                    <default>false</default>
+                    <label>Job Team</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Start_Date__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.ts2__Start_Date__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Start Date from Placement</inlineHelpText>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Total_Billing__c</fullName>
+        <externalId>false</externalId>
+        <formula>Placement__r.Total_Billing__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total Billing</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>User_ID_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( Billing_Owner__r.Id =  $User.Id,1,0)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>User ID Formula</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X18_Digit_ID__c</fullName>
+        <externalId>false</externalId>
+        <formula>CASESAFEID( Id )</formula>
+        <label>18 Digit ID</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Billing</label>
+    <nameField>
+        <displayFormat>Bill#{00000000}</displayFormat>
+        <label>Billing Number</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Billings</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Adjustment</fullName>
+        <active>true</active>
+        <description>When an Adjustment is taken</description>
+        <label>Adjustment</label>
+        <picklistValues>
+            <picklist>Billing_Status__c</picklist>
+            <values>
+                <fullName>Fall Off Adjustment Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fall Off Adjustment Needed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paid in Full</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TBA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Role__c</picklist>
+            <values>
+                <fullName>CT Monthly Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outside Candidate Referral</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Billing_Placement</fullName>
+        <active>true</active>
+        <description>Use if an account is being billed for this placement</description>
+        <label>Billing for this Placement</label>
+        <picklistValues>
+            <picklist>Billing_Status__c</picklist>
+            <values>
+                <fullName>Not Paid</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Paid in Full</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Waiting for Guarantee</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Wash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Role__c</picklist>
+            <values>
+                <fullName>CT Monthly Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outside Candidate Referral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outside Client Referral</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>CT_Commission</fullName>
+        <active>true</active>
+        <description>When CT Commission is Paid</description>
+        <label>CT Commission</label>
+        <picklistValues>
+            <picklist>Billing_Status__c</picklist>
+            <values>
+                <fullName>Fall Off Adjustment Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fall Off Adjustment Needed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paid in Full</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TBA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Role__c</picklist>
+            <values>
+                <fullName>CT Monthly Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outside Candidate Referral</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Fall_Off</fullName>
+        <active>true</active>
+        <description>Use if there is a Fall Off for this placement</description>
+        <label>Fall Off</label>
+        <picklistValues>
+            <picklist>Billing_Status__c</picklist>
+            <values>
+                <fullName>Fall Off Adjustment Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fall Off Adjustment Needed</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Wash</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Role__c</picklist>
+            <values>
+                <fullName>CT Monthly Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outside Candidate Referral</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outside Client Referral</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Fall_Off_Adjustment_Updated</fullName>
+        <active>false</active>
+        <description>Use if an adjustment is needed for a &quot;fall off&quot; from this placement</description>
+        <label>Fall Off Adjustment</label>
+        <picklistValues>
+            <picklist>Billing_Status__c</picklist>
+            <values>
+                <fullName>Fall Off Adjustment Needed</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Not Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paid in Full</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TBA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Role__c</picklist>
+            <values>
+                <fullName>Candidate Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outside Candidate Referral</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Minimum_Wage_Pay_Back</fullName>
+        <active>true</active>
+        <description>When a Minimum Wage is Paid Back</description>
+        <label>Minimum Wage Pay Back</label>
+        <picklistValues>
+            <picklist>Billing_Status__c</picklist>
+            <values>
+                <fullName>Fall Off Adjustment Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fall Off Adjustment Needed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Paid</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Paid in Full</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TBA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Role__c</picklist>
+            <values>
+                <fullName>CT Monthly Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outside Candidate Referral</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Minimum_Wage_Pay_Out</fullName>
+        <active>true</active>
+        <description>When a Minimum Wage is Paid Out</description>
+        <label>Minimum Wage Pay Out</label>
+        <picklistValues>
+            <picklist>Billing_Status__c</picklist>
+            <values>
+                <fullName>Fall Off Adjustment Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fall Off Adjustment Needed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not Paid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paid in Full</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TBA</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location__c</picklist>
+            <values>
+                <fullName>East Bay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>San Francisco</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silicon Valley</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Role__c</picklist>
+            <values>
+                <fullName>CT Monthly Bill</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Candidate Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Manager</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Mgr CT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Referral 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Job Team</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outside Candidate Referral</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Client__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Billing_Owner__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Role__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Billing_Credits__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Billing_Notes__c</customTabListAdditionalFields>
+        <listViewButtons>Mass_Delete</listViewButtons>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>If_Fall_Off_Record_Check_Fall_Off_Box</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND( Fall_Off__c  = FALSE,
+$RecordType.Name = &quot;Fall Off Adjustment 2014&quot;)</errorConditionFormula>
+        <errorDisplayField>Fall_Off__c</errorDisplayField>
+        <errorMessage>Check Fall Off field</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Mass_Delete</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Mass Delete</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>true</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/9.0/connection.js&quot;)}
+
+var records = {!GETRECORDIDS( $ObjectType.Billings__c )};
+
+if (records[0] == null) {
+alert(&quot;Please select at least one record.&quot;) }
+else {
+
+var errors = [];
+var result = sforce.connection.deleteIds(records);
+if (result &amp;&amp; result.length){
+var numFailed = 0;
+var numSucceeded = 0;
+for (var i = 0; i &lt; result.length; i++){
+var res = result[i];
+if (res &amp;&amp; res.success == &apos;true&apos;){
+numSucceeded++;
+} else {
+var es = res.getArray(&quot;errors&quot;);
+if (es.length &gt; 0) {
+errors.push(es[0].message);
+}
+numFailed++;
+}
+}
+if (numFailed &gt; 0){
+alert(&quot;Failed: &quot; + numFailed + &quot;\nSucceeded: &quot; + numSucceeded + &quot; \n Due to: &quot; + errors.join(&quot;\n&quot;));
+} else {
+alert(&quot;Number of records deleted: &quot; + numSucceeded);
+}
+}
+window.location.reload();
+}</url>
+    </webLinks>
+</CustomObject>

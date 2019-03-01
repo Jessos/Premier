@@ -1,0 +1,11 @@
+<apex:page controller="S3attachmentext"  action="{!openfile}" showHeader="false" sidebar="false" >
+<apex:pagemessages ></apex:pagemessages>
+    <script type="text/javascript">
+              window.onload = showattach; 
+                  function showattach(){              
+                    var shurl='{!urlforopen}';              
+                    var  openwin=window.open(shurl,"_self",replace=true,titlebar=0);
+                    openwin.focus();
+                     }
+    </script>
+</apex:page>

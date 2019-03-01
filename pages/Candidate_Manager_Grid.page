@@ -1,0 +1,51 @@
+<apex:page sidebar="false" showHeader="true" docType="html-4.01-strict">
+<div id="tabstrip" style="display:none;"> <ul> 
+<li class="k-state-active">Applications</li>
+<li>Submittals</li>
+<li>Interviews</li>
+<li>Placements</li>
+</ul>
+<!-- Applications -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Application__c" DelayLoad="false"  ViewID="a5H400000000nQxEAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Submittals -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Submittal__c" DelayLoad="true"  ViewID="a5H40000001YwqREAS" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Interviews -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Interview__c" DelayLoad="true"  ViewID="a5H400000000kG7EAI" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+<!-- Placements -->
+<div style="overflow:hidden;"> 
+<CRMC_PP:Grid ObjectName="ts2__Placement__c" DelayLoad="true"  ViewID="a5H40000001YyvGEAS" 
+ EnableNewButton="true"  EnableNewInline="true"  EnableEdit="true"  EnableActions="true"  EnableFieldChooser="true" 
+ EnableStickyViews="true"  EnableToolbar="true"  EnableViews="true"  EnableFormatting="true"  EnableReadingPane="true" />
+ <CRMC_PP:DrillUp /> 
+ </div>
+
+</div>
+<script>
+$(document).ready(function() {
+    $("#tabstrip").kendoTabStrip({
+      activate: function(e){
+        setTimeout(function(){          $(window).resize();        });
+      }
+    });
+    $("#tabstrip").css("display", "block");
+});
+ </script>
+</apex:page>

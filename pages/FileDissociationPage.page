@@ -1,0 +1,145 @@
+<apex:page showHeader="true" sidebar="true" controller="FileDissociationPageController">
+    
+<apex:slds />
+    
+ <body>
+
+    <div class="slds-scope">
+
+      <apex:form id="form">  
+
+        <apex:variable value="foo" var="foo" rendered="{!NOT(ISNULL(userMessage))}" id="errorMessageId">
+
+          <div class="demo-only" style="height: 4rem;">
+
+            <div class="slds-notify_container slds-is-relative">
+
+              <div class="{!IF(isSuccess,'slds-notify slds-notify_toast slds-theme_success','slds-notify slds-notify_toast slds-theme_error')}" role="alert">
+
+                <div class="slds-notify__content">
+
+                  <h2 class="slds-text-heading_small ">{!userMessage}</h2>
+
+                </div>
+
+              </div>
+
+            </div>
+            
+          </div>          
+
+        </apex:variable>        
+
+        <div class="slds-page-header">
+
+          <div class="slds-media">
+
+            <div class="slds-media__body">
+
+              <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Rohde Corp - 80,000 Widgets">{!objectLabelName} - {!recordName} - Remove Files without Deleting them</h1>
+
+              <a href="{!linkBackToRecord}" target="_blank">Link Back to {!objectLabelName}</a>
+
+            </div>
+
+          </div>
+
+        </div>             
+
+        <table class="slds-table slds-table_bordered" style="table-layout:fixed;">
+
+          <thead>
+
+            <tr class="slds-text-title_caps">
+
+              <th scope="col">
+
+                <div class="slds-truncate" title="isSelected">Remove?</div>
+
+              </th>
+
+              <th scope="col" width="50%">
+
+                <div class="slds-truncate" title="File">File</div>
+
+              </th>
+
+              <th scope="col">
+
+                <div class="slds-truncate" title="Created Date">Created Date</div>
+
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            <apex:repeat value="{!attachmentWrappers}" var="aw">
+
+              <tr>
+
+                <td data-label="isSelected">
+
+                  <div class="demo-only slds-size_1-of-2">
+
+                    <div class="slds-form-element">
+
+                      <label class="slds-checkbox_toggle slds-grid">
+
+                        <span class="slds-form-element__label slds-m-bottom_none"></span>
+
+                        <apex:inputCheckbox value="{!aw.remove}"/>
+
+                        <span id="toggle-desc" class="slds-checkbox_faux_container" aria-live="assertive">
+
+                          <span class="slds-checkbox_faux"></span>
+
+                          <span class="slds-checkbox_on">Remove</span>
+
+                          <span class="slds-checkbox_off">Don't Remove</span>
+
+                        </span>
+
+                      </label>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+                <td data-label="File">
+
+                  <div class="slds-truncate" title="{!aw.fileName}">{!aw.fileName}</div>
+
+                </td>
+
+                <td data-label="Created Date">
+
+                  <div class="slds-truncate" title="{!aw.createdDateString}">{!aw.createdDateString}</div>
+
+                </td>
+
+              </tr>
+
+            </apex:repeat>
+
+          </tbody>
+
+        </table>  
+        
+        <div class="slds-align_absolute-center" id="attachButtonId">
+
+          <apex:commandButton styleClass="slds-button slds-button_brand" value="Remove File(s)" action="{!deleteContentDocumentLinks}" reRender="form" id="buttonId"/>
+
+        </div>
+          
+      </apex:form>
+
+      </div>
+
+  </body>
+
+</apex:page>

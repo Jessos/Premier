@@ -1,0 +1,1143 @@
+<!--
+    
+    Page        : TempInvoice_US_v3
+    Purpose     : Temp Invoice US -custom  template
+
+    Change History 
+    ******************************************************************************************************************************************
+         SCRUM        ModifiedBy        Date            Requested By                            Description                              Tag
+    ******************************************************************************************************************************************
+         SC-14437      SMendu        09/03/2017       Andrew             Custom template
+
+
+-->
+
+
+<apex:page standardController="tc9_ti__Consolidated_Invoice__c" renderAs="pdf" extensions="Ctrl_TempInv_v3" recordSetVar="Consolidated_Invoice__c" showheader="false" sidebar="false"  applyhtmltag="false" language="{!Locale}">
+<title>
+        <apex:outputText value="Invoice" />
+    </title>
+  
+<style type="text/css">
+        
+        .header {
+            position: running(header);
+            width: 100%;
+            margin-top: -100px;
+            font-family: Sans-serif; 
+            font-size:10px;
+        }
+        .headerCenter {
+            position: running(headerCenter);
+            width: 50%;
+            text-align: right;
+            font-family: sans-serif;
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .headerRight {
+            position: running(headerRight);
+            width: 100%;
+            margin-top: 25px;
+            height: 250px;
+            font-family: sans-serif;
+            font-size:10px;
+        }
+        @page {
+            @top-left {
+                content: element(header);
+                font-family: Sans-serif;
+                font-size:10px;
+            }
+            @top-center {
+                content: element(headerCenter);
+                font-family: Sans-serif;
+                font-size:10px;
+            }
+            @top-right {
+                content: element(headerRight);
+                font-family: Sans-serif;
+            }
+            @bottom-left {
+                content: element(footer);
+                font-family: Sans-serif;
+            }
+            @bottom-center {
+                content: element(footerCenter);
+                font-family: Sans-serif;
+            }
+            @bottom-right {
+                content: element(footerRight);
+                font-family: Sans-serif;
+            }
+            size:210mm 297mm;
+            margin:15mm;
+            margin-right:10mm;
+            margin-top : 10mm
+            margin-bottom:2.80cm;
+            margin-left:10mm;
+            margin-right:10mm;
+            font-family:Sans-serif;
+            font-size:10px;
+        }
+        div.footer {
+            position: running(footer);
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        div.footerCenter {
+            position: running(footerCenter);
+            margin-bottom: 55px; !important
+            padding-bottom: 25px;
+            margin-left: 650px !important; 
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        div.footerRight {
+            position: running(footerRight);
+            text-align: right;
+            margin-bottom: 25px;
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .pagenumber:before {
+            content: counter(page);
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .pagecount:before {
+            content: counter(pages);
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .txInvoice {
+            font-weight: bold;
+            font-size: 22px;
+            font-family: Sans-serif;
+            margin-top: 0%; 
+        }
+        .backingSheet{
+            margin:0 auto;
+            width:200px;
+            font-weight: bold;
+            font-size: 22px;
+            font-family: Sans-serif;
+        }
+        .placement{
+            font-weight: bold;
+            font-size: 17px;
+            font-family: Sans-serif;
+            text-align: left;
+            margin-left:5%
+        }
+        .fieldLabel {
+            font-weight: bold;
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .companyName {
+            font-size: 10px;
+            font-family: Sans-serif;
+        }
+        .companyName1 {
+            font-weight: bold;
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .invoiceTable {
+            border-collapse: collapse; 
+            width: 100%
+            #border: solid 1px;
+            border-bottom: solid 1px #C4C4C4;
+            text-align: center;
+            font-family: Sans-serif;
+            font-size: 10px;
+            border :  solid 1px black
+        }
+        
+        .invoiceTable1 {
+            border-collapse: collapse;
+            width: 50%;
+            #border: solid 1px;
+            margin-left: 50%;
+            font-family: Sans-serif;
+            page-break-inside: avoid !important;
+             border :  solid 1px black;
+             font-size:10px;
+        }
+        .invoiceTable td,
+        .invoiceTable th,
+        .invoiceTable1 td,
+        .invoiceTable1 th {
+            border-top: solid 0.5px #F5F4F4;
+            border-collapse: collapse; 
+            padding-top: 8px;
+            padding-bottom: 8px;
+            vertical-align: top;
+            text-align: center;
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .backingSheetTable{
+            border-collapse: collapse; 
+            padding-top : 5px;
+            border-right: 0.2px solid black;
+            border-left: 0.2px solid black;
+            margin-left: 0.5%;
+        }
+        
+        tr.noBorder td {border: 0; }
+        
+        .backingSheetTable td,
+        .backingSheetTable th {
+            <!-- border-top: solid 0.5px #F5F4F4; -->
+            border-top: 0.5px solid black;
+            border-collapse: collapse; 
+            padding-top: 5px;
+            padding-bottom: 5px;
+            vertical-align: top;
+            text-align: center;
+            font-family: Sans-serif;
+            font-size:10px;
+            border: 0.2px solid black;
+            border-left: 0.2px solid black;
+            border-right: 0.2px solid black;
+        }
+        .backingSheetTable th,
+        .invoiceTable th,
+        .newInvoice td,
+        .totalLine td,
+        .totalLine1 td {
+            border-top: solid 1px #C4C4C4;
+            font-family: Sans-serif;
+            font-size:10px;
+    
+        }
+    
+        
+        .backingSheetTable th,
+        .invoiceTable th {
+            font-weight: bold;
+            font-size:10px;
+        }
+        
+        
+        .backingSheetTable1{
+            border-collapse: collapse; 
+            padding-top : 5px;
+            
+            margin-left: 0.5%;
+        }
+        
+        tr.noBorder td {border: 0; }
+        
+        .backingSheetTable1 td,
+        .backingSheetTable1 th {
+            <!-- border-top: solid 0.5px #F5F4F4; -->
+            <!-- border-top: 0.5px solid black; -->
+            border-collapse: collapse; 
+            padding-top: 5px;
+            padding-bottom: 5px;
+            vertical-align: top;
+            text-align: center;
+            font-family: Sans-serif;
+            font-size:10px;
+            
+            
+        }
+        .backingSheetTable1 th,
+        .invoiceTable th,
+        .newInvoice td,
+        .totalLine td,
+        .totalLine1 td {
+            border-top: solid 1px #C4C4C4;
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .backingSheetTable1 th,
+        .invoiceTable th {
+            font-weight: bold;
+            font-size:10px;
+        }
+        
+        
+        
+        .totalLine td,
+        .amountColumn td {
+            text-align: right;
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .totalValue {
+            font-size: 10px;
+            font-weight: bold;
+            font-family: Sans-serif;
+        }
+        .lefty {
+            text-align: left !important;
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .borderbottom td {
+            border-bottom: 1pt solid black;
+            font-family: Sans-serif;
+            font-size:10px;
+        }
+        .fixedImage{
+            width:150px;
+            height:100px;
+            margin-left: 0%;
+        }
+        .FromClass{
+            display:block;
+            height:250px;
+            width: 30%;
+            font-family: sans-serif;
+            font-size:10px;
+            float :left;
+        }
+        .marginclass{
+            margin-top:30% !important;
+        }
+        
+        .timesheetHeader{
+            padding-top:5px;
+            padding-bottom:5px;
+            font-family: sans-serif;
+            font-size:10px;
+        }
+        .timesheetHeader .tsHeaderInfo{
+            width:60%; margin-left : 20px;
+        }
+       
+    </style>
+
+<apex:variable var="oppindex" value="{!1}" />    
+<apex:repeat value="{!accountKeys}" var="keys">
+<apex:repeat value="{!mapOfAccounttoConInvoice[keys]}" var="conInvoice">
+<apex:variable value="{!mapOfConInvtoTotal[conInvoice.id]}" var="totalObj" />
+<div class="footerCenter">
+<apex:variable var="pagenumber" value="{!1}"/>
+Page {!pagenumber} of {!mapOfConInvtoTotal[conInvoice.id].pageCount}
+</div>
+ <div style="float :left;
+            width       : 70%;
+            font-family: Sans-serif;
+            font-size:10px;
+            margin-top:0%;
+            display:block;
+            height:250px;
+            ">
+            
+        <div class="fixedImage">
+            <apex:image url="/servlet/servlet.FileDownload?file={!MapofInvoiceToLogo[conInvoice.tc9_ti__Billing_Entity__c]}" width="150" height="100" style="margin-left:0.02%" rendered="{!mapOfAccountToisLogo[conInvoice.tc9_ti__Billing_Entity__c]}"/>
+            <!-- <apex:outputField value="{!billingEntity.Logo__c}" style="width:10%;height:10%" /> -->
+            <br/>
+        </div>
+        
+        <div style="width:40%;font-family: Sans-serif; margin-top:14%">
+            <apex:outputText value="To" style=" font-weight: bold; font-size:10px;" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Bill_To_Account__c].Name}" style="font-size: 10px;
+            font-family: Sans-serif;" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].Name}" style="font-size: 10px;
+            font-family: Sans-serif;" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingStreet}" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingCity}" />
+            <apex:outputText value=", {!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingState} " rendered="{!IF(mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingState!=null,'true','false')}"/>
+            <apex:outputText value=" {!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingPostalCode}"/>
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingCountry}" />
+        </div>
+    </div>
+     <div class="FromClass">   
+             <apex:outputText value="INVOICE" styleClass="txInvoice" style="margin-left:4%;text-align:right;"/>
+            <div style="margin-left:4%">
+            <br/>
+            <b><apex:outputText value="From" styleClass="companyName" /></b>
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].Name}" style="font-size: 10px;
+            font-family: Sans-serif; " />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingStreet}" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingCity}" />
+           
+            <apex:outputText value=", {!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingState} " rendered="{!IF(mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingState!=null,'true','false')}"/>
+            <apex:outputText value=" {!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingPostalCode}" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingCountry}" />
+            <br/>
+            <br/>
+
+            
+           
+            <b>Phone : </b>{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].Phone}<br/>
+            
+            <b>Fax : </b>{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].Fax}
+
+          </div> 
+        <br/>
+        <table style="text-align:right;font-family: Sans-serif;page-break-inside: avoid;width:97%;font-size:10px;margin-left: 7px;">
+                    <tr>
+                        <td class="lefty">
+                            <apex:outputText value="Invoice Number" styleClass="companyName1" style="text-align:left;font-weight:bold" />
+                        </td>
+            
+                        <td>
+                            <apex:outputText value="{!conInvoice.Name} " />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lefty">
+                            <apex:outputText value="Amount" styleClass="companyName1" style="text-align:left" />
+                        </td>
+            
+                        <td>
+                             $ <apex:outputText value="{!conInvoice.CurrencyISOCode} " />
+                               <apex:outputText value="{0,number,###,##0.00} ">
+                                   <apex:param value="{!mapOfConInvtoTotal[conInvoice.id].TotalRecord.tc9_ti__TotalBillIncTax__c}" />
+                               </apex:outputText>
+                          
+                        </td>
+                    </tr>
+            
+                    <tr class="totalLine1">
+                        <td class="lefty">
+                            <apex:outputText value="Invoice Date" styleClass="companyName1" style="text-align:left;font-size:10px;" />
+                        </td>
+            
+                        <td>
+                            <apex:outputField value="{!conInvoice.tc9_ti__Invoiced_Date__c}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lefty">
+                            <apex:outputText value="Due Date" styleClass="companyName1" style="text-align:left;font-size:10px;" />
+                        </td>
+            
+                        <td>
+                            <apex:outputText value="{!conInvoice.tc9_ti__DueDate__c} " />
+                        </td>
+                    </tr>
+                    <tr class="totalLine1">
+                        <td class="lefty">
+                            <apex:outputText value="Payment Terms" styleClass="companyName1" style="text-align:left;font-size:10px;" />
+                        </td>
+            
+                        <td> 
+                            <apex:outputText value="{!conInvoice.tc9_ti__PaymentTerm__c} " />
+                        </td>
+                    </tr>
+                 </table>
+
+    </div>
+   
+    
+        
+    
+<apex:repeat value="{!totalObj.listOfInvoiceWrappers}" var="pageInvObj">
+
+   
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+   
+    
+    <table class="invoiceTable" style="page-break-inside: avoid;">
+        <tr style="font-weight:bold !important">    
+            <th style="width:8%;font-weight:bold;font-family:Sans-serif;">PO No</th>
+            <th style="width:8%;font-weight:bold;font-family:Sans-serif;">Contractor</th>
+            <th style="width:8%;font-weight:bold;font-family:Sans-serif;">Description</th>
+            <th style="{!IF(totalObj.showProjectCode==true,'width:10%;font-weight:bold;font-family:Sans-serif;','display:none')}" >InvoiceCode</th>
+            <th style="width:8%;font-weight:bold;font-family:Sans-serif;">W/E Date</th>
+            <th style="width:8%;font-weight:bold;font-family:Sans-serif;">Item</th>
+            <th style="width:8%;font-weight:bold;font-family:Sans-serif;align:center">&nbsp;Quantity</th>
+            <th style="width:8%;font-weight:bold;word-wrap:break-word;font-family:Sans-serif;text-align:right">Rate</th>
+            <th style="width:11%;font-weight:bold;word-wrap:break-word;font-family:Sans-serif;text-align:right">&nbsp;Pre-Discount Rate</th>
+            <th style="width:8%;font-weight:bold;word-wrap:break-word;font-family:Sans-serif;text-align:right ">&nbsp;Amount ($USD)</th>
+            <th style="width:11%;font-weight:bold;word-wrap:break-word;font-family:Sans-serif;text-align:right">&nbsp;Pre-Discount Amount($USD)</th>
+          
+        </tr>
+        <apex:repeat value="{!pageInvObj.invRecords}" var="inv" >
+            <apex:repeat value="{!inv.FirstInvoiceItem}" var="lin">
+            <tr  style="background-color:#D3D3D3;display:{!IF(inv.showInvoiceDetails, '', 'none')};height:50px;width:100px">
+                <td style="vertical-align:middle;"> 
+                    <apex:outputText value="{!inv.PONumber}" rendered="{!inv.showInvoiceDetails}"/>
+                </td>
+                <td style="vertical-align:middle;word-wrap: break-word;width:10%;">
+                    <apex:outputText value="{!LEFT(inv.candidateName,40)}" rendered="{!inv.showInvoiceDetails}"/>
+                </td>
+                <td style="vertical-align:middle;word-wrap: break-word;width:20%;">
+                    <apex:outputText value="{!LEFT(inv.jobName,60)}" rendered="{!AND(inv.showInvoiceDetails, NOT(OR(lin.invItem.tc9_ti__Paycode__c == 'EXP',lin.invItem.tc9_ti__Paycode__c == 'ALW' )))}" />
+                    <apex:outputText value="{!LEFT(lin.invItem.Description__c,60)}" rendered="{!AND(inv.showInvoiceDetails, OR(lin.invItem.tc9_ti__Paycode__c == 'EXP', lin.invItem.tc9_ti__Paycode__c == 'ALW'))}" />
+                </td>
+                <td style="{!IF(totalObj.showProjectCode==true,'','display:none')}">
+                    <apex:outputText value="{!lin.projectCode}" rendered="{!totalObj.showProjectCode}"/>
+                </td>
+                <td>
+                </td>                
+                <td>
+                </td>
+                <td>
+                </td>
+                <td style="text-align:right;">
+                </td>
+                
+                <td style="text-align:right;min-width:50px;">
+                </td>
+                 <td>
+                </td>
+                 <td>
+                </td>
+            </tr>
+            <tr>
+                <td> 
+                </td>
+                <td>
+                </td>                
+                <td>
+                <apex:outputText value="{!LEFT(lin.invItem.tc9_ti__Description__c,60)}"/>
+                </td>
+                <td style="{!IF(totalObj.showProjectCode==true,'','display:none')}">
+                </td>
+                <td>
+                     <apex:outputField value="{!lin.invItem.tc9_ti__Week_End_Date__c}" />
+                </td>                
+                <td>
+                     <apex:outputText value="{!lin.invItem.tc9_ti__Paycode__c}" /> 
+                </td>
+                <td>
+                     <apex:outputText value="{!lin.invItem.tc9_ti__Quantity__c}" /> 
+                </td>
+                <td style="text-align:right;">
+                     <apex:outputText value="{0,number,###,##0.00} " style="text-align:right;margin-right:-3px;">
+                        <apex:param value="{!lin.invItem.tc9_ti__BillRate__c}" /></apex:outputText> 
+                </td> 
+                <td style="text-align:right;">
+                     <apex:outputText value="{0,number,###,##0.00} " style="text-align:right;margin-right:-3px;">
+                        <apex:param value="{!lin.invItemPreDescRate}" /></apex:outputText> 
+                </td>
+
+                <td style="text-align:right;">
+                    <apex:outputText value="{0,number,###,##0.00} " style="text-align:right;margin-right:-4px;min-width:50px;">
+                       <apex:param value="{!lin.invItem.tc9_ti__TotalBillIncTax__c}" /></apex:outputText> 
+
+                </td> 
+                <td style="text-align:right;">
+                     <apex:outputText value="{0,number,###,##0.00} " style="text-align:right;margin-right:-3px;">
+                        <apex:param value="{!lin.invItem.tc9_ti__Quantity__c * lin.invItemPreDescRate}" /></apex:outputText> 
+                </td>
+            </tr>
+            </apex:repeat>
+            <apex:variable value="{!inv.FirstInvoiceItem.invItem.tc9_ti__Week_End_Date__c}" var="lastPaycode" />
+            <apex:variable value="{!inv.FirstInvoiceItem.projectCode}" var="lastProjectCode" />
+            <apex:repeat value="{!inv.FollowingInvoiceItems}" var="line">
+                <tr>
+                    <td>                         
+                    </td>
+                    <td>
+                    </td>
+                    <td>    
+                    <!-- <apex:outputText value="{!line.invItem.Description__c}" rendered="{!OR(line.invItem.Paycode__c == 'EXP' ,line.invItem.Paycode__c == 'ALW')}"/> -->
+                    <apex:outputText value="{!LEFT(line.invItem.tc9_ti__Description__c,60)}"/>
+                    </td>
+                    <td style="{!IF(totalObj.showProjectCode==true,'','display:none')}">
+                        <apex:outputText value="{!line.projectCode}" rendered="{!AND(totalObj.showProjectCode,NOT(line.projectCode == lastProjectCode))}" />
+                        <apex:variable value="{!line.projectCode}" var="lastProjectCode" />
+                    </td>
+                    <td>
+                        <apex:outputField value="{!line.invItem.tc9_ti__Week_End_Date__c}" rendered="{!NOT(line.invItem.tc9_ti__Week_End_Date__c == lastPaycode)}" />
+                        <apex:variable value="{!line.invItem.tc9_ti__Week_End_Date__c}" var="lastPaycode" />
+                    </td>                    
+                    <td>
+                        <apex:outputText value="{!line.invItem.tc9_ti__Paycode__c}" />
+                    </td>
+                    <td>
+                        <apex:outputText value="{!line.invItem.tc9_ti__Quantity__c}" />
+                    </td>
+                    <td style="text-align:right;">
+                        <apex:outputText value="{0,number,###,##0.00} ">
+                            <apex:param value="{!line.invItem.tc9_ti__BillRate__c}" /></apex:outputText>
+                    </td>
+                    <td style="text-align:right;">
+                     <apex:outputText value="{0,number,###,##0.00} " style="text-align:right;margin-right:-3px;">
+                        <apex:param value="{!line.invItemPreDescRate}" /></apex:outputText> 
+                </td>
+
+                <td style="text-align:right;">
+                    <apex:outputText value="{0,number,###,##0.00} " style="text-align:right;margin-right:-4px;min-width:50px;">
+                       <apex:param value="{!line.invItem.tc9_ti__TotalBillIncTax__c}" /></apex:outputText> 
+
+                </td> 
+           
+                <td style="text-align:right;">
+                     <apex:outputText value="{0,number,###,##0.00} " style="text-align:right;margin-right:-3px;">
+                        <apex:param value="{!line.invItem.tc9_ti__Quantity__c * line.invItemPreDescRate}" /></apex:outputText> 
+                </td>
+                    <!--
+                    <td style="text-align:right;margin-right:-4px;">
+                        <apex:outputText value="{0,number,###,##0.00} ">
+                            <apex:param value="{!line.invItem.tc9_ti__TotalBillIncTax__c}" /></apex:outputText>
+                    </td>-->
+                </tr>
+            </apex:repeat> 
+        </apex:repeat>
+    </table>
+    
+    <!--  Break page only when required, otherwise accommodate the invoice footer in the same page -->
+    <apex:outputPanel rendered="{!pageInvObj.breakPage}" >
+        
+        <div style="page-break-after: always;" ></div> 
+        <div class="footerCenter">
+         <apex:variable var="pagenumber" value="{!pagenumber+1}"/> 
+        Page {!pagenumber} of {!mapOfConInvtoTotal[conInvoice.id].pageCount}
+        </div>
+        <div style="float :left;
+            width       : 70%;
+            font-family: Sans-serif;
+            font-size:10px;
+            margin-top:0%;
+            display : block;
+            height:250px;
+            ">
+            
+         <div class="fixedImage">
+            <apex:image url="/servlet/servlet.FileDownload?file={!MapofInvoiceToLogo[conInvoice.tc9_ti__Billing_Entity__c]}" width="150" height="100" style="margin-left:0.02%" rendered="{!mapOfAccountToisLogo[conInvoice.tc9_ti__Billing_Entity__c]}"/>
+            <!-- <apex:outputField value="{!billingEntity.Logo__c}" style="width:10%;height:10%" /> -->
+            <br/>
+        </div>
+        
+        <div style="width:40%;font-family:Sans-serif;margin-top:14%">
+            <apex:outputText value="To" style=" font-weight: bold; font-size:10px;" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Bill_To_Account__c].Name}" style="font-size: 10px;
+            font-family: Sans-serif;" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].Name}" style="font-size: 10px;
+            font-family: Sans-serif;" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingStreet}" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingCity}" />
+            <apex:outputText value=", {!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingState} " rendered="{!IF(mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingState!=null,'true','false')}"/>
+             <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingPostalCode}" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingCountry}" />
+        </div>
+        
+    </div>
+    
+    <div class="FromClass">
+             <apex:outputText value="Inv" styleClass="txInvoice" style="margin-left:4%;text-align:right;"/>
+        <div style="margin-left:4%">
+            <br/>
+            <apex:outputText value="From" styleClass="companyName" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].Name}" style="font-size: 10px;
+            font-family: Sans-serif; " />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingStreet}" />
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingCity}" />
+            <apex:outputText value=", {!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingState} " rendered="{!IF(mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingState!=null,'true','false')}"/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingPostalCode}"/>
+            <br/>
+            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingCountry}" />
+            <br/>
+            <br/>
+
+           
+           
+            <b>Phone : </b>{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].Phone}<br/>
+            
+            <b>Fax : </b>{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].Fax}
+
+        </div>
+
+        <br/>    
+        <table style="text-align:right;font-family: Sans-serif;page-break-inside: avoid;width:97%;font-size:10px;margin-left: 7px;margin-top:1%">
+                    <tr>
+                        <td class="lefty">
+                            <apex:outputText value="Invoice Number" styleClass="companyName1" style="text-align:left;font-weight:bold" />
+                        </td>
+            
+                        <td>
+                            <apex:outputText value="{!conInvoice.Name} " />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lefty">
+                            <apex:outputText value="Total" styleClass="companyName1" style="text-align:left" />
+                        </td>
+            
+                        <td>
+                             $ <apex:outputText value="{!conInvoice.CurrencyISOCode} " />
+                               <apex:outputText value="{0,number,###,##0.00} ">
+                                   <apex:param value="{!mapOfConInvtoTotal[conInvoice.id].TotalRecord.tc9_ti__TotalBillIncTax__c}" />
+                               </apex:outputText>
+                          
+                        </td>
+                    </tr>
+            
+                    <tr class="totalLine1">
+                        <td class="lefty">
+                            <apex:outputText value="Invoice Date" styleClass="companyName1" style="text-align:left;font-size:10px;" />
+                        </td>
+            
+                        <td>
+                            <apex:outputField value="{!conInvoice.tc9_ti__Invoiced_Date__c}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lefty">
+                            <apex:outputText value="Due Date" styleClass="companyName1" style="text-align:left;font-size:10px;" />
+                        </td>
+            
+                        <td>
+                            <apex:outputText value="{!conInvoice.tc9_ti__DueDate__c} " />
+                        </td>
+                    </tr>
+                    <tr class="totalLine1">
+                        <td class="lefty">
+                            <apex:outputText value="Payment Terms" styleClass="companyName1" style="text-align:left;font-size:10px;" />
+                        </td>
+            
+                        <td> 
+                            <apex:outputText value="{!conInvoice.tc9_ti__PaymentTerm__c} " />
+                        </td>
+                    </tr>
+                 </table>
+    </div>
+ 
+    
+    </apex:outputPanel>
+   </apex:repeat>
+    <br/>
+    <div>
+    
+    <apex:outputPanel >
+        <table  class="invoiceTable1 {!IF(totalObj.isMargin,'marginclass','')}" width="100%">
+             <tr class="totalLine">
+                <td  style="text-align:left;font-size:10px;font-weight:bold;">
+                    Pre-Discount Total</td>
+                     <td width="50px"></td>
+                 <td class="totalValue" style="text-align:right;font-size:10px;">
+                   
+                   <apex:outputText value="{0,number,###,##0.00} ">
+                       <apex:param value="{!mapOfConInvtoTotal[conInvoice.id].totalPreDescAmt}" />
+                   </apex:outputText>
+                </td>
+                
+            <tr class="totalLine">
+                <td  style="text-align:left;font-size:10px;font-weight:bold;">
+                    Total Due to Premier</td>
+
+                <td class="totalValue" style="text-align:left;font-size:10px;">
+                   
+                   <apex:outputText value="{0,number,###,##0.00} ">
+                       <apex:param value="{!mapOfConInvtoTotal[conInvoice.id].TotalRecord.tc9_ti__TotalBillIncTax__c}" />
+                   </apex:outputText>
+                </td>
+                <td width="50px"></td>
+            </tr>
+
+            </tr>
+        </table>
+       </apex:outputPanel>
+    </div>
+    <table width="100%" style="page-break-inside: avoid;">
+        <tr>
+            <td width="70%">
+                <div style="width:70%;font-family: Sans-serif;page-break-inside: avoid;font-size:10px;">
+                    <br/><b>Please remit to :</b>
+                    <br/>
+                    <b>Bank Account Name:&nbsp;</b><apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].tc9_ti__Bank_Account_Name__c}" />
+                    <br/>
+                    
+                    <b>Branch:&nbsp;</b><apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].tc9_ti__BSB__c}" />
+                    <br/>
+                    <b>Acc No:&nbsp;</b> <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].tc9_ti__Bank_Account_Number2__c}" />
+                    <br/>
+                    <br/>
+                    <br/>
+                    <b>Send remittance advice to:</b>
+                    <br/>
+                    <b>Email:&nbsp;</b><apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].tc9_ti__Billing_Email__c}"/>
+                    <br/>
+
+
+                    <br/>
+                    <b>Address</b>
+                    <br/>
+                    <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].Name}" styleClass="companyName" />
+                    <br/>
+                    <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingStreet}" />
+                    <br/>
+                    <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingCity}" />
+                    
+                    <apex:outputText value=", {!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingState} " rendered="{!IF(mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingState!=null,'true','false')}" />
+                    
+                    <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingPostalCode}" />
+                    <br/>
+                    <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingCountry}" /><br/><br/>
+                    <apex:outputfield value="{!conInvoice.tc9_ti__Invoice_Message__c}"/>
+                    
+                </div>
+            </td>
+           
+            </tr>
+        </table>
+        
+        <apex:outputPanel rendered="{!isNewBackingsheetVersion}">
+        <apex:outputPanel rendered="{!OR(AND(showBackingSheets, !mapOfConInvoicetoAccount[conInvoice.tc9_ti__Bill_To_Account__c].tc9_ti__Backing_Sheet_Exception__c,isExpense),
+                                         AND(!showBackingSheets, mapOfConInvoicetoAccount[conInvoice.tc9_ti__Bill_To_Account__c].tc9_ti__Backing_Sheet_Exception__c,isExpense))}" >
+            <div style="page-break-after: always;" ></div> 
+            <!-- <div class="placement" >{$Label.Invoice_Placement}</div> -->
+            <apex:variable value="{!1}" var="backingSheetPage" />
+            <apex:repeat value="{!totalObj.bsPaginated}" var="pageObj" >
+                <div class="footerCenter">
+                    <apex:variable var="pagenumber" value="{!pagenumber+1}"/> 
+                    Page {!pagenumber} of {!mapOfConInvtoTotal[conInvoice.id].pageCount}
+                </div>
+                <div style="float :left;
+                            width       : 70%;
+                            font-family: Sans-serif;
+                            font-size:10px;
+                            margin-top:0%;
+                            display:block;
+                            height:250px;
+                            
+                            ">
+                        
+                    <div class="fixedImage">
+                        <apex:image url="/servlet/servlet.FileDownload?file={!MapofInvoiceToLogo[conInvoice.tc9_ti__Billing_Entity__c]}" width="150" height="100" style="margin-left:0.02%" rendered="{!mapOfAccountToisLogo[conInvoice.tc9_ti__Billing_Entity__c]}"/>
+                        <!-- <apex:outputField value="{!billingEntity.Logo__c}" style="width:10%;height:10%" /> -->
+                        <br/>
+                    </div>
+                    
+                    <div style="width:40%;font-family: Sans-serif; margin-top:14%">
+                        <apex:outputText value="To" style=" font-weight: bold; font-size:10px;" />
+                        <br/>
+                        <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Bill_To_Account__c].Name}" style="font-size: 10px;
+                        font-family: Sans-serif;" />
+                        <br/>
+                        <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].Name}" style="font-size: 10px;
+                        font-family: Sans-serif;" />
+                        <br/>
+                        <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingStreet}" />
+                        <br/>
+                        <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingCity}" />
+                        <apex:outputText value=", {!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingState} " rendered="{!IF(mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingState!=null,'true','false')}"/>
+                        <apex:outputText value=" {!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingPostalCode}"/>
+                        <br/>
+                        <apex:outputText value="{!mapOfConInvoicetoContact[conInvoice.tc9_ti__Bill_To_Contact__c].MailingCountry}" />
+                    </div>
+                </div>
+                <div class="FromClass">
+                        <div style="margin-left:4%">
+                                                <div class="backingSheet" >Backing Sheet</div>
+                        
+                            <br/>
+                            <b><apex:outputText value="From" styleClass="companyName" /></b>
+                            <br/>
+                            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].Name}" style="font-size: 10px;
+                            font-family: Sans-serif; " />
+                            <br/>
+                            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingStreet}" />
+                            <br/>
+                            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingCity}" />
+                            <apex:outputText value=", {!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingState} " rendered="{!IF(mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingState!=null,'true','false')}"/>
+                            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingPostalCode}"/>
+                            <br/>
+                            <apex:outputText value="{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].BillingCountry}" />
+                            <br/>
+                            <br/>
+
+
+                            
+                            <b>Phone : </b>{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].Phone}<br/>
+                            
+                            <b>Fax : </b>{!mapOfConInvoicetoAccount[conInvoice.tc9_ti__Billing_Entity__c].Fax}
+                
+                        </div>
+
+                <br/>    
+                <table style="text-align:right;font-family: Sans-serif;page-break-inside: avoid;width:97%;font-size:10px;margin-left: 7px;margin-top:1%">
+                            <tr>
+                                <td class="lefty">
+                                    <apex:outputText value="PO No" styleClass="companyName1" style="text-align:left;font-weight:bold" />
+                                </td>
+                    
+                                <td>
+                                    <apex:outputText value="{!conInvoice.Name} " />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lefty">
+                                    <apex:outputText value="Total" styleClass="companyName1" style="text-align:left" />
+                                </td>
+                    
+                                <td>
+                                     $ <apex:outputText value="{!conInvoice.CurrencyISOCode} " />
+                                       <apex:outputText value="{0,number,###,##0.00} ">
+                                           <apex:param value="{!mapOfConInvtoTotal[conInvoice.id].TotalRecord.tc9_ti__TotalBillIncTax__c}" />
+                                       </apex:outputText>
+                                  
+                                </td>
+                            </tr>
+                    
+                            <tr class="totalLine1">
+                                <td class="lefty">
+                                    <apex:outputText value="Invoice Date" styleClass="companyName1" style="text-align:left;font-size:10px;" />
+                                </td>
+                    
+                                <td>
+                                    <apex:outputField value="{!conInvoice.tc9_ti__Invoiced_Date__c}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lefty">
+                                    <apex:outputText value="Due Date" styleClass="companyName1" style="text-align:left;font-size:10px;" />
+                                </td>
+                    
+                                <td>
+                                    <apex:outputText value="{!conInvoice.tc9_ti__DueDate__c} " />
+                                </td>
+                            </tr>
+                            <tr class="totalLine1">
+                                <td class="lefty">
+                                    <apex:outputText value="Payment Terms" styleClass="companyName1" style="text-align:left;font-size:10px;" />
+                                </td>
+                    
+                                <td> 
+                                    <apex:outputText value="{!conInvoice.tc9_ti__PaymentTerm__c} " />
+                                </td>
+                            </tr>
+                         </table>
+                </div>
+                
+                <apex:repeat value="{!pageObj.backingSheetWList}" var="timesheetW" >
+                    <div class="timesheetHeader" style="display:{!IF(timesheetW.showHeader,'block','none')};margin-top:35%">
+                        <span >
+                            <span class="fieldLabel" style="font-size:14px;font-weight:bold;font-family: Sans-serif;"> Placement </span>
+                            <br/>
+                            <br/>
+                        </span>
+                        
+                        <span >
+                            <span class="fieldLabel"> Candidate : </span>  <apex:outputField value="{!timesheetW.ts.Candidate__r.Name}" style="font-size:10px;font-weight:bold;font-family: Sans-serif;"/>
+                            <br/>
+                             
+                        </span>
+                         <span>
+                            <span class="fieldLabel"> Client: </span> <apex:outputField value="{!timesheetW.ts.tc9_ti__Placement__r.ts2__Client__r.Name}" style="font-size:10px;font-weight:bold;font-family: Sans-serif;"/>
+                            <br/>
+                        </span>
+                        
+                        <span>
+                            <span class="fieldLabel"> Job : </span> <apex:outputField value="{!timesheetW.ts.tc9_ti__Placement__r.ts2__Hiring_Manager__r.Name}" style="font-size:10px;font-weight:bold;font-family: Sans-serif;" rendered="{!IF(timesheetW.ts.tc9_ti__Placement__r.ts2__Hiring_Manager__r.Name!=NULL, true, false)}" />
+                            <br/>
+                            <br/>
+                            <br/>
+                        </span>
+                        
+                        
+                        <div style="font-size:14px;font-weight:bold;font-family: Sans-serif;"> Timesheet </div>
+                        <br/>
+                        <span style="font-size:10px;font-weight:bold;font-family: Sans-serif;">
+                            <span class="fieldLabel"> Invoice Week: </span>
+                            <apex:outputField value="{!timesheetW.ts.tc9_ti__Start_Date__c}" /> -
+                            <apex:outputField value="{!timesheetW.ts.tc9_ti__End_Date__c}" /> <br/>
+                        </span>
+                    </div>
+                    <table class="invoiceTable, backingSheetTable" style="width:100%;table-layout: absolute;page-break-inside: avoid;margin-top:2%">
+                        <tr style="display:{!IF(timesheetW.showHeader,'','none')}; background-color:#D3D3D3">
+                            <th style="width:10%;" > abel.Invoice_Work_Date </th>
+                            <th style="width:5%; word-wrap: break-word;"> Work Day </th>
+                            <th style="width:7%; display:{!IF(timesheetW.isHours==false,'','none')};word-wrap: break-word;"> Start Time </th>
+                            <th style="width:7%; display:{!IF(timesheetW.isHours==false,'','none')};word-wrap: break-word;"> End Time </th>
+                            <th style="width:5%; display:{!IF(timesheetW.isHours==false,'','none')};word-wrap: break-word;"> Break </th>
+                            <th style="width:5%; display:{!IF (AND(showSection['Break2']==true,timesheetW.isHours==false),'','none')}; word-wrap: break-word;"> {$Label.Invoice_Break_2} </th>
+                            <th style="display:{!IF(timesheetW.isHours==true,'','none')}"><apex:outputText value="{$Label.Invoice_Hours}"/></th> 
+                            <th style="display:{!IF(timesheetW.isHours==true,'','none')}"><apex:outputText value="{$Label.Invoice_Minutes}"/></th> 
+                            <th style="width:7%;" > Leave </th>
+                            <th style="width:5%"> Total </th>
+                            <th style="width:50%;text-align:left;padding-left:8px;"> Comments </th>
+                        </tr>
+                        <apex:repeat value="{!timesheetW.tsEntryWList}" var="tseWrap">
+                            <tr>
+                                <td> <apex:outputField value="{!tseWrap.tse.tc9_ti__WorkDate__c}"  /> </td>
+                                <td> <apex:outputField value="{!tseWrap.tse.tc9_ti__WorkDay__c}"  /> </td>
+                                <td style="display:{!IF(timesheetW.isHours==false,'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__StartTime__c}"  rendered="{!NOT(timesheetW.isHours)}"/> </td>
+                                <td style="display:{!IF(timesheetW.isHours==false,'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__EndTime__c}"  rendered="{!NOT(timesheetW.isHours)}"/> </td>
+                                <td style="display:{!IF(timesheetW.isHours==false,'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__BreakTime__c}" rendered="{!NOT(timesheetW.isHours)}"/> </td>
+                                <td style="display:{!IF (AND(showSection['Break2']==true,timesheetW.isHours==false),'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__BreakTime2__c}"  rendered="{!AND(NOT(timesheetW.isHours),(displayBreak2))}"/> </td>
+                                <td style="display:{!IF(timesheetW.isHours==true,'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__Total_Time_hours__c}"  rendered="{!timesheetW.isHours}"/> </td>
+                                <td style="display:{!IF(timesheetW.isHours==true,'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__Total_Time_mins__c}"  rendered="{!timesheetW.isHours}"/> </td>
+                                <td> 
+                                    <apex:outputField value="{!tseWrap.tse.tc9_ti__Type_Of_Leave__c}"  rendered="{!!ISBLANK(tseWrap.tse.tc9_ti__Type_Of_Leave__c)}" />
+                                    <apex:outputText value="-"  rendered="{!ISBLANK(tseWrap.tse.tc9_ti__Type_Of_Leave__c)}" />  
+                                </td>
+                                
+                                <td> <apex:outputField value="{!tseWrap.tse.tc9_ti__HoursAcutal__c}"  /> </td>
+                                <td style="width:50%;word-wrap:break-word;text-align:left;padding-left:8px;"> <apex:outputField value="{!tseWrap.tse.tc9_ti__Notes_Talent__c}"  /> </td>
+                            </tr>
+                        </apex:repeat>
+                        <tr style="display:{!IF(timesheetW.showHistory,'','none')};" class="noBorder">
+                            <td style="width:10%"> </td>
+                            <td style="width:5%"> </td>
+                            <td style="width:5%;display:{!IF(timesheetW.isHours==false,'','none')}"></td>
+                            <td style="width:5%;display:{!IF(timesheetW.isHours==false,'','none')}"> </td>
+                            <td style="display:{!IF(displayBreak2,'','none')};width:5%;"> </td>
+                            <td style="width:7%;"> </td>
+                            <td style="width:5%;" class="fieldLabel"> Total</td>
+                            <td style="width:5%;" class="fieldLabel"> <apex:outputField value="{!timesheetW.ts.tc9_ti__WeeklyActualHours__c}" /> </td>
+                            <td style="width:50%;"> </td>
+                        </tr>
+                    </table>
+                    <div class="timesheetHeader" style="display:{!IF(timesheetW.showHistory,'','none')}">
+                        <span class="fieldLabel"> Client Comment : </span> <apex:outputField value="{!timesheetW.ts.tc9_ti__Notes_Customer__c}" />
+                    </div>
+                    <br/>
+                   <div style="font-size:14px;font-weight:bold;font-family: Sans-serif;"> Timesheet History</div><br/>
+                   <table class="invoiceTable, backingSheetTable" style="width:40%;page-break-inside: avoid;" >
+                            <tr style="background-color:#D3D3D3">
+                                <th style="width:10%;text-align:left;padding-left:8px;"><b>Status</b></th>
+                                <th style="width:10%;text-align:left;padding-left:8px;"><b>User</b></th>
+                                <th style="width:10%;text-align:left;padding-left:8px;">Date/Time</th>
+                            </tr>
+                        <apex:repeat value="{!timesheetW.tsHistoryList}" var="tsHistory" rendered="{!timesheetW.showHistory}">
+                            
+                            <tr>
+                               <!-- <td style="width:5%;display:{!IF(timesheetW.isHours==false,'','none')}"></td>
+                                <td style="width:5%;display:{!IF(timesheetW.isHours==false,'','none')}"> </td>
+                                <td style="display:{!IF(displayBreak2,'','none')};width:5%;margin-left:3px;"> </td>
+                                <td style="width:7%;"> </td>
+                                <td style="display:{!IF(timesheetW.isHours==true,'','none')}"/>
+                                <td style="width:5%" class="fieldLabel" >  <apex:outputField value="{!tsHistory.NewValue}" />  </td> -->
+                                <td  style="width:10%;text-align:left;padding-left:8px;"> <apex:outputField value="{!tsHistory.NewValue}" /></td>
+                                <td style="width:10%;text-align:left;padding-left:8px;" ><apex:outputField value="{!tsHistory.Parent.tc9_ti__Approver_Name__c}" rendered="{!IF(tsHistory.NewValue =='Approved' || tsHistory.NewValue =='Rejected', true, false)}" style="float:left" /> </td>
+                                <td  style="width:15%;text-align:left;padding-left:8px;"> <apex:outputField value="{!tsHistory.CreatedDate}" /></td>
+                             </tr>
+                        </apex:repeat>
+                        
+                        
+                    </table>
+                   
+                    <br/>
+                </apex:repeat>
+                
+                <div style="display:{!IF(backingSheetPage != totalObj.BSPagesCount, '', 'none')};page-break-after: always;" ></div>
+                <apex:variable value="{!backingSheetPage+1}" var="backingSheetPage" /> 
+            </apex:repeat>
+        </apex:outputPanel>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!NOT(isNewBackingsheetVersion)}">
+              <apex:outputPanel rendered="{!OR(AND(showBackingSheets, !mapOfConInvoicetoAccount[conInvoice.tc9_ti__Bill_To_Account__c].tc9_ti__Backing_Sheet_Exception__c,isExpense),
+                                         AND(!showBackingSheets, mapOfConInvoicetoAccount[conInvoice.tc9_ti__Bill_To_Account__c].tc9_ti__Backing_Sheet_Exception__c,isExpense))}" >
+            <div style="page-break-after: always;" ></div>
+            <div class="backingSheet" >Backing Sheet</div>
+            <apex:variable value="{!1}" var="backingSheetPage" />
+            <apex:repeat value="{!totalObj.bsPaginated}" var="pageObj" >
+                <div class="footerCenter">
+                    <apex:variable var="pagenumber" value="{!pagenumber+1}"/>
+                    <br/>Page {!pagenumber} of {!mapOfConInvtoTotal[conInvoice.id].pageCount}
+                </div>
+                <apex:repeat value="{!pageObj.backingSheetWList}" var="timesheetW" >
+                    <div class="timesheetHeader" style="display:{!IF(timesheetW.showHeader,'block','none')}">
+                        <span >
+                            <span class="fieldLabel"> Candidate : </span> <apex:outputField value="{!timesheetW.ts.tc9_ti__Candidate__r.Name}" />
+                        </span>
+                        <span class="tsHeaderInfo">
+                            <span class="fieldLabel">Client : </span> <apex:outputField value="{!timesheetW.ts.tc9_ti__Placement__r.ts2__Client__r.Name}" />
+                        </span>
+                        <span class="tsHeaderInfo">
+                            <span class="fieldLabel"> Invoice Week : </span>
+                            <apex:outputField value="{!timesheetW.ts.tc9_ti__Start_Date__c}" /> -
+                            <apex:outputField value="{!timesheetW.ts.tc9_ti__End_Date__c}" /> <br/>
+                        </span>
+                    </div>
+                    <table class="invoiceTable, backingSheetTable1" style="width:100%;table-layout: absolute;">
+                        <tr style="display:{!IF(timesheetW.showHeader,'','none')}">
+                            <th style="width:10%;" > Work Date </th>
+                            <th style="width:5%; word-wrap: break-word;"> Work Day </th>
+                            <th style="width:7%; display:{!IF(timesheetW.isHours==false,'','none')};word-wrap: break-word;"> StartTime </th>
+                            <th style="width:7%; display:{!IF(timesheetW.isHours==false,'','none')};word-wrap: break-word;"> Invoice End Time</th>
+                            <th style="width:5%; display:{!IF(timesheetW.isHours==false,'','none')};word-wrap: break-word;"> Break </th>
+                            <th style="width:5%; display:{!IF (AND(showSection['Break2']==true,timesheetW.isHours==false),'','none')}; word-wrap: break-word;"> {$Label.Invoice_Break_2} </th>
+                            <th style="display:{!IF(timesheetW.isHours==true,'','none')}"><apex:outputText value="Hours"/></th>
+                            <th style="display:{!IF(timesheetW.isHours==true,'','none')}"><apex:outputText value="Minutes"/></th>
+                            <th style="width:7%;" > Label.Invoice_Leave}</th>
+                            <th style="width:5%"> {$Label.Invoice_Bs_Total} </th>
+                            <th style="width:50%;text-align:left;padding-left:8px;"> Candidate Comment </th>
+                        </tr>
+                        <apex:repeat value="{!timesheetW.tsEntryWList}" var="tseWrap">
+                            <tr>
+                                <td> <apex:outputField value="{!tseWrap.tse.WorkDate__c}"  /> </td>
+                                <td> <apex:outputField value="{!tseWrap.tse.WorkDay__c}"  /> </td>
+                                <td style="display:{!IF(timesheetW.isHours==false,'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__StartTime__c}"  rendered="{!NOT(timesheetW.isHours)}"/> </td>
+                                <td style="display:{!IF(timesheetW.isHours==false,'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__EndTime__c}"  rendered="{!NOT(timesheetW.isHours)}"/> </td>
+                                <td style="display:{!IF(timesheetW.isHours==false,'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__BreakTime__c}" rendered="{!NOT(timesheetW.isHours)}"/> </td>
+                                <td style="display:{!IF (AND(showSection['Break2']==true,timesheetW.isHours==false),'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__BreakTime2__c}"  rendered="{!AND(NOT(timesheetW.isHours),(displayBreak2))}"/> </td>
+                                <td style="display:{!IF(timesheetW.isHours==true,'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__Total_Time_hours__c}"  rendered="{!timesheetW.isHours}"/> </td>
+                                <td style="display:{!IF(timesheetW.isHours==true,'','none')}"> <apex:outputField value="{!tseWrap.tse.tc9_ti__Total_Time_mins__c}"  rendered="{!timesheetW.isHours}"/> </td>
+                                <td>
+                                    <apex:outputField value="{!tseWrap.tse.tc9_ti__Type_Of_Leave__c}"  rendered="{!!ISBLANK(tseWrap.tse.tc9_ti__Type_Of_Leave__c)}" />
+                                    <apex:outputText value="-"  rendered="{!ISBLANK(tseWrap.tse.tc9_ti__Type_Of_Leave__c)}" />
+                                </td>
+
+                                <td> <apex:outputField value="{!tseWrap.tse.tc9_ti__HoursAcutal__c}"  /> </td>
+                                <td style="width:50%;word-wrap:break-word;text-align:left;padding-left:8px;"> <apex:outputField value="{!tseWrap.tse.tc9_ti__Notes_Talent__c}"  /> </td>
+                            </tr>
+                        </apex:repeat>
+                        <tr style="display:{!IF(timesheetW.showHistory,'','none')}">
+                            <td style="width:10%"> </td>
+                            <td style="width:5%;"> </td>
+                            <td style="width:5%;display:{!IF(timesheetW.isHours==false,'','none')}"></td>
+                            <td style="width:5%;display:{!IF(timesheetW.isHours==false,'','none')}"> </td>
+                            <td style="display:{!IF(displayBreak2,'','none')};width:5%;"> </td>
+                            <td style="width:7%;"> </td>
+                            <td style="width:5%;" class="fieldLabel"> Total</td>
+                            <td style="width:5%;" class="fieldLabel"> <apex:outputField value="{!timesheetW.ts.tc9_ti__WeeklyActualHours__c}" /> </td>
+                            <td style="width:50%;"> </td>
+                        </tr>
+                    </table>
+                    <table class="invoiceTable, backingSheetTable1" style="page-break-inside: avoid;">
+                        <apex:repeat value="{!timesheetW.tsHistoryList}" var="tsHistory" rendered="{!timesheetW.showHistory}">
+                            <tr>
+
+
+                               <td style="width:5%;display:{!IF(timesheetW.isHours==false,'','none')}"></td>
+                                <td style="width:5%;display:{!IF(timesheetW.isHours==false,'','none')}"> </td>
+                                <td style="display:{!IF(displayBreak2,'','none')};width:5%;margin-left:3px;"> </td>
+                                <td style="width:7%;"> </td>
+                                <td style="display:{!IF(timesheetW.isHours==true,'','none')}"/>
+                                <td style="width:5%" class="fieldLabel" >  <apex:outputField value="{!tsHistory.NewValue}" />  </td>
+                                <td style="width:10%;text-align:left;padding-left:8px;" ><apex:outputField value="{!tsHistory.Parent.tc9_ti__Approver_Name__c}" rendered="{!IF(tsHistory.NewValue =='Approved' || tsHistory.NewValue =='Rejected', true, false)}" style="float:left" /> </td>
+                                <td  style="width:10%;text-align:left;padding-left:8px;"> <apex:outputField value="{!tsHistory.CreatedDate}" /></td>
+                             </tr>
+                        </apex:repeat>
+                    </table>
+                    <div class="timesheetHeader" style="display:{!IF(timesheetW.showHistory,'','none')}">
+                        <span class="fieldLabel"> {$Label.Invoice_Client_Comment} : </span> <apex:outputField value="{!timesheetW.ts.tc9_ti__Notes_Customer__c}" />
+                    </div>
+                    <br/>
+                </apex:repeat>
+                <div style="display:{!IF(backingSheetPage != totalObj.BSPagesCount, '', 'none')};page-break-after: always;" ></div>
+                <apex:variable value="{!backingSheetPage+1}" var="backingSheetPage" />
+            </apex:repeat>
+        </apex:outputPanel>
+        </apex:outputPanel> 
+        <!--  to avoid a blank page in the end -->
+        <apex:variable var="oppindex" value="{!oppindex+1}"/>
+        <apex:outputPanel rendered="{!IF((oppindex-1)!= conInvoiceSize,true, false)}" >
+            <div style="page-break-after: always;" ></div> 
+        </apex:outputPanel>
+        
+        </apex:repeat>
+    </apex:repeat>
+</apex:page>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>lightningBaseUrl__c</fullName>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Lightning Org Base Url</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>preferredFolderDeveloperName__c</fullName>
+        <description>this is the unique name of the folder that should be defaulted as the selected folder when using the Submittals Email Page that appears as a result of clicking &quot;Submit to Client&quot; on a job order</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>this is the unique name of the folder that should be defaulted as the selected folder when using the Submittals Email Page that appears as a result of clicking &quot;Submit to Client&quot; on a job order</inlineHelpText>
+        <label>Preferred Template Folder Developer Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Custom Page Settings</label>
+    <pluralLabel>Custom Page Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

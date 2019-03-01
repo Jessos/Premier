@@ -1,0 +1,193 @@
+<apex:page Id="pageId" title="Sick Leave Entry"  docType="html-5.0" showHeader="false" sidebar="false" cache="false" controller="Ctrl_ApplySickLeave">
+    <noscript Id = "noscript-warning">This page is best viewed with JavaScript Enabled</noscript>
+    <style type="text/css">
+        #noscript-warning {
+            background-color: #0073FF;
+            color: #FFFFFF;
+            font-family: sans-serif;
+            font-size: 120%;
+            font-weight: bold;
+            left: 0;
+            padding: 5px 0;
+            position: fixed;
+            text-align: center;
+            top: 0;
+            width: 100%;
+            z-index: 101;
+        }
+
+    .JSenableMsg    { margin:0 auto;width:50%;text-align:center;color:red;font-size:large;font-weight:bold;}
+    .adTSLinkButton { text-decoration : none;}
+    .adTSDetails    { margin-top:1em;}
+    .timeEntryError { border: 3px solid red;}
+    .alerty			{ border: 2px solid #FF0000; display: inline-block; margin-left: 20%; margin-top: -5%; padding: 5px; width: 400px !important;}
+    .padded 		{ display: inline-block; margin-top: 1.5em;}
+    .paddedBtn 		{ padding: 2px 4px;}
+    .pbBody 		{ margin-top: 5% !important;}
+    .mainTitle		{ margin-left: 2em !important; }
+    
+</style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+    <script>
+        function isValidInput(field) {
+            var re = /^[0-9:]*$/;
+            if (!re.test(field.value)  ) {
+                field.value = "";
+            }
+            else if(field.value.length > 2){
+                field.value=field.value.substring(0,3);
+            }
+        }
+    
+        function isValidTime(h, m, t, s)
+        {
+        	//console.log('@@@ isValidTime');
+            var isEmpty = false;
+            var hr = document.getElementById(h).value;
+            var min = document.getElementById(m).value;
+            
+            if (hr==null || hr.length == 0){
+                $('#'+t +' input').each(function(){
+                        $(this).val('');
+                  });
+                isEmpty = true;
+            }
+            if (min==null || min.length == 0){
+                $('#'+t +' input').each(function(){
+                        $(this).val('');
+                 });
+                isEmpty = true;
+            }
+
+            //24 hour
+            var re = /^([01][0-9]|2[0-3]):[0-5][0-9]$/;
+            if (isEmpty == false){
+                if (!re.test(hr+':'+min) ){
+                    alert("Please input valid Time!");
+                    //document.getElementById(el).className = 'timeEntryError'
+                    document.getElementById(m).value = "";
+                    document.getElementById(t).value = "";
+                    document.getElementById(h).value = "";
+                    document.getElementById(h).focus();
+                }
+                else{
+                	//console.log('@@@ set');	
+                    $('#'+t +' input').each(function(){
+                        $(this).val(hr + ':' + min);
+                    });
+                    
+                    if(s == 'true'){
+                    	//console.log('@@@ validating');	
+                    	Validate();
+                    }
+                }
+            }
+        }
+        
+    </script>
+
+<apex:composition template="{!$Site.Template}">
+    <apex:define name="body">  
+    <noscript>
+        <div  class="JSenableMsg">
+            Your browser is blocking JavaScript. Please enable this in your browser settings.
+        </div>
+    </noscript> 
+    <div style="display:none" id="containerDiv">
+    <apex:form id="formId">
+		<apex:actionFunction name="Validate" action="{!Validate}" rerender="pBlock" status="spinIcon"/>	
+        <apex:pagemessages id="pgMsg"> </apex:pagemessages>
+        
+        <apex:pageBlock title="Sick Leave" mode="edit" id="pBlock">
+			<apex:pageBlockButtons location="bottom">
+				
+		    	<apex:actionStatus id="loading">        
+                    <apex:facet name="stop"><apex:commandButton value="Save" action="{!save}" rerender="pgMsg,formId" status="loading" styleClass="paddedBtn"/></apex:facet>
+                    <apex:facet name="start"><apex:commandButton value="Saving.." action="{!save}" rerender="pgMsg,formId" status="loading" disabled="true"/></apex:facet>
+                </apex:actionStatus>
+	            <apex:commandButton action="{!Cancel}" value="Cancel" immediate="true" styleClass="paddedBtn"/>
+	        </apex:pageBlockButtons>
+			<apex:pageBlockSection columns="1">
+			
+				<apex:pageBlockSectionItem >
+	            	<apex:outputLabel value="Week Start Date "/>
+            		<apex:outputField value="{!oTimesheet.tc9_ti__Start_Date__c}" />
+	            </apex:pageBlockSectionItem>
+	            
+	            <apex:pageBlockSectionItem >
+	            	<apex:outputLabel value="Week End Date "/>
+            		<apex:outputField value="{!oTimesheet.tc9_ti__End_Date__c}" />
+	            </apex:pageBlockSectionItem>
+			
+				<apex:pageBlockSectionItem >
+	            	<apex:outputLabel value="Date "/>
+            		<apex:inputField value="{!oTimesheetEntry.tc9_ti__WorkDate__c}" />
+	            </apex:pageBlockSectionItem>
+	            
+	            <apex:pageBlockSectionItem >
+					<apex:outputLabel value="Start Time "  styleClass="padded"/>
+		            <apex:outputPanel styleClass="padded">     
+		                <input value="{!Left(oTimesheetEntry.tc9_ti__StartTime__c, 2)}" id="_shr"  onkeyup="isValidInput(this);"  onblur="isValidTime('_shr', '_smin', '_s', 'false');"  size="1" maxlength="2" />:
+		                <input value="{!Right(oTimesheetEntry.tc9_ti__StartTime__c, 2)}" id="_smin"  onkeyup="isValidInput(this);" onblur="isValidTime('_shr', '_smin', '_s', 'false');" size="1" maxlength="2" />
+		                <div id="_s" >
+		                    <apex:inputHidden value="{!oTimesheetEntry.tc9_ti__StartTime__c}" id="sTime" /> 
+		                </div>
+		            </apex:outputPanel>
+	            </apex:pageBlockSectionItem>
+	            
+	            <apex:pageBlockSectionItem >
+					<apex:outputLabel value="End Time " styleClass="padded"/>
+		            <apex:outputPanel styleClass="padded">     
+		                <input value="{!Left(oTimesheetEntry.tc9_ti__EndTime__c, 2)}" id="_ehr"  onkeyup="isValidInput(this);"  onblur="isValidTime('_ehr', '_emin', '_e', 'false');"  size="1" maxlength="2" />:
+		                <input value="{!Right(oTimesheetEntry.tc9_ti__EndTime__c, 2)}" id="_emin"  onkeyup="isValidInput(this);" onblur="isValidTime('_ehr', '_emin', '_e', 'true');" size="1" maxlength="2" />
+		                <div id="_e" >
+		                    <apex:inputHidden value="{!oTimesheetEntry.tc9_ti__EndTime__c}" id="eTime" >
+		                    	
+		                    </apex:inputHidden> 
+		                </div>
+		            </apex:outputPanel>
+	            </apex:pageBlockSectionItem>
+	            
+	            <apex:pageBlockSectionItem >
+	            	<apex:outputLabel value="Hours " styleClass="padded"/>
+	            	<apex:outputPanel styleClass="padded">
+	            		<apex:actionStatus id="spinIcon">
+				            <apex:facet name="start">
+				                <img src="/img/loading.gif" />
+				            </apex:facet>
+				        </apex:actionStatus>
+	            		<apex:outputPanel >
+	            			<apex:outputText value="{!nHoursApplied}"/>
+			           		<apex:outputPanel styleClass="alerty" rendered="{!isHoursEntered}" >
+			           			You have only {!nHoursRemainingForTheDay} hours of sick leave available, please re-enter a time less than your sick leave owed.
+			           		</apex:outputPanel>
+			           	</apex:outputPanel>
+	            	</apex:outputPanel>	
+	            </apex:pageBlockSectionItem>
+	        </apex:pageBlockSection>
+		</apex:pageBlock>		                        
+
+    
+    </apex:form>
+    </div>
+    </apex:define>  
+ </apex:composition> 
+    <script type="text/javascript">
+        //Initialize onload
+        var oldonload = window.onload;
+        // initialize autocomplete fields and disable browser auto suggest on form fields
+        var newonload = function(){
+             document.getElementById('containerDiv').style.display = 'block';
+        };
+        if (typeof window.onload != 'function') {
+          window.onload = newonload;
+        } 
+        else {
+          window.onload = function() {
+            oldonload();
+            newonload();
+          }
+        }
+    </script>
+</apex:page>

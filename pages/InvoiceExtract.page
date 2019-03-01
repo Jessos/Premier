@@ -1,0 +1,32 @@
+<apex:page controller="InvoiceGeneratorCtrl" tabStyle="tc9_ti__Transaction__c">
+
+<!--apex:form >
+<apex:pageBlock >
+<apex:messages />
+<apex:pageBlockSection title="Report">
+
+<apex:inputfield value="{!dummyTransaction.tc9_ti__SentToPayRollDate__c}" label="From Date" />
+<apex:inputfield value="{!dummyTransaction.tc9_ti__InvoiceDate__c}" label="To Date" />
+
+</apex:pageBlockSection>
+<apex:commandButton action="{!Submit}" value="Extract Invoice" id="theButton"/>
+</apex:pageBlock>
+</apex:form-->
+
+<apex:form >
+	<apex:pageblock >
+			<apex:pageMessages />
+		  <apex:pageblocksection title="Invoice Extraction" columns="1">
+				<apex:commandbutton value="Download" action="{!extractInformation}" />				
+			</apex:pageblocksection>
+			<apex:pageblocksection title="Transaction Details" columns="2">
+				<apex:inputfield value="{!dummyTransaction.StartDate__c}" label="From Date" />
+				<apex:inputfield value="{!dummyTransaction.EndDate__c}" label="To Date" />
+				
+			</apex:pageblocksection>
+			
+			
+		</apex:pageblock>
+	</apex:form>
+
+</apex:page>
