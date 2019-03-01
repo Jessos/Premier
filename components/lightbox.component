@@ -1,0 +1,40 @@
+<apex:component selfclosing="true">
+    <apex:attribute name="function" description="This is the name of the JS function to call." 
+        type="String" required="true"/>
+    <apex:attribute name="title" description="This is the title displayed in the lightbox." 
+        type="String" required="true"/>
+    <apex:attribute name="content" description="This is the HTML content of the lightbox." 
+        type="String" required="true"/>
+    <apex:attribute name="width" description="This is the width, in pixels, of the lightbox." 
+        type="Integer" required="true"/>
+    <apex:attribute name="height" description="This is the height, in pixels, of the iframe." 
+        type="Integer" required="true"/>
+    <apex:attribute name="duration" description="This is the duration, in ms, to show the box before it autohides (i.e. 2000ms = 2 sec), or 0 for an untimed box." 
+        type="Integer" required="true"/>
+    <apex:attribute name="height" description="This is the height, in pixels, of the iframe." 
+        type="Integer" required="true"/>
+
+    <script type="text/javascript">     
+
+
+    function {!function}() {
+       
+             var box = new window.SimpleDialog("hersh"+Math.random(), true);
+             window.box = box;
+                
+             box.setTitle("{!title}");
+        
+             box.createDialog();
+             box.setWidth({!width});
+             
+             box.setContentInnerHTML("<p style=\"text-align:right\"><a href=\"#\" onclick=\"box.hide();\">Cancel</a></p><iframe id=\"theIframe\" name=\"theIframe\" src=\"{!content}\" frameborder=0 width=\"100%\" height=\"{!height}\">my iframe</iframe>");
+             box.setupDefaultButtons();
+             
+             box.show();
+             
+             if( {!duration} > 0 )
+                setTimeout("box.hide();",{!duration});
+
+    }
+    </script>
+</apex:component>

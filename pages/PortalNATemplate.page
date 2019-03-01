@@ -1,0 +1,46 @@
+<!--
+ Created by Adelaide Greenaway on 10/01/18.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Site Template
+ * Created custom login page to avoid confusion with standard SF Site template
+ * this is the main template that holds the scripts and stylesheets for the Portal
+
+    NOTE:: THIS VERSION IS THE NO ACCESS VERSION!! USED FOR LOGIN, FORGOTTEN PASSWORD ETC!
+ *
+ -->
+
+<apex:page showHeader="false" id="PortalNATemplate" standardStylesheets="false">
+
+    <!-- Google Places API -->
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key={!$Setup.customTFPortalSettings__c.AddressAutocompleteGoogleKey__c}"></script>
+    <apex:includeScript value="{!$Resource.customPortalJS}" loadOnReady="true"/>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="http://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <apex:styleSheet value="{!URLFOR($Resource.trialforcePortalCSS,'')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.customPortalIcons_Fontello,'/fontello-0f58d68a/css/portal_icons.css')}"/>
+    </head>
+
+    <apex:insert name="header">
+        <c:PortalNAHeader />
+        <noscript Id = "noscript-warning">This page is best viewed with JavaScript Enabled</noscript>
+
+    </apex:insert>
+    <apex:insert name="body"/>
+
+    <apex:insert name="footer">
+
+        <c:PortalFooter />
+    </apex:insert>
+    </html>
+</apex:page>

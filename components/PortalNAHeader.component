@@ -1,0 +1,35 @@
+<!--
+ Created by Adelaide Greenaway on 10/01/18.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Header Component --- Portal_Base_Controller
+ * Created custom header page to avoid confusion with standard site header component
+ * this component displays the portal banner and banner menu items
+
+ NOTE:: USED BY THE PORTAL NA TEMPLATE!!!
+ *
+ -->
+<apex:component id="headerNAComponent" controller="Portal_Base_Controller">
+    <script>
+        var primaryColour = "{!$Setup.customTFPortalSettings__c.Primary_Colour__c}";
+        var secondaryColour = "{!$Setup.customTFPortalSettings__c.Secondary_Colour__c}";//'#FF2B5E';
+        var tertiaryColour = "{!$Setup.customTFPortalSettings__c.Tertiary_Colour__c}";
+
+        /*console.log('primaryColour:: '+primaryColour);
+        console.log('secondaryColour:: '+secondaryColour);
+        console.log('tertiaryColour:: '+tertiaryColour);*/
+
+       document.documentElement.style.setProperty('--logoBarColour', primaryColour);
+       document.documentElement.style.setProperty('--sideBarColour', secondaryColour);
+       document.documentElement.style.setProperty('--highlightColour', tertiaryColour);
+    </script>
+
+    <body>
+    <div  class="logoBar" >
+        <img src="{!URLFOR($Resource.PortalSiteLogo, '')}" alt="logo" class="logoBarLogo" />
+
+    </div>
+    </body>
+</apex:component>

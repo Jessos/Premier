@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>CUSTOM_Disable_Resubmit__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This checkbox when checked will prevent portal users from editing a timesheet that is in the status of &apos;Submitted&apos;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This checkbox when checked will prevent portal users from editing a timesheet that is in the status of &apos;Submitted&apos;</inlineHelpText>
+        <label>Disable Resubmit</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enable_Rate_Calculator__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>When generating Transactions, when True, the Rate Calculator will be used to determine Pay and Bill Rates for the Pay Code. When False, the multipliers defined in the Award Master will be used to determine the Pay and Bill Rates.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When generating Transactions, when True, the Rate Calculator will be used to determine Pay and Bill Rates for the Pay Code. When False, the multipliers defined in the Award Master will be used to determine the Pay and Bill Rates.</inlineHelpText>
+        <label>Enable Rate Calculator</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+</CustomObject>

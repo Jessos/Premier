@@ -1,0 +1,310 @@
+<!--
+ Created by Adelaide Greenaway on 19/12/17.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Expenses Home --- Portal_Expense_Controller
+ * NOTE: Refer to SiteTemplate and customPortalJS for any scripts that are used on this page
+ *
+ -->
+
+<apex:page id="PortalExpensesHome" title="2cloudnine Community Portal" docType="html-5.0" controller="Portal_Expense_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false">
+<head>
+    <title>Premier Timesheet Portal</title>
+</head>
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+            <body>
+            <div class="sideBar">
+                <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks sidebarHighlight"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalPlacementHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Placement History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks "><i class="icon-profilegrey"></i>My Profile</a>
+                    <a href="https://access.paylocity.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Paylocity Portal</a>
+                    <a href="http://support.pstaffing.com/" target="_blank" class="sideBarLinks"> <i class="icon-search"></i>Support Center</a>
+            </div>
+
+            <apex:form >
+                <div id="main" class="pageContent ">
+
+                    <h1>Expense Reports</h1>
+                    <p>New expense submittal process coming soon!</p>
+                    <p>Until then, please download and complete <u><a href="https://drive.google.com/file/d/14mdSXvU9-18VeidzFOmgO8fAOuKU4_7_/view?usp=sharing" target="_blank">this form</a></u>. Once complete, email it to your supervisor with <u><a href="mailto: payroll@premiertalentpartners.com">payroll@premiertalentpartners.com</a></u> cc'd and receipts attached for approval.</p>
+           <!--          <apex:pageMessages id="messages" />
+
+                    <apex:outputPanel id="addNew" rendered="{!okToCreateNew}">
+                        <div  >
+                            <apex:commandbutton value="Create New Expense Report" action="{!setupNewExpClaim}" styleClass="tsPgCreateExp" />
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{! !okToCreateNew}">
+                        <p class="vimpMessage">You are unable to create any Expense Claims, as you don't not have any past, current or future contracts to claim against.</p>
+                    </apex:outputPanel>
+
+                    <ul class="tab expHomeTable">
+                        <a href="javascript:void(0)" onclick="openStatusTab(event, 'New');">
+                            <div class="tablink">New</div>
+                        </a>
+                        <a href="javascript:void(0)" onclick="openStatusTab(event, 'Submitted');">
+                            <div class="tablink">Submitted</div>
+                        </a>
+                        <a href="javascript:void(0)" onclick="openStatusTab(event, 'Approved');">
+                            <div class="tablink">Approved</div>
+                        </a>
+                        <a href="javascript:void(0)" onclick="openStatusTab(event, 'Rejected');">
+                            <div class="tablink">Rejected</div>
+                        </a>
+                    </ul>
+                    <apex:outputPanel rendered="{! !haveExpClaims}">
+                        <h2>You do not have any expense claims to view. </h2>
+                        <p class="impMsg">Note: Expense Claims for periods dating back 2 years or next 30 days are viewable in the Portal.</p>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!haveExpClaims}">
+                        <div id="New" class="tsTab" style="{!IF(newPageTurn,'display:block','display:none')}">
+                            <table class="tableStyle" id="table_id">
+                                <thead class="tableHeader">
+                                <tr>
+                                    <th class="tsTableth">Id</th>
+                                    <th class="tsTableth">Client/Site</th>
+                                    <th class="tsTableth">Placement</th>
+                                    <th class="tsTableth">Report Date</th>
+                                    <th class="tsTableth">Report Amount</th>
+                                    <th class="tsStatusth">Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <apex:repeat value="{!newExpClaimsToShow}" var="ec">
+                                    <tr >
+                                       <td class="dtInfo">
+                                            <u>
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.Name}</div>
+                                            </a>
+                                            </u>
+                                        </td>
+                                        <td class="imptd">{!ec.tc9_ti__Placement__r.Account_Name__c}
+                                            <div class="mobileTSinfoJob">
+                                                    {!ec.Name}
+                                            </div>
+                                            <div class="mobileTSinfoJob">
+                                                    {!ec.tc9_ti__Placement__r.ts2__Job__r.Name}
+                                            </div>
+                                            <div class="mobileTSinfoDate">
+                                                <apex:outputText value="{0,date,MMM d}"><apex:param value="{!ec.tc9_ti__Claim_Date__c}"/></apex:outputText>
+                                            </div>
+                                        </td>
+                                        <td class="dtInfo">{!ec.tc9_ti__Placement__r.ts2__Job__r.Name}</td>
+                                        <td class="wider dtInfo "><apex:outputText value="{0,date,MMM d}"><apex:param value="{!ec.tc9_ti__Claim_Date__c}"/></apex:outputText></td>
+                                        <td class="dtInfo"><apex:outputText value="{0,number,currency}"><apex:param value="{!ec.Total_Inc_Tax__c}"/></apex:outputText></td>
+                                        <td class="status dtInfo">
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.tc9_ti__Status__c}</div>
+                                            </a>
+                                        </td>
+                                        <td class="mobileTSstatus status">
+                                            <div class="mobileHrs">
+                                                <apex:outputText value="{0,number,currency}"><apex:param value="{!ec.Total_Inc_Tax__c}"/></apex:outputText>
+                                            </div>
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.tc9_ti__Status__c}</div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                                </tbody>
+                            </table>
+                            <apex:commandButton value="<" action="{!previousNew}" disabled="{!disablePreviousNew}" styleClass="{!IF(disablePreviousNew != true,'nextArrowBox','disabledArrowBox')}" />
+                            <apex:commandButton value=">" action="{!nextNew}" disabled="{!disableNextNew}" styleClass="{!IF(disableNextNew != true,'nextArrowBox','disabledArrowBox')}" />
+                            <p class="pageTurn">{!newfirstEntry} -  {!newlastEntry} of {!newTotalEntry} Expense Reports</p>
+                        </div>
+
+                        <div id="Submitted" class="tsTab" style="{!IF(submittedPageTurn,'display:block','display:none')}">
+                            <table class="tableStyle" id="table_id">
+                                <thead class="tableHeader">
+                                <tr>
+                                    <th class="tsTableth">Id</th>
+                                    <th class="tsTableth">Client/Site</th>
+                                    <th class="tsTableth">Placement</th>
+                                    <th class="tsTableth">Claim Date</th>
+                                    <th class="tsTableth">Claim Amount</th>
+                                    <th class="tsStatusth">Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <apex:repeat value="{!submittedExpClaimsToShow}" var="ec">
+                                    <tr >
+                                        <td class="dtInfo">
+                                            <u>
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.Name}</div>
+                                            </a>
+                                        </u>
+                                        </td>
+                                        <td class="imptd  ">{!ec.tc9_ti__Placement__r.Account_Name__c}
+                                            <div class="mobileTSinfoJob">
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                    {!ec.Name}
+                                                    </a>
+                                            </div>
+                                            <div class="mobileTSinfoJob">
+                                                    {!ec.tc9_ti__Placement__r.ts2__Job__r.Name}
+                                            </div>
+                                            <div class="mobileTSinfoDate">
+                                                <apex:outputText value="{0,date,MMM d}"><apex:param value="{!ec.tc9_ti__Claim_Date__c}"/></apex:outputText>
+                                            </div>
+                                        </td>
+                                        <td class="dtInfo">{!ec.tc9_ti__Placement__r.ts2__Job__r.Name}</td>
+                                        <td class="wider dtInfo "><apex:outputText value="{0,date,MMM d}"><apex:param value="{!ec.tc9_ti__Claim_Date__c}"/></apex:outputText></td>
+                                        <td class="dtInfo"><apex:outputText value="{0,number,currency}"><apex:param value="{!ec.Total_Inc_Tax__c}"/></apex:outputText></td>
+                                        <td class="status dtInfo">
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.tc9_ti__Status__c}</div>
+                                            </a>
+                                        </td>
+                                        <td class="mobileTSstatus status">
+                                            <div class="mobileHrs">
+                                                <apex:outputText value="{0,number,currency}"><apex:param value="{!ec.Total_Inc_Tax__c}"/></apex:outputText>
+                                            </div>
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.tc9_ti__Status__c}</div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                                </tbody>
+                            </table>
+                            <div>
+                                <apex:commandButton value="<" action="{!previousSubmitted}" disabled="{!disablePreviousSubmitted}" styleClass="{!IF(disablePreviousSubmitted != true,'nextArrowBox','disabledArrowBox')}"/>
+                                <apex:commandButton value=">" action="{!nextSubmitted}" disabled="{!disableNextSubmitted}" styleClass="{!IF(disableNextSubmitted != true,'nextArrowBox','disabledArrowBox')}"/>
+                                <p class="pageTurn">{!submittedfirstEntry} -  {!submittedlastEntry} of {!submittiedTotalEntry} Expense Reports</p>
+                            </div>
+                        </div>
+
+                        <div id="Approved" class="tsTab" style="{!IF(approvedPageTurn,'display:block','display:none')}">
+                            <table class="tableStyle" id="table_id">
+                                <thead class="tableHeader">
+                                <tr>
+                                    <th class="tsTableth">Id</th>
+                                    <th class="tsTableth">Client/Site</th>
+                                    <th class="tsTableth">Placement</th>
+                                    <th class="tsTableth">Report Date</th>
+                                    <th class="tsTableth">Report Amount</th>
+                                    <th class="tsStatusth">Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <apex:repeat value="{!approvedExpClaimsToShow}" var="ec">
+                                    <tr >
+                                         <td class="dtInfo">
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.Name}</div>
+                                            </a>
+                                        </td>
+                                        <td class="imptd  ">{!ec.tc9_ti__Placement__r.Account_Name__c}
+                                            <div class="mobileTSinfoJob">
+                                                    {!ec.Name}
+                                            </div>
+                                            <div class="mobileTSinfoJob">
+                                                    {!ec.tc9_ti__Placement__r.ts2__Job__r.Name}
+                                            </div>
+                                            <div class="mobileTSinfoDate">
+                                                <apex:outputText value="{0,date,MMM d}"><apex:param value="{!ec.tc9_ti__Claim_Date__c}"/></apex:outputText>
+                                            </div>
+                                        </td>
+                                        <td class="dtInfo">{!ec.tc9_ti__Placement__r.ts2__Job__r.Name}</td>
+                                        <td class="wider dtInfo "><apex:outputText value="{0,date,MMM d}"><apex:param value="{!ec.tc9_ti__Claim_Date__c}"/></apex:outputText></td>
+                                        <td class="dtInfo"><apex:outputText value="{0,number,currency}"><apex:param value="{!ec.Total_Inc_Tax__c}"/></apex:outputText></td>
+                                        <td class="status dtInfo">
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.tc9_ti__Status__c}</div>
+                                            </a>
+                                        </td>
+                                        <td class="mobileTSstatus status">
+                                            <div class="mobileHrs">
+                                                <apex:outputText value="{0,number,currency}"><apex:param value="{!ec.Total_Inc_Tax__c}"/></apex:outputText>
+                                            </div>
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.tc9_ti__Status__c}</div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                                </tbody>
+                            </table>
+                            <div>
+                                <apex:commandButton value="<" action="{!previousApproved}" disabled="{!disablePreviousApproved}" styleClass="{!IF(disablePreviousApproved != true,'nextArrowBox','disabledArrowBox')}"/>
+                                <apex:commandButton value=">" action="{!nextApproved}" disabled="{!disableNextApproved}" styleClass="{!IF(disableNextApproved != true,'nextArrowBox','disabledArrowBox')}"/>
+                                <p class="pageTurn">{!approvedfirstEntry} -  {!approvedlastEntry} of {!approvedTotalEntry} Expense Reports</p>
+                            </div>
+                        </div>
+
+                        <div id="Rejected" class="tsTab" style="{!IF(rejectedPageTurn,'display:block','display:none')}">
+                            <table class="tableStyle" id="table_id">
+                                <thead class="tableHeader">
+                                <tr>
+                                    <th class="tsTableth">Id</th>
+                                    <th class="tsTableth">Client/Site</th>
+                                    <th class="tsTableth">Placement</th>
+                                    <th class="tsTableth">Report Date</th>
+                                    <th class="tsTableth">Report Amount</th>
+                                    <th class="tsStatusth">Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <apex:repeat value="{!rejectedExpClaimsToShow}" var="ec">
+                                    <tr >
+                                         <td class="dtInfo">
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.Name}</div>
+                                            </a>
+                                        </td>
+                                        <td class="imptd  ">{!ec.tc9_ti__Placement__r.Account_Name__c}
+                                            <div class="mobileTSinfoJob">
+                                                    {!ec.Name}
+                                            </div>
+                                            <div class="mobileTSinfoJob">
+                                                    {!ec.tc9_ti__Placement__r.ts2__Job__r.Name}
+                                            </div>
+                                            <div class="mobileTSinfoDate">
+                                                <apex:outputText value="{0,date,MMM d}"><apex:param value="{!ec.tc9_ti__Claim_Date__c}"/></apex:outputText>
+                                            </div>
+                                        </td>
+                                        <td class="dtInfo">{!ec.tc9_ti__Placement__r.ts2__Job__r.Name}</td>
+                                        <td class="wider dtInfo "><apex:outputText value="{0,date,MMM d}"><apex:param value="{!ec.tc9_ti__Claim_Date__c}"/></apex:outputText></td>
+                                        <td class="dtInfo"><apex:outputText value="{0,number,currency}"><apex:param value="{!ec.Total_Inc_Tax__c}"/></apex:outputText></td>
+                                        <td class="status dtInfo">
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.tc9_ti__Status__c}</div>
+                                            </a>
+                                        </td>
+                                        <td class="mobileTSstatus status">
+                                            <div class="mobileHrs">
+                                                <apex:outputText value="{0,number,currency}"><apex:param value="{!ec.Total_Inc_Tax__c}"/></apex:outputText>
+                                            </div>
+                                            <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!ec.Id}">
+                                                <div id="theStatus" class="statusText hideLink" >{!ec.tc9_ti__Status__c}</div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                                </tbody>
+                            </table>
+                            <div>
+                                <apex:commandButton value="<" action="{!previousRejected}" disabled="{!disablePreviousRejected}" styleClass="{!IF(disablePreviousRejected != true,'nextArrowBox','disabledArrowBox')}"/>
+                                <apex:commandButton value=">" action="{!nextRejected}" disabled="{!disableNextRejected}" styleClass="{!IF(disableNextRejected != true,'nextArrowBox','disabledArrowBox')}"/>
+                                <p class="pageTurn">{!rejectedfirstEntry} -  {!rejectedlastEntry} of {!rejectedTotalEntry} Expense Reports</p>
+                            </div> 
+                        </div>
+                    </apex:outputPanel>-->
+                </div>
+            </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+</apex:page>

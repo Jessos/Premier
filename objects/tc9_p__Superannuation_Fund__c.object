@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>SMSF_Trustee_Dec__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To capture smsf acknowledgement in portal</description>
+        <externalId>false</externalId>
+        <label>SMSF Trustee Declaration</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Super_Search_Field__c</fullName>
+        <externalId>false</externalId>
+        <formula>tc9_p__Fund_Name__c + &apos; --- USI: &apos; + tc9_p__Unique_Superannuation_Identifier__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Super Search Field</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>customFund_Website__c</fullName>
+        <externalId>false</externalId>
+        <label>Fund Website</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+</CustomObject>

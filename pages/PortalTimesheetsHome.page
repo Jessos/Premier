@@ -1,0 +1,265 @@
+<apex:page id="CommunitiesHomePage" controller="Ctrl_CommunityTSPage" showHeader="false" sidebar="false"  standardStylesheets="false" docType="html-5.0" applyHTMLTag="false" cache="true">
+<head>
+    <title>Premier Timesheet Portal</title>
+</head>
+<!--  <script>
+     $(function() {
+         $( "#accordion_OverDue" ).accordion({
+             collapsible: true,
+             heightStyle: "content"
+         });
+         $( "#accordion_Current" ).accordion({
+             collapsible: true,
+             heightStyle: "content"
+         });
+         $( "#accordion_TSH" ).accordion({
+             collapsible: true,
+             heightStyle: "content"
+         });
+        
+         $(".table").dataTable({
+             bFilter: false, 
+             bInfo: true,
+             bLengthChange: false,
+             iDisplayLength: 5,
+             "aoColumnDefs": [
+                 { 'bSortable': false, 'aTargets': [ 2 ] }
+             ]
+            
+         });
+        
+       });
+</script> -->
+
+
+        <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        
+        <apex:define name="body">
+        <body>
+        <div class="sideBar ">
+                    <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks"><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks sidebarHighlight"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalPlacementHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Placement History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks "><i class="icon-profilegrey"></i>My Profile</a>
+                    <a href="https://access.paylocity.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Paylocity Portal</a>
+                    <a href="http://support.pstaffing.com/" target="_blank" class="sideBarLinks"> <i class="icon-search"></i>Support Center</a>
+            </div>
+                <apex:form >
+                <div id="main" class="pageContent">  
+                <h1>Timesheets</h1> 
+                <div class="row">
+                    <div class="col-xs-6"/>
+                    <div class="col-xs-2">
+                    </div>
+                    </div>
+                    <div class="container">
+                         <div id="thistabs" class="bs-example">
+                            <div class="tabbable"> <!-- Only required for left/right tabs -->
+                                <div class="tab-content">
+                                    <div class="tab-pane" >
+                                    <ul class="tab">
+                                    <a href="javascript:void(0)" onclick="openStatusTab(event, 'Incomplete');">
+                                        <div class="tablink" id="r">Incomplete</div>
+                                    </a>
+                                    <!-- <a href="javascript:void(0)" onclick="openStatusTab(event, 'Current');">
+                                        <div class="tablink">Current</div>
+                                    </a> -->
+                                    <a href="javascript:void(0)" onclick="openStatusTab(event, 'Submitted');">
+                                        <div class="tablink"  id="a">Submitted</div>
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="openStatusTab(event, 'Approved');">
+                                        <div class="tablink"  id="b">Approved</div>
+                                    </a>
+                                    </ul>
+                                     </div>
+                                        <span class="text-muted" style="display:{!IF(currentList.size > 0,'none','')}">You have no overdue timesheets to display.</span>
+                                        <div class="tsTab" id="Incomplete" >
+                                            <apex:variable value="{!0}" var="plctNumOD"/>
+                                                <apex:repeat value="{!currentList}" var="odPlctWrp">
+                                                
+                                                        <h3>
+                                                            {!odPlctWrp.plctName} - {!odPlctWrp.clientName} - {!odPlctWrp.JobName}
+                                                            <!-- <span class="badge">{!odPlctWrp.numOfTS}</span> -->
+                                                        </h3>
+                                                    
+                                                    <div  id="Incomplete"> 
+                                                       <p>
+                                                            <span style="display:{!IF(odPlctWrp.thisTSList.size > 0,'none','')}">There are no Timesheets to display</span>
+                                                            <table class="tableStyle" id="tableOD_{!plctNumOD}">
+                                                                <thead class="tableHeader">
+                                                                    <tr>
+                                                                        <th class="expTableth">Name</th>
+                                                                        <th class="expTableth">Client Name</th>
+                                                                        <th class="expTableth">Period</th>
+                                                                        <th class="expTableth">Hours</th>
+                                                                        <th class="expTableth">Status</th>                                                                 
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:variable value="{!0}" var="TSIndexOD"/>
+                                                                    <apex:repeat value="{!odPlctWrp.thisTSList}" var="thisTS">
+                                                                        <tr>
+                                                                            <td>
+                                                                                <u><a href="{!$Site.CurrentSiteURL}FillTimesheet_Page_v2?tsId={!thisTS.Id}&list=OD&TSIndexOD={!TSIndexOD}">
+                                                                                    <apex:outputText styleClass="text-muted" value="{!thisTS.Name}"/>
+                                                                                </a></u>
+                                                                            </td>
+                                                                            <td> 
+                                                                                <apex:outputText styleClass="text-muted" value="{!thisTS.tc9_ti__Placement__r.ts2__Job__r.tc9_ti__Client_Name__c}"/>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span class="text-muted"><c:Locale_Formatted_Date date_value="{!thisTS.tc9_ti__Start_Date__c}" rendered="{!IF(ISBLANK(thisTS.Id),false,true)}"/>&nbsp;-&nbsp;<c:Locale_Formatted_Date date_value="{!thisTS.tc9_ti__End_Date__c}" rendered="{!IF(ISBLANK(thisTS.Id),false,true)}"/></span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:outputText styleClass="text-muted" value="{!thisTS.tc9_ti__WeeklyActualHours__c}"/>
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:outputText styleClass="text-muted" value="{!thisTS.tc9_ti__Status__c}"/>
+                                                                            </td>
+                                                                        </tr>   <!-- end of table rows -->
+                                                                        <apex:variable value="{!TSIndexOD + 1}" var="TSIndexOD"/>
+                                                                    </apex:repeat> <!-- end of table body content -->
+                                                                </tbody> <!-- end of table body -->
+                                                            </table> <!-- table of TS -->   
+                                                        </p>                                                      
+                                                    </div> <!-- sliding div -->
+                                                    <apex:variable value="{!plctNumOD + 1}" var="plctNumOD"/>
+                                                </apex:repeat> <!-- plctlevel wrp -->
+                                        </div> <!-- accordion -->
+                                   
+                                    <div class="tsTab" id="Submitted" style="display:none">
+                                        <br/>
+                                        <span class="text-muted" style="display:{!IF(overDueList.size > 0,'none','')}">There are no Timesheets to display</span>
+                                        <div id="Submitted" >
+                                            <apex:variable value="{!0}" var="plctNumC"/>
+                                                <apex:repeat value="{!overDueList}" var="CPlctWrp">
+                                                    <!-- <button class="btn btn-primary btn-block" type="button"> -->
+                                                        <h3>
+                                                            {!CPlctWrp.plctName} - {!CPlctWrp.clientName} - {!CPlctWrp.JobName}
+                                                            <span class="badge">{!CPlctWrp.numOfTS}</span>
+                                                        </h3>
+                                                        <!-- </button> -->
+                                                    
+                                                    <div>
+                                                       <p>
+                                                            <span style="display:{!IF(CPlctWrp.thisTSList.size > 0,'none','')}">There are no Timesheets to display</span>
+                                                            <table id="tableC_{!plctNumC}" class="table table-condensed">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="expTableth">Name</th>
+                                                                        <th class="expTableth">Client Name</th>
+                                                                        <th class="expTableth">Period</th>
+                                                                        <th class="expTableth">Hours</th>
+                                                                        <th class="expTableth">Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:variable value="{!0}" var="TSIndexCU"/>
+                                                                    <apex:repeat value="{!CPlctWrp.thisTSList}" var="thisTS">
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="{!$Site.CurrentSiteURL}FillTimesheet_Page_v2?tsId={!thisTS.Id}&list=CU&TSIndexCU={!TSIndexCU}">
+                                                                                    <apex:outputText styleClass="text-muted" value="{!thisTS.Name}"/>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:outputText styleClass="text-muted" value="{!thisTS.tc9_ti__Placement__r.ts2__Job__r.tc9_ti__Client_Name__c}"/>
+                                                                            </td>
+                                                                            <td>
+                                                                                <!-- <apex:outputText styleClass="text-muted" value="{!thisTS.tc9_ti__Start_Date__c} - {!thisTS.tc9_ti__End_Date__c}"/> -->
+                                                                                <span class="text-muted"><c:Locale_Formatted_Date date_value="{!thisTS.tc9_ti__Start_Date__c}" rendered="{!IF(ISBLANK(thisTS.Id),false,true)}"/>&nbsp;-&nbsp;<c:Locale_Formatted_Date date_value="{!thisTS.tc9_ti__End_Date__c}" rendered="{!IF(ISBLANK(thisTS.Id),false,true)}"/></span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:outputText styleClass="text-muted" value="{!thisTS.tc9_ti__WeeklyActualHours__c}"/>
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:outputText styleClass="text-muted" value="{!thisTS.tc9_ti__Status__c}"/>
+                                                                            </td>
+                                                                        </tr>   <!-- end of table rows -->
+                                                                        <apex:variable value="{!TSIndexCU + 1}" var="TSIndexCU"/>
+                                                                    </apex:repeat> <!-- end of table body content -->
+                                                                </tbody> <!-- end of table body -->
+                                                            </table> <!-- table of TS -->   
+                                                        </p>                                                      
+                                                    </div> <!-- sliding div -->
+                                                    <apex:variable value="{!plctNumC + 1}" var="plctNumC"/>
+                                                </apex:repeat> <!-- plctlevel wrp -->
+                                        </div> <!-- accordion -->
+                                    </div>
+
+                                    <div class="tsTab" id="Approved" style="display:none">
+                                
+                                        <br/>
+                                        <span class="text-muted" style="display:{!IF(TSHList.size > 0,'none','')}">There are no Timesheets to display</span>
+                                        <div id="Approved">
+                                        
+                                            <apex:variable value="{!0}" var="plctNumTSH"/>
+                                                <apex:repeat value="{!TSHList}" var="TSHPlctWrp">
+                                                    <h3>
+                                                            {!TSHPlctWrp.plctName} - {!TSHPlctWrp.clientName} - {!TSHPlctWrp.JobName}
+                                                            <span class="badge">{!TSHPlctWrp.numOfTS}</span>
+                                                        </h3>
+                                                    
+                                                    <div>
+                                                       <p>
+                                                            <span style="display:{!IF(TSHPlctWrp.thisTSList.size > 0,'none','')}">There are no Timesheets to display</span>
+                                                            <table id="tableTSH_{!plctNumTSH}" class="table table-condensed">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="expTableth">Name</th>
+                                                                        <th class="expTableth">Client Name</th>
+                                                                        <th class="expTableth">Period</th>
+                                                                        <th class="expTableth">Hours</th>
+                                                                        <th class="expTableth">Status</th>                                                                  
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <apex:variable value="{!0}" var="TSIndexTSH"/>
+                                                                    <apex:repeat value="{!TSHPlctWrp.thisTSList}" var="thisTS">
+                                                                        <tr>
+                                                                            <td>
+                                                                                <a href="{!$Site.CurrentSiteURL}FillTimesheet_Page_v2?tsId={!thisTS.Id}&list=TSH&TSIndexTSH={!TSIndexTSH}">
+                                                                                    <apex:outputText styleClass="text-muted" value="{!thisTS.Name}"/>
+                                                                                </a>
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:outputText styleClass="text-muted" value="{!thisTS.tc9_ti__Placement__r.ts2__Job__r.tc9_ti__Client_Name__c}"/>
+                                                                            </td>
+                                                                            <td>
+                                                                                <span class="text-muted"><c:Locale_Formatted_Date date_value="{!thisTS.tc9_ti__Start_Date__c}" rendered="{!IF(ISBLANK(thisTS.Id),false,true)}"/>&nbsp;-&nbsp;<c:Locale_Formatted_Date date_value="{!thisTS.tc9_ti__End_Date__c}" rendered="{!IF(ISBLANK(thisTS.Id),false,true)}"/></span>
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:outputText styleClass="text-muted" value="{!thisTS.tc9_ti__WeeklyActualHours__c}"/>
+                                                                            </td>
+                                                                            <td>
+                                                                                <apex:outputText styleClass="text-muted" value="{!thisTS.tc9_ti__Status__c}"/>
+                                                                            </td>
+                                                                        </tr>   <!-- end of table rows -->
+                                                                        <apex:variable value="{!TSIndexTSH + 1}" var="TSIndexTSH"/>
+                                                                    </apex:repeat> <!-- end of table body content -->
+                                                                </tbody> <!-- end of table body -->
+                                                            </table> <!-- table of TS -->   
+                                                        </p>                                                      
+                                                    </div> <!-- sliding div -->
+                                                    <apex:variable value="{!plctNumTSH + 1}" var="plctNumTSH"/>
+                                                </apex:repeat> <!-- plctlevel wrp -->
+                                                <span class="text-muted" style="display:{!IF(TSHList.size == 100,'','None')}"><b>NOTE: </b>Please Contact your Payroll Administrator for earlier Timesheets</span>
+                                        </div>
+                                    </div> <!-- last tab -->
+                                </div> <!-- end of tab content -->
+                           </div>  <!-- end of tabbable -->
+                        </div> <!-- end of thisTabs --> 
+                    </div> <!-- end of container -->
+                </div>
+                </apex:form>
+                </body>
+            <!-- </apex:outputPanel> -->
+        
+        
+          </apex:define>
+        
+        </apex:composition>
+
+    
+</apex:page>

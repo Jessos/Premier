@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Create_New_Tab_Name_Add_Proj_Code_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Create_New_Tab_Name_Add_Proj_Code_Page</shortDescription>
+        <value>Create New</value>
+    </labels>
+    <labels>
+        <fullName>Custom_Expenses_Page_Not_Defined_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Expenses Page Not Defined Error</shortDescription>
+        <value>You have enabled Custom Timesheet feature. Please set the visualforce page name in TimeCards Config custom settings.</value>
+    </labels>
+    <labels>
+        <fullName>Expense_Type_required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Expense Type required</shortDescription>
+        <value>Expense Type : Please enter a value</value>
+    </labels>
+    <labels>
+        <fullName>NullErrorMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NullErrorMsg</shortDescription>
+        <value>cannot be null value.</value>
+    </labels>
+    <labels>
+        <fullName>Project_Code_Created</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Project_Code_Created</shortDescription>
+        <value>Project code already exists</value>
+    </labels>
+    <labels>
+        <fullName>Project_Code_added_to_Job</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Project_Code_added_to_Job</shortDescription>
+        <value>Selected Project Code has been added to the Job</value>
+    </labels>
+    <labels>
+        <fullName>Search_Existing_Add_Project_Code_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Search_Existing_Add_Project_Code_Page</shortDescription>
+        <value>Search Existing</value>
+    </labels>
+    <labels>
+        <fullName>TimesheetCommunity_Delete</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TimesheetCommunity_Delete</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>TimesheetCommunity_Edit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TimesheetCommunity_Edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>TimesheetCommunity_Upload</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TimesheetCommunity_Upload</shortDescription>
+        <value>Upload</value>
+    </labels>
+    <labels>
+        <fullName>Unsupported_File_types</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Unsupported File types</shortDescription>
+        <value>Only pdf/image files are allowed</value>
+    </labels>
+</CustomLabels>

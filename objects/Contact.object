@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Personal_Details_Provided__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To keep track of this Portal Users personal details completion status</description>
+        <externalId>false</externalId>
+        <label>Personal Details Provided</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+</CustomObject>

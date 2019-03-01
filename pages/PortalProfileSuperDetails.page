@@ -1,0 +1,524 @@
+<!--
+ Created by Adelaide Greenaway on 15/11/17.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Profile Superannuation Details --- Portal_ProfileSuperDetails_Controller
+ * NOTE: Refer to SiteTemplate and customPortalJS for any scripts that are used on this page
+ *
+ -->
+
+<apex:page id="PortalProfileSuperDetails" docType="html-5.0" controller="Portal_ProfileSuperDetails_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false">
+
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+
+        <body>
+            <div class="sideBar">
+                <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                <a href="{!$Site.Prefix}/PortalContracts" class="sideBarLinks"><i class="icon-ContractG"></i>Contracts</a>
+                <a href="{!$Site.Prefix}/PortalPolicies" class="sideBarLinks "><i class="icon-ContractG"></i>Policies</a>
+                <a href="{!$Site.Prefix}/PortalPaymentHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Payment History</a>
+                <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks sidebarHighlight"><i class="icon-profilegrey"></i>My Profile</a>
+            </div>
+            <apex:form >
+                    <div class="pageContent">
+                        <div>
+                            <h1> My Profile </h1>
+
+                            <ul class="tab dtInfo">
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfilePersonalDetails"  >Personal Details</a>
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileBankDetails" >Bank Details</a>
+                                <a href="#" class="active tabPadding" >Superannuation Details</a>
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileTaxDetails" >Tax Details</a>
+                            </ul>
+                        </div>
+                        <div>
+                            <apex:pageMessages id="messages" />
+                        </div>
+                        <div id="SuperDetailsM" >
+                            <div>
+                                <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="tsTabBack">
+                                    <i class="icon-chevronblue iconMain iconHInv"></i><p class="linkText">Back to My Profile</p>
+                                </a>
+                                <!--<div id="contentToToggle" style="display:{!IF(showContent,"block","none")};">-->
+                                <div id="readBlock">
+                                    <apex:outputPanel rendered="{!AND(showContent, OR(apraRSA_Fund != null, empNomFund != null, smsfFund != null))}">
+                                        <h2>Superannuation Fund Details</h2>
+
+                                        <apex:outputlabel >Super Fund Option   </apex:outputlabel>
+                                        <p class="roText">{!superTypeSelected}</p>
+                                        <apex:outputPanel rendered="{!IF(superTypeSelected == 'APRA/RSA',true,false)}">
+                                            <apex:outputlabel >Super Fund Name </apex:outputlabel>
+                                            <p class="roText">{!apraRSA_FundName}</p>
+                                            <apex:outputlabel >Super Fund Member Number </apex:outputlabel>
+                                            <p class="roText">{!apraRSAMemberNumber}</p>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!IF(superTypeSelected == 'Employer Nominated',true,false)}">
+                                            <apex:outputlabel >Super Fund Name </apex:outputlabel>
+                                            <p class="roText">{!empNomFundName}</p>
+                                            <apex:outputlabel >Super Fund Member Number </apex:outputlabel>
+                                            <div>
+                                                <apex:outputText styleClass="roText" value="{!IF(empNomMemberNumber == '000000000','Your membership is being processed',empNomMemberNumber)}"/>
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!IF(superTypeSelected == 'SMSF',true,false)}">
+                                            <apex:outputlabel >Super Fund Name SMSF.... </apex:outputlabel>
+                                            <p class="roText">{!smsfFundName}</p>
+                                            <apex:outputlabel >Super Fund Member Number </apex:outputlabel>
+                                            <p class="roText">{!smsfMemberNumber}</p>
+
+                                            <apex:outputlabel >Super Fund ABN </apex:outputlabel>
+                                            <p class="roText">{!smsfFundABN}</p>
+                                            <apex:outputlabel >Super Fund Electronic Service Address </apex:outputlabel>
+                                            <p class="roText">{!smsfFundESA}</p>
+
+                                            <apex:outputlabel >Super Fund BSB </apex:outputlabel>
+                                            <p class="roText">{!smsfFundBSB}</p>
+                                            <apex:outputlabel >Super Fund Account Name </apex:outputlabel>
+                                            <p class="roText">{!smsfFundAccName}</p>
+                                            <apex:outputlabel >Super Fund Account Number </apex:outputlabel>
+                                            <p class="roText">{!smsfFundAccNum}</p>
+                                            <apex:outputlabel >Super Fund Phone </apex:outputlabel>
+                                            <p class="roText">{!smsfFundPhone}</p>
+                                            <apex:outputlabel >Super Fund Email </apex:outputlabel>
+                                            <p class="roText">{!smsfFundEmail}</p>
+
+                                            <apex:outputlabel >Super Fund Address </apex:outputlabel>
+                                            <apex:outputPanel >
+                                                <apex:outputLabel value="STREET" />
+                                                <p class="roText">{!street}</p>
+                                                <apex:outputLabel value="CITY" />
+                                                <p class="roText">{!city}</p>
+                                                <apex:outputLabel value="STATE" />
+                                                <p class="roText">{!state}</p>
+                                                <apex:outputLabel value="POSTAL CODE" />
+                                                <p class="roText">{!postalcode}</p>
+                                                <apex:outputLabel value="COUNTRY" />
+                                                <p class="roText">{!country}</p>
+                                            </apex:outputPanel>
+
+                                            <apex:outputlabel >Super Fund Trustee Declaration </apex:outputlabel>
+                                            <apex:inputCheckbox value="{!smsfFundTrusteeDec}"/>
+                                            <div >
+                                                <h3>SMSF Attachments :  </h3>
+                                                <div id="attachmentPanel{!currentPayee.Id}" >
+                                                    <apex:repeat value="{!smsfAttachments}" var="newAtt">
+                                                        <p><apex:outputLink value="{!URLFOR($Action.Attachment.Download, newAtt.Id)}" target="_blank" styleClass="attachment-link">{!newAtt.Name}
+                                                        </apex:outputLink></p>
+                                                    </apex:repeat>
+                                                </div>
+                                            </div>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                    <div>
+                                        <apex:outputPanel rendered="{!AND(showContent,apraRSA_Fund == null,empNomFund == null,smsfFund == null)}">
+                                            <p class="impMessage" >Please provide Superannuation Fund Details.</p>
+                                            <apex:commandbutton styleClass="pageButton" value="Provide Super Details" action="{!loadSelectionDetails}" onComplete="toggleEntry(event, 'editBlock', 'readBlock');"/>
+                                        </apex:outputPanel>
+                                    </div>
+                                    <div>
+                                        <apex:outputPanel rendered="{!showContent}">
+                                            <apex:commandbutton styleClass="pageButton" value="Update Super Details" action="{!loadSelectionDetails}" rendered="{!AND(showContent, OR(apraRSA_Fund != null, empNomFund != null, smsfFund != null))}" onComplete="toggleEntry(event, 'editBlock', 'readBlock');"/>
+                                        </apex:outputPanel>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="editBlock">
+                                <div id="updateFunds">
+                                    <!--<apex:outputPanel rendered="{!!showContent}">-->
+                                        <apex:selectRadio layout="pageDirection" id="superRadio" value="{!superTypeSelected}" >
+                                            <apex:selectOption itemLabel="Employer Nominated" itemValue="empNom" />
+                                            <apex:selectOption itemLabel="APRA or Retirement Savings Account (RSA)" itemValue="apraRSA"/>
+                                            <apex:selectOption itemLabel="Self-managed (SMSF)" itemValue="smsf"/>
+                                        </apex:selectRadio>
+
+                                        <div id="div_apraRSA" >
+                                            <p class="impMessage">Please provide Superannuation Fund Details.</p>
+                                            <apex:outputPanel rendered="{!IF(apraRSA_Fund != null,true,false)}">
+                                                <apex:outputLabel value="Previously Selected Fund" />
+                                                <p class="roText"> {!apraRSA_FundName}</p>
+                                            </apex:outputPanel>
+
+                                            <apex:actionFunction name="paraFunctionFS" action="{!getFund}" reRender="thenewfund, thenewfund2, thenewfund3">
+                                                <apex:param id="aname" assignTo="{!apraRSA_Fund}" name="fundCode" value=""/>
+                                            </apex:actionFunction>
+                                            <h3>Find and Select a Fund:</h3>
+                                            <div>
+                                                <apex:inputText id="fundTextBox" value="{!searchedFund}" styleClass="placeHolder pageInput" />
+                                                <apex:inputHidden id="searchFundId" value="{!selectedFund}"  />
+                                            </div>
+
+                                            <div id="div_apraRSA_2" >
+                                                <div>
+                                                    <apex:outputlabel >Selected Super Fund Name and USI  </apex:outputlabel>
+                                                    <div>
+                                                        <apex:outputText value="{!searchedFund}" id="thenewfund" styleClass="roText"/>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <apex:outputlabel >Please Provide your Fund Member Number  </apex:outputlabel>
+                                                    <div>
+                                                        <apex:inputText styleClass="pageInput"  value="{!apraRSAMemberNumber}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="div_empNom" >
+                                            <h2>Employer Nominated Superannuation Fund Details</h2>
+                                            <apex:outputlabel >Super Fund   </apex:outputlabel>
+                                            <p class="roText">{!empNomFundName}</p>
+                                            <p class="impMessage">Do you have a member number for this Employer Nominated Fund?</p>
+                                            <apex:selectRadio layout="pageDirection" id="superRadio_2" value="{!haveEmpNomNumber}">
+                                                <apex:selectOption itemLabel="Yes" itemValue="Yes" />
+                                                <apex:selectOption itemLabel="No" itemValue="No"/>
+                                            </apex:selectRadio>
+                                            <div id="div_haveNum">
+                                                <div>
+                                                    <apex:outputlabel >Please Provide your Fund Member Number  </apex:outputlabel>
+                                                    <div>
+                                                        <apex:inputText styleClass="pageInput"  value="{!empNomMemberNumber}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="div_SMSF" >
+                                            <p class="impMessage">Please provide Superannuation Fund Details.</p>
+                                            <!--<apex:outputlabel >Super Fund   </apex:outputlabel><br/>-->
+                                            <!--<apex:inputText value="{!superFund1}"/><br/><br/>-->
+                                            <div>
+                                                <apex:outputlabel >Super Fund Name  </apex:outputlabel>
+                                                <div>
+                                                    <apex:inputText styleClass="pageInput"  value="{!smsfFundName}"/>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <apex:outputlabel >Super Fund Member Number </apex:outputlabel>
+                                                <div>
+                                                    <apex:inputText styleClass="pageInput"  value="{!smsfMemberNumber}"/>
+                                                </div>
+                                            </div>
+                                            <div id="abnEntryError">
+                                                <p class="vimpMessage">The ABN you have entered has failed validation, please check your ABN and re-enter.</p>
+                                            </div>
+                                            <div>
+
+                                                <apex:outputlabel >Super Fund ABN </apex:outputlabel>
+                                                <div>
+                                                    <!--<form>-->
+                                                        <apex:inputText styleClass="pageInput"  value="{!smsfFundABN}" onBlur="validateABN(this, jQuery('[id$=showSave]'))" onkeypress="return isNumberKey(event)" maxLength="11"/>
+                                                    <!--</form>-->
+
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <apex:outputlabel >Super Fund Electronic Service Address </apex:outputlabel>
+                                                <div>
+                                                    <apex:inputText styleClass="pageInput"  value="{!smsfFundESA}"/>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <apex:outputlabel >Super Fund BSB </apex:outputlabel>
+                                                <div>
+                                                    <apex:inputText styleClass="pageInput"  value="{!smsfFundBSB}" onkeypress="return isNumberKey(event)" maxLength="6" />
+                                                    <!--<apex:inputText styleClass="pageInput"  value="{!smsfFundBSB}"/>-->
+                                                    <!--<apex:outputlabel >Account BSB  </apex:outputlabel><br/>-->
+                                                    <!--<apex:actionFunction name="paraFunctionBSB" action="{!getBSB}" reRender="thenew2">-->
+                                                    <!--<apex:param id="aname2" assignTo="{!smsfFundBSB}" name="bsbCode" value=""/>-->
+                                                    <!--</apex:actionFunction>-->
+                                                    <!--<apex:inputText id="bsbTextBox" value="{!selectedBSB}" styleClass="placeHolder" />-->
+                                                    <!--<apex:inputHidden id="searchBSBId" value="{!selectedBSB}"  /><br/><br/>-->
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <apex:outputlabel >Super Fund Account Name </apex:outputlabel>
+                                                <div>
+                                                    <apex:inputText styleClass="pageInput"  value="{!smsfFundAccName}"/>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <apex:outputlabel >Super Fund Account Number </apex:outputlabel>
+                                                <div>
+                                                    <apex:inputText styleClass="pageInput"  value="{!smsfFundAccNum}"/>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <apex:outputlabel >Super Fund Phone </apex:outputlabel>
+                                                <div>
+                                                    <apex:input type="tel" styleClass="pageInput" value="{!smsfFundPhone}" onkeypress="return isPhNumKey(event)"/>
+                                                </div>
+
+                                            </div>
+                                            <div>
+                                                <apex:outputlabel >Super Fund Email </apex:outputlabel>
+                                                <div id="emailErr" style="display:none;">
+                                                    <p class="dataEntryErrorMsg" >Please enter a valid email address</p>
+                                                </div>
+                                                <div>
+                                                    <apex:input id="txtEmail" type="email" styleClass="pageInput" value="{!smsfFundEmail}" onBlur=" checkEmail($(this).val(),jQuery('[id$=showSave]'),jQuery('[id$=txtEmail]'),jQuery('[id$=emailErr]'));"/>
+
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <apex:attribute type="Id" name="objectId" required="true" assignTo="{!recordId}" description="The sObject record to validate the address for" />
+                                                <apex:attribute type="String" name="objectName" required="true" assignTo="{!objName}" description="The API name of the sObject" />
+
+                                                <!-- Address One Fields -->
+                                                <apex:attribute type="String" name="addressOneName" required="true" description="The label name of the first address." />
+                                                <apex:attribute type="String" name="oneStreet" required="true" assignTo="{!streetOne}" description="The API name of the first street field." />
+                                                <apex:attribute type="String" name="oneCity" required="true" assignTo="{!cityOne}" description="The API name of the first city field." />
+                                                <apex:attribute type="String" name="oneState" required="true" assignTo="{!stateOne}" description="The API name of the first state field." />
+                                                <apex:attribute type="String" name="onePostalCode" required="true" assignTo="{!postalcodeOne}" description="The API name of the first postal code field." />
+                                                <apex:attribute type="String" name="oneCountry" required="true" assignTo="{!countryOne}" description="The API name of the first country." />
+
+                                                <apex:outputlabel >Super Fund Address </apex:outputlabel>
+                                                <apex:outputPanel >
+                                                    <div>
+                                                        <input class="pageInput" type="text" id="autocomplete_one" placeholder="Start typing address..." />
+                                                    </div>
+                                                    <div>
+                                                        <apex:outputLabel value="STREET" />
+                                                        <div>
+                                                            <apex:inputText value="{!street}"  styleClass="oneStreet pageInput"  />
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <apex:outputLabel value="CITY" />
+                                                        <div>
+                                                            <apex:inputText value="{!city}"  styleClass="oneCity pageInput"  />
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <apex:outputLabel value="STATE" />
+                                                        <div>
+                                                            <apex:inputText value="{!state}"  styleClass="oneState pageInput" />
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <apex:outputLabel value="POSTAL CODE" />
+                                                        <div>
+                                                            <apex:inputText value="{!postalcode}"  styleClass="onePostalCode pageInput" />
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <apex:outputLabel value="COUNTRY" />
+                                                        <div>
+                                                            <apex:inputText value="{!country}"  styleClass="oneCountry pageInput"  />
+                                                        </div>
+                                                    </div>
+                                                </apex:outputPanel>
+                                            </div>
+                                            <div >
+
+                                                <h2 ><apex:inputCheckbox value="{!smsfFundTrusteeDec}" styleClass="largerRadioBox"/>SMSF Declaration - I declare this is a registered SMSF</h2>
+                                            </div>
+
+
+                                            <div class="fileinputs" >
+                                                <div style="padding-top:20pt; padding-bottom:10pt" >
+                                                    <label styleClass="mobileLabel">Please Provide Required Documentation</label>
+                                                </div>
+                                                <input class="file" type="file" id="attachmentFile{!currentPayee.Id}" multiple="1"/>
+                                                <div >
+                                                    <input type="button" value = "Save File" class="save-file-button tsTableth_Button" onclick="uploadFile('{!currentPayee.Id}','attachmentFile','attachmentPanel');" />
+                                                    <apex:commandButton value="Cancel" styleClass="tsTableth_Button" action="{!cancel}"/>
+                                                </div>
+                                            </div>
+                                            <div >
+                                                <h4>SMSF Attachments:  </h4>
+                                                <div id="outputArea" class="file-uploading-please">
+                                                </div>
+                                                <div id="attachmentPanel{!currentPayee.Id}" >
+                                                    <apex:repeat value="{!smsfAttachments}" var="newAtt">
+                                                        <h5>
+                                                            <apex:commandButton styleClass="addRemButton" value="-" action="{!deleteAtt}" rerender="attPanel" rendered="{!IF(AND(expClaim.tc9_ti__Status__c != 'Approved',expClaim.tc9_ti__Status__c!='Submitted'),true,false)}">
+                                                                <apex:param name="attIdParam" value="{!newAtt.id}" assignTo="{!chosenAttId}"/>
+                                                            </apex:commandButton>
+
+                                                            <apex:outputText value="{!newAtt.Name}" />
+                                                        </h5>
+                                                    </apex:repeat>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div >
+                                        <apex:commandbutton value="Save Super Details" action="{!saveSuper}" id="showSave" styleClass="pageButton"/>
+                                        <apex:commandButton action="{!cancel}" value="Cancel" rendered="{!!showContent}" styleClass="pageButton" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+
+    <script type="text/javascript">
+
+    function uploadFile(parentId,attachmentFile,attachmentPanel)
+    {
+        var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
+
+        var filesabcd = document.getElementById(attachmentFile+parentId).files;
+
+        //$('.save-file-button').after('<span class="save-file-uploading">... please wait while file is uploading...</span>');
+        $('.save-file-uploading').remove();
+        $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:13pt;"><i class="fas fa-circle-notch fa-spin"></i>&nbsp;upload in progress</span>');
+
+        for(var i = 0; i < filesabcd.length; i++)
+        {
+            if(filesabcd[i].size <= maxFileSize)
+            {
+                attachsample(filesabcd[i],parentId,attachmentPanel);
+                console.log('filesabcd:: ');
+                console.log(filesabcd[i].size);
+            }
+            else
+            {
+                console.log('TOO BIG?? filesabcd:: '+filesabcd[i]);
+                console.log(filesabcd[i].size);
+                console.log('max:'+maxFileSize);
+                $('.save-file-uploading').remove();
+                $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">File to big. Max file size is 4.5MB</span>');
+                //alert('File must be under 4.3 MB in size.  Your file is too large.  Please try again.');
+            }
+        }
+
+        if(filesabcd.length == 0){
+            $('.save-file-uploading').remove();
+        }
+    }
+    function attachsample(file,parentId,attachmentPanel)
+    {
+        var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters
+        console.log('2:'+parentId);
+        var fileReader = new FileReader();
+        console.log('fileReader:: ');
+        console.log(fileReader);
+        fileReader.onloadend = function(event)
+        {
+            //console.log('inside onloadend --- line 510');
+            var attachmentName = file.name;
+            var attachmentDesc = 'SMSF';
+            var binary = "";
+            var bytes = new Uint8Array(event.target.result);
+            var length = bytes.byteLength;
+            //console.log('inside onloadend --- line 515');
+            for (var i = 0; i < length; i++)
+            {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            var attachment = window.btoa(binary);//(new sforce.Base64Binary(binary)).toString();
+
+            var positionIndex=0;
+            var fileSize = attachment.length;
+
+            console.log(" --- line 522 Total Attachment Length: " + fileSize);
+
+            var doneUploading = false;
+            var fileext = attachmentName.substr((attachmentName.lastIndexOf('.') + 1)).toUpperCase();
+            console.log('fileext: '+fileext);
+
+            if(fileSize < maxStringSize) {
+                if(fileext!='' && (fileext=='JPG' || fileext=='JPEG' || fileext=='GIF' || fileext=='PNG' || fileext=='PDF' || fileext=='DOCX' || fileext=='DOC'))
+                {
+                    console.log(' --- line 531 attachname'+attachmentName);
+                    uploadChunk(parentId,null,attachmentName,attachment,positionIndex,fileSize,doneUploading,attachmentPanel,attachmentDesc);
+                }
+                else{
+                    $('.save-file-uploading').remove();
+                    $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">Only .jpg, .gif, .png, .docx, .doc and .pdf files allowed</span>');
+
+                    //alert('Only .jpg, .gif, .png, .docx, .doc and .pdf files allowed');
+                }
+            } else {
+                $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">File to big. Max file size is 4.5MB</span>');
+                //alert('Base 64 Encoded file is too large.  Maximum size is ' + maxStringSize + ' your file is ' + fileSize + '.');
+
+            }
+        }
+
+        fileReader.onerror = function(e) {
+            $('.save-file-uploading').remove();
+            $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">There was an error reading the file.  Please try again.</span>');
+            //alert('There was an error reading the file.  Please try again.');
+        }
+        fileReader.onabort = function(e) {
+            $('.save-file-uploading').remove();
+            $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">There was an error reading the file.  Please try again.</span>');
+            //alert('There was an error reading the file.  Please try again.');
+        }
+
+        fileReader.readAsArrayBuffer(file);  //Read the body of the file
+    }
+
+    //Method to send a file to be attached to the parent
+    //Sends parameters: Parent Id, Attachment (body), Attachment Name, and the Id of the Attachment if it exists to the controller
+    function uploadChunk(parentId, fileId, attachmentName, attachment, positionIndex,fileSize,doneUploading,attachmentPanel,attachmentDesc) {
+        var chunkSize = 950000;
+        //console.log(' --- line 560 came inside'+attachmentName);
+        var attachmentBody = "";
+
+        if(fileSize <= positionIndex + chunkSize) {
+            attachmentBody = attachment.substring(positionIndex);
+            doneUploading = true;
+        } else {
+            attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
+        }
+        //console.log(" --- line 569 Uploading " + parentId+":"+fileId+":"+ attachmentBody.length + " chars of " + fileSize);
+
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.Portal_ProfileSuperDetails_Controller.doUploadAttachment}',
+            parentId, attachmentBody, attachmentName, fileId,attachmentDesc,
+            function(result, event) {
+            //console.log(result);
+            if(event.type === 'exception') {
+                console.log(" --- line 577 exception");
+                console.log(event);
+            } else if(event.status) {
+                if(result.substring(0,3) == '00P') {
+                    //console.log(" --- line 585 --- result");
+                    if(doneUploading == true) {
+                        $('.save-file-uploading').remove();
+                        //alert('File uploaded successfully!');
+
+                        $('#outputArea').prepend('<h5 >'+attachmentName+' has uploaded successfully!</h5>');
+                        //console.log('got here',$('#attachmentPanel'+parentId));
+                        //extra css line so that this works on mobile also
+                        $('#outputArea').css("display","block");
+
+                        $('#attdiv').style('display:block;');
+
+                    } else {
+                        positionIndex += chunkSize;
+                        uploadChunk(parentId,result,attachmentName,attachment,positionIndex,fileSize,doneUploading,attachmentPanel,attachmentDesc);
+                    }
+                }
+            } else {
+                $('.save-file-uploading').remove();
+                $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">Could not upload file!</span>');
+                //alert('Could not upload file!');
+                //alert('Could not upload file!');
+                //console.log(event.message);
+                //console.log('all done?  --- line 601')
+            }
+            $('.file-input-opacity').val('');
+            $('.file-area label.jcf-fake-input span em').html('');
+        },
+        {buffer: false, escape: true, timeout: 120000}
+        );
+    }
+
+    </script>
+</apex:page>

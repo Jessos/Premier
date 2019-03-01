@@ -1,0 +1,38 @@
+<!--
+ Created by Adelaide Greenaway on 10/01/18.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Login Page --- Portal_Base_Controller
+ * Created custom login page to avoid confusion with standard SF communities pages
+ *
+ -->
+
+<apex:page id="loginPage" showHeader="false" docType="html-5.0" title="2cloudnine Employee Portal Login Page" controller="Portal_Login_Controller" >
+    <apex:composition template="{!$Site.Prefix}/PortalNATemplate">
+    <!--<apex:composition template="{!$Site.Template}">-->
+        <apex:define name="body">
+            <body >
+            <!--<apex:pageMessages />-->
+            <apex:panelGrid columns="1">
+                <br/>
+                <br/>
+                <apex:panelGrid columns="1" styleClass="loginWindow">
+                    <br/>
+                    <apex:outputPanel layout="block" styleClass="loginPanel">
+                        <apex:panelGrid styleClass="loginPanel" columns="2">
+                            <apex:panelGroup >
+                                <br/>
+                                <br/>
+                                <c:PortalLogin id="siteLogin"/>
+                            </apex:panelGroup>
+                        </apex:panelGrid>
+                    </apex:outputPanel>
+                </apex:panelGrid>
+            </apex:panelGrid>
+            </body>
+            <br/>
+        </apex:define>
+    </apex:composition>
+</apex:page>

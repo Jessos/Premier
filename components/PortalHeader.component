@@ -1,0 +1,106 @@
+<!--
+ Created by Adelaide Greenaway on 10/01/18.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Header Component --- Portal_Base_Controller
+ * Created custom header page to avoid confusion with standard site header component
+ * this component displays the portal banner and banner menu items
+ *
+ -->
+<apex:component id="headerComponent" controller="Portal_Home_Controller">
+    <script>
+        var primaryColour = "{!$Setup.customTFPortalSettings__c.Primary_Colour__c}";
+        var secondaryColour = "{!$Setup.customTFPortalSettings__c.Secondary_Colour__c}";//'#FF2B5E';
+        var tertiaryColour = "{!$Setup.customTFPortalSettings__c.Tertiary_Colour__c}";
+
+        /*console.log('primaryColour:: '+primaryColour);
+        console.log('secondaryColour:: '+secondaryColour);
+        console.log('tertiaryColour:: '+tertiaryColour);*/
+
+        document.documentElement.style.setProperty('--logoBarColour', primaryColour);
+        document.documentElement.style.setProperty('--sideBarColour', secondaryColour);
+        document.documentElement.style.setProperty('--highlightColour', tertiaryColour);
+
+
+    </script>
+
+    <body>
+
+    <div  class="logoBar" >
+
+        <!--<div class="dimBar">-->
+        <img src="{!URLFOR($Resource.PortalSiteLogo, '')}" alt="logo" class="logoBarLogo" />
+
+        <div style="display:{!IF(showMenu,"block","none")};" >
+            <apex:outputPanel >
+                <i class="icon-dots logoBarIcons dropDown">
+                    <apex:outputLink styleClass="dropDownItem" value="{!$Site.Prefix}/secur/logout.jsp">Logout</apex:outputLink>
+                    <apex:outputLink styleClass="dropDownItem" value="{!$Site.Prefix}/ChangePassword">Change Password</apex:outputLink>
+                    <apex:outputLink styleClass="dropDownItem" value="{!$Site.Prefix}/changePortalAvatar">Change Profile Avatar</apex:outputLink>
+                    <apex:outputLink styleClass="dropDownItem" value="{!$Site.Prefix}/PortalHome"><i class="icon-homegrey"></i></apex:outputLink>
+                </i>
+                <apex:outputPanel rendered="{!IF(portalAvatar != null, true, false)}">
+                    <div class="logoBarPhoto" >
+                        
+                        <!-- <apex:image value="{!URLFOR($Action.Attachment.Download, '00P0m0000071VkyEAE')}" styleClass="logoBarPhoto"/> -->
+                     <apex:image value="{!URLFOR($Action.Attachment.Download, portalAvatar.Id)}" styleClass="logoBarPhoto"/> 
+                    </div>
+                </apex:outputPanel>
+
+                <div class="notifIcon" style="{!IF(notificationCount == 0,'display:none','display:block')}">
+                    <i class="icon-notifications "></i>
+                    <div class="notifTxt"><a href="{!$Site.Prefix}/PortalHome">{!notificationCount}</a></div>
+                </div>
+                <div class="logoBarName" >Hi {!contractor.FirstName}</div>
+            </apex:outputPanel>
+            <!--</div>-->
+
+            <!--mobile only menu slider -->
+            <div class="wrapper">
+                <input type="checkbox" id="menuToggler" class="input-toggler" />
+                <label for="menuToggler" class="menu-toggler">
+                    <span class="menu-toggler__line"></span>
+                    <span class="menu-toggler__line"></span>
+                    <span class="menu-toggler__line"></span>
+                </label>
+                <aside class="sidebar">
+                    <div  id="mobileMenuHeader" class="mobileLogoBar">
+                        <div  class="mobileLogoBar">
+                            <div style="display:{!IF(showMenu,"block","none")};">
+                                <apex:outputPanel >
+                                    <div class="mobileNotifIcon" style="{!IF(notificationCount == 0,'display:none','display:block')}">
+                                        <i class="icon-notifications "></i>
+                                        <!--<a href="{!$Site.Prefix}/PortalHome"><i class="icon--notifications"></i></a>-->
+                                        <div class="mobileNotifTxt"><a href="{!$Site.Prefix}/PortalHome">{!notificationCount}</a></div>
+                                    </div>
+                                    <apex:outputPanel >
+                                        <apex:outputPanel rendered="{!IF(portalAvatar != null, true, false)}">
+                                            <div class="mobileLogoBarPhoto" >
+                                                <apex:image value="{!URLFOR($Action.Attachment.Download, portalAvatar.Id)}" styleClass="mobileLogoBarPhoto"/>
+                                            </div>
+                                        </apex:outputPanel>
+                                        <div class="mobileLogoBarName" >{!contractor.FirstName}</div>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                            </div>
+
+                        </div>
+                    </div>
+                    <ul class="menu ">
+                        <li class="menu__item"><a href="{!$Site.Prefix}/PortalHome" class="menu__link "><i class="icon-homegrey"></i>   Home</a></li>
+                        <li class="menu__item"><a href="{!$Site.Prefix}/PortalTimesheetsHome" class="menu__link  "><i class="icon-timesheetgrey"></i>Timesheets</a></li>
+                        <li class="menu__item"><a href="{!$Site.Prefix}/PortalExpensesHome" class="menu__link  "><i class="icon-expensegrey"></i>Expenses</a></li>
+                        <li class="menu__item"><a href="{!$Site.Prefix}/PortalContracts" class="menu__link "><i class="icon-ContractG"></i>Contracts</a></li>
+                        <li class="menu__item"><a href="{!$Site.Prefix}/PortalPolicies" class="menu__link  "><i class="icon-ContractG"></i>Policies</a></li>
+                        <li class="menu__item"><a href="{!$Site.Prefix}/PortalPaymentHistory" class="menu__link "><i class="icon-paygrey"></i>Payment History</a></li>
+                        <li class="menu__item"><a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="menu__link  "><i class="icon-profilegrey"></i>My Profile</a></li>
+                        <li class="menu__item"><a href="{!$Site.Prefix}/secur/logout.jsp" class="menu__link "><i class="icon-left-arrow"></i>Logout</a></li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+    </div>
+    </body>
+</apex:component>

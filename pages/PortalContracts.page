@@ -1,0 +1,62 @@
+<!--
+ Created by Adelaide Greenaway on 22/11/17.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Contracts --- Portal_Home_Controller
+ *
+ -->
+
+<apex:page id="PortalContracts" title="2cloudnine Community Portal" docType="html-5.0" controller="Portal_Home_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false">
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+            <body>
+                <div class="sideBar">
+                    <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks "><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalContracts" class="sideBarLinks sidebarHighlight"><i class="icon-ContractG"></i>Contracts</a>
+                    <a href="{!$Site.Prefix}/PortalPolicies" class="sideBarLinks "><i class="icon-ContractG"></i>Policies</a>
+                    <a href="{!$Site.Prefix}/PortalPaymentHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Payment History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks "><i class="icon-profilegrey"></i>My Profile</a>
+                </div>
+                <apex:form >
+                    <div class="pageContent">
+                        <h1>Contracts</h1>
+                        <apex:outputPanel rendered="{! !plcAgreementsExist}">
+                            <h2>You currently do not have any past or future Contracts.</h2>
+                        </apex:outputPanel>
+                    <apex:outputPanel rendered="{!plcAgreementsExist}">
+                        <apex:outputPanel >
+
+                            <apex:repeat value="{!incompletePlcAgreementWrapperList}" var="plcic">
+                                <div class="notificationBox">
+                                    <apex:commandButton onClick="openModal('{!plcic.plcAgreement.Current_Signing_URL__c}');" value="View Agreement" styleClass="noteBoxButton"/>
+                                    <h2>Client:&nbsp;{!plcic.plcAgreement.Placement__r.ts2__Client__r.Name}</h2>
+                                    <h3><b>Assignment: </b>{!plcic.plcAgreement.Placement__r.Name} -- {!plcic.plcAgreement.Placement__r.ts2__Job__r.Name}</h3>
+                                    <p><b>Start Date: </b> <apex:outputText value="{0,date,d MMM yyyy}"><apex:param value="{!plcic.plcAgreement.Placement__r.ts2__Start_Date__c}"/></apex:outputText></p>
+                                    <p><b>End Date: </b><apex:outputText value="{0,date,d MMM yyyy}"><apex:param value="{!plcic.plcAgreement.Placement__r.ts2__End_Date__c}"/></apex:outputText></p>
+                                    <p><b>Agreement Status: </b>{!plcic.plcAgreement.echosign_dev1__Status__c}</p>
+                                </div>
+                            </apex:repeat>
+
+                            <apex:repeat value="{!completePlcAgreementWrapperList}" var="plcc">
+                                <div class="notificationBox">
+                                    <apex:commandButton onClick="openModal('{!plcc.plcAgreement.echosign_dev1__SignedPDF__c}');" value="View Agreement" styleClass="noteBoxButton"/>
+                                    <h2>Client:&nbsp;{!plcc.plcAgreement.Placement__r.ts2__Client__r.Name}</h2>
+                                    <h3><b>Assignment:</b> {!plcc.plcAgreement.Placement__r.Name} -- {!plcc.plcAgreement.Placement__r.ts2__Job__r.Name} </h3>
+                                    <p><b>Start Date: </b><apex:outputText value="{0,date,d MMM yyyy}"><apex:param value="{!plcc.plcAgreement.Placement__r.ts2__Start_Date__c}"/></apex:outputText></p>
+                                    <p><b>End Date: </b><apex:outputText value="{0,date,d MMM yyyy}"><apex:param value="{!plcc.plcAgreement.Placement__r.ts2__End_Date__c}"/></apex:outputText></p>
+                                    <p><b>Agreement Status:</b> {!plcc.plcAgreement.echosign_dev1__Status__c}</p>
+                                </div>
+                            </apex:repeat>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                </div>
+            </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+</apex:page>

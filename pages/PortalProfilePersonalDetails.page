@@ -1,0 +1,366 @@
+<!--
+ Created by Adelaide Greenaway on 2/11/17.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Profile Personal Details --- Portal_ProfilePersonal_Controller
+ * NOTE: Refer to SiteTemplate and customPortalJS for any scripts that are used on this page
+ *
+ -->
+
+<apex:page id="PortalProfilePersonalDetails" controller="Portal_ProfilePersonal_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false" docType="html-5.0">
+<head>
+    <title>Premier Timesheet Portal</title>
+</head>
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+            <body>
+                <div class="sideBar">
+                    <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalPlacementHistory" class="sideBarLinks "><i class="icon-paygrey"></i>Placement History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks sidebarHighlight"><i class="icon-profilegrey"></i>My Profile</a>
+                    <a href="https://access.paylocity.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Paylocity Portal</a>
+                    <a href="http://support.pstaffing.com/" target="_blank" class="sideBarLinks"> <i class="icon-search"></i>Support Center</a>
+                </div>
+                <apex:form >
+                    <div id="main" class="pageContent">
+                        <apex:messages />
+                        <div class="dtInfo">
+                            <h1> My Profile </h1>
+                            <apex:outputPanel rendered="{!IF(payeeEarnerType == 'PAYG',true, false)}">
+                                <apex:pageMessages id="messages" />
+                                <ul class="tab">
+                                    <a href="#" class="active tabPadding" >Personal Details</a>
+                                    <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileBankDetails" >Bank Details</a>
+                                    <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileSuperDetails" >Superannuation Details</a>
+                                    <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileTaxDetails" >Tax Details</a>
+                                </ul>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!OR(payeeEarnerType == 'PTY / LTD', payeeEarnerType == 'Managed Company Contractor')}">
+                                <h1> My Profile </h1>
+                                <ul class="tab">
+                                    <a href="#" class="active tabPadding" >Personal Details</a>
+                                    <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileCompanyDetails" >Company Details</a>
+                                    <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileBankDetails" >Bank Details</a>
+                                </ul>
+                            </apex:outputPanel>
+                        </div>
+                        <div id="mainMProfPersonal" class="tsDayMenu" >
+                            <apex:outputPanel rendered="{!IF(payeeEarnerType == 'PAYG',true, false)}">
+                                <ul class="tstabM" >
+                                    <a class="tsM" href="#" onclick="toggleEntry(event, 'PersonalDetailsM', 'mainMProfPersonal');" >
+                                        <div class="tablink timeEntryTab">
+                                            <p class="mobileMyProfileMenuItem">Personal Details<i class="icon-chevron mobileTSEtabT"></i></p>
+                                        </div>
+                                        <div style="clear:both;"/>
+                                    </a>
+
+                                    <a class="tsM" href="{!$Site.Prefix}/PortalProfileBankDetails"  >
+                                        <div class="tablink timeEntryTab">
+                                            <p class="mobileMyProfileMenuItem">Bank Details<i class="icon-chevron mobileTSEtabT"></i></p>
+                                        </div>
+                                        <div style="clear:both;"/>
+                                    </a>
+
+                                    <a class="tsM" href="{!$Site.Prefix}/PortalProfileSuperDetails"  >
+                                        <div class="tablink timeEntryTab">
+                                            <p class="mobileMyProfileMenuItem">Super Details<i class="icon-chevron mobileTSEtabT"></i></p>
+                                        </div>
+                                        <div style="clear:both;"/>
+                                    </a>
+                                    <a class="tsM" href="{!$Site.Prefix}/PortalProfileTaxDetails"  >
+                                        <div class="tablink timeEntryTab">
+                                            <p class="mobileMyProfileMenuItem">Tax Details<i class="icon-chevron mobileTSEtabT"></i></p>
+                                        </div>
+                                        <div style="clear:both;"/>
+                                    </a>
+
+                                    <div style="height:60pt">
+
+                                    </div>
+                                </ul>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!OR(payeeEarnerType == 'PTY / LTD', payeeEarnerType == 'Managed Company Contractor')}">
+                                <ul class="tstabM" >
+                                    <a class="tsM" href="#" onclick="toggleEntry(event, 'PersonalDetailsM', 'mainMProfPersonal');" >
+                                        <div class="tablink timeEntryTab">
+                                            <p class="mobileMyProfileMenuItem">Personal Details<i class="icon-chevron mobileTSEtabT"></i></p>
+                                        </div>
+                                        <div style="clear:both;"/>
+                                    </a>
+
+                                    <a class="tsM" href="{!$Site.Prefix}/PortalProfileBankDetails"  >
+                                        <div class="tablink timeEntryTab">
+                                            <p class="mobileMyProfileMenuItem">Bank Details<i class="icon-chevron mobileTSEtabT"></i></p>
+                                        </div>
+                                        <div style="clear:both;"/>
+                                    </a>
+
+                                    <a class="tsM" href="{!$Site.Prefix}/PortalProfileCompanyDetails"  >
+                                        <div class="tablink timeEntryTab">
+                                            <p class="mobileMyProfileMenuItem">Company Details<i class="icon-chevron mobileTSEtabT"></i></p>
+                                        </div>
+                                        <div style="clear:both;"/>
+                                    </a>
+
+                                    <div style="height:60pt">
+
+                                    </div>
+                                </ul>
+                            </apex:outputPanel>
+                        </div>
+
+
+                        <div id="PersonalDetailsM" class="tsTabMHide">
+                            <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="tsTabBack">
+                                <i class="icon-chevronblue iconMain iconHInv"></i><p class="linkText">Back to My Profile</p>
+                            </a>
+                            <!--<div id="contentToToggle" style="display:{!IF(showContent,"block","none")};">-->
+                               <div id="readBlock">
+                                <apex:pageBlock >
+                                    <apex:pageBlockSection columns="2">
+                                        <apex:pageBlockSectionItem >
+                                            <apex:outputLabel styleClass="lightLabel" value="NAME  " >
+                                            <p class="roText" >{!contractor.FirstName}&nbsp;{!contractor.LastName}</p>
+                                            </apex:outputLabel>
+                                        </apex:pageBlockSectionItem>
+                                        <!-- <apex:pageBlockSectionItem >
+                                            <apex:outputLabel styleClass="lightLabel" value="DATE OF BIRTH  " >
+                                            <p class="roText"><apex:outputText value="{0,date,d MMM yyyy}" ><apex:param value="{!contractor.Birthdate}"/></apex:outputText></p>
+                                            </apex:outputLabel>
+                                        </apex:pageBlockSectionItem> -->
+                                    </apex:pageBlockSection>
+                                </apex:pageBlock>
+
+                                <hr />
+                                <apex:pageBlock >
+                                    <apex:pageBlockSection columns="2">
+                                        <!-- <apex:pageBlockSectionItem >
+                                            <apex:outputLabel styleClass="lightLabel" value="HOME PHONE " >
+                                            <p class="roText">{!phone}</p>
+                                            </apex:outputLabel>
+                                        </apex:pageBlockSectionItem> -->
+                                        <apex:pageBlockSectionItem >
+                                            <apex:outputLabel styleClass="lightLabel" value="MOBILE PHONE  " >
+                                            <p class="roText">{!mobile}</p>
+                                            </apex:outputLabel>
+                                        </apex:pageBlockSectionItem>
+                                    </apex:pageBlockSection>
+                                </apex:pageBlock>
+
+                                <hr />
+                                <apex:pageBlock >
+                                    <apex:pageBlockSection columns="1">
+                                        <apex:pageBlockSectionItem >
+                                            <apex:outputLabel styleClass="lightLabel" value="EMAIL  " >
+                                            <p class="roTextEmail">{!email}</p>
+                                            </apex:outputLabel>
+                                        </apex:pageBlockSectionItem>
+                                    </apex:pageBlockSection>
+                                </apex:pageBlock>
+                                <hr />
+                                <div >
+                                    <apex:pageBlock >
+                                        <apex:pageBlockSection columns="1">
+                                            <apex:pageBlockSectionItem >
+                                                <apex:outputLabel styleClass="lightLabel" value="ADDRESS  " >
+                                                    <p class="roTextAddress">{!street}</p>
+                                                    <p class="roTextAddress">{!city}</p>
+                                                    <p class="roTextAddress">{!state},&nbsp;{!postalcode}</p>
+                                                    <p class="roTextAddress">{!country}</p>
+                                                </apex:outputLabel>
+                                            </apex:pageBlockSectionItem>
+                                        </apex:pageBlockSection>
+                                    </apex:pageBlock>
+                                </div>
+                                <hr />
+
+                                    <div >
+                                        <apex:commandbutton value="Update Details" styleClass="pageButton" onComplete="toggleEntry(event, 'editBlock', 'readBlock');"/>
+                                        <!--<apex:commandbutton value="Update Details" action="{!toggleContent}" styleClass="pageButton"/>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--<div id="contentToToggle" style="display:{!IF(showContent,"none","block")};">-->
+                            <div >
+                                <div id="editBlock" >
+                                    <div >
+                                    <apex:outputLabel value="NAME  " />
+                                    <p class="roText">{!contractor.FirstName}&nbsp;{!contractor.LastName}</p>
+
+                                    <!-- <apex:outputLabel value="DATE OF BIRTH  " />
+                                    <p class="roText"><apex:outputText value="{0,date,d MMM yyyy}" ><apex:param value="{!contractor.Birthdate}"/></apex:outputText></p>
+ -->
+                                    <hr />
+                                    <!-- <apex:outputLabel value="HOME PHONE  " />
+                                    <div>
+                                        <apex:input type="tel" styleClass="pageInput" value="{!phone}" onKeyPress="return isPhNumKey(event)"/>
+                                    </div> -->
+
+                                    <div>
+                                        <apex:outputlabel >Mobile Phone </apex:outputlabel>
+                                        <div>
+                                            <apex:input type="tel" styleClass="pageInput" value="{!mobile}" onKeyPress="return isPhNumKey(event)"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <apex:outputlabel >Email </apex:outputlabel>
+                                        <div id="emailErr" style="display:none;">
+                                            <p class="dataEntryErrorMsg" >Please enter a valid email address</p>
+                                        </div>
+                                        <div>
+                                            <apex:input id="txtEmail" type="email" styleClass="pageInput" value="{!email}" onBlur=" checkEmail($(this).val(),jQuery('[id$=showSave]'),jQuery('[id$=txtEmail]'),jQuery('[id$=emailErr]'));"/>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                    <div >
+                                        <hr />
+                                        <p class="note">Start typing your address to quickly populate via Google.</p>
+
+                                        <apex:attribute type="Id" name="objectId" required="true" assignTo="{!recordId}" description="The sObject record to validate the address for" />
+                                        <apex:attribute type="String" name="objectName" required="true" assignTo="{!objName}" description="The API name of the sObject" />
+
+                                        <!-- Address One Fields -->
+                                        <apex:attribute type="String" name="addressOneName" required="true" description="The label name of the first address." />
+                                        <apex:attribute type="String" name="oneStreet" required="true" assignTo="{!streetOne}" description="The API name of the first street field." />
+                                        <apex:attribute type="String" name="oneCity" required="true" assignTo="{!cityOne}" description="The API name of the first city field." />
+                                        <apex:attribute type="String" name="oneState" required="true" assignTo="{!stateOne}" description="The API name of the first state field." />
+                                        <apex:attribute type="String" name="onePostalCode" required="true" assignTo="{!postalcodeOne}" description="The API name of the first postal code field." />
+                                        <apex:attribute type="String" name="oneCountry" required="true" assignTo="{!countryOne}" description="The API name of the first country." />
+
+                                        <div>
+                                            <apex:outputLabel value="ADDRESS" />
+
+                                            <div>
+                                                <input class="pageInput"  type="text" id="autocomplete_one" placeholder="Start typing address..." />
+                                            </div>
+                                            <p class="dataEntryErrorMsg">Make sure your address has been captured correctly and amend your address details as required before submitting.</p>
+
+                                        </div>
+                                        <div>
+                                            <apex:outputLabel value="STREET" />
+                                            <div>
+                                                <apex:inputText value="{!street}"  styleClass="oneStreet pageInput"  />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="CITY" />
+                                            <div>
+                                                <apex:inputText value="{!city}"  styleClass="oneCity pageInput"  />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="STATE" />
+                                            <div>
+                                                <apex:inputText value="{!state}"  styleClass="oneState pageInput"  />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="POSTAL CODE" />
+                                            <div>
+                                                <apex:inputText value="{!postalcode}"  styleClass="onePostalCode pageInput"  />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="COUNTRY" />
+                                            <div>
+                                                <apex:inputText value="{!country}"  styleClass="oneCountry pageInput"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <!-- <div >
+                                        <div>
+                                            <apex:outputLabel value="EMERGENCY CONTACT NAME  " />
+                                            <div>
+                                                <apex:inputText styleClass="pageInput"  value="{!emerName}"/>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="EMERGENCY CONTACT PHONE NUMBER  " />
+                                            <div>
+                                                <apex:input type="tel" styleClass="pageInput" value="{!emerNumber}" onkeypress="return isPhNumKey(event)"/>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="EMERGENCY CONTACT RELATIONSHIP  " />
+                                            <div>
+                                                <apex:inputText styleClass="pageInput" value="{!emerRelnship}"/>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="RESIGNATION NOTICE  " />
+                                            <div>
+                                                 <apex:selectList multiselect="false" size="1" value="{!Contact.Resignation_Notice__c}" required="false" >
+                                                       <!--<apex:selectOptions value="{!Resignationnotice}"/>-->
+                                                    
+                                             <!--        </apex:selectList>
+                                            </div>
+                                        </div>
+
+                                       
+
+                                        <div>
+                                            <apex:outputLabel value="LANGUAGES  " />
+                                            <div>
+                                                <apex:inputText styleClass="pageInput" value="{!languages}"/>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="HIGHEST EDUCATION COMPLETED  " />
+                                            <div>
+                                                <apex:inputText styleClass="pageInput" value="{!highesteducationcompleted}"/>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="JOB TYPE  " />
+                                            <div>
+                                                <apex:inputText styleClass="pageInput" value="{!jobtype}"/>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="REGISTRATION LOCATION PREFERENCE  " />
+                                            <div>
+                                                <apex:inputText styleClass="pageInput" value="{!registrationlocationpreference}"/>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputLabel value="LINKEDIN PROFILE  " />
+                                            <div>
+                                                <apex:inputText styleClass="pageInput" value="{!linkedinprofile}"/>
+                                            </div>
+                                        </div>
+
+                                    </div> --> -->
+                                    <!-- <hr /> -->
+                                    <div>
+                                        <apex:commandButton action="{!submit}" value="Save Updated Details" styleClass="pageButton"/> &nbsp;&nbsp;
+                                        <apex:commandbutton value="Cancel" styleClass="pageButton" onComplete="toggleEntry(event, 'readBlock', 'editBlock');"/>
+                                        <!--<apex:commandButton action="{!cancel}" value="Cancel" styleClass="pageButton"/>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+</apex:page>

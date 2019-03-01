@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Settings used by the 2cloudnine Trialforce Custom Portal</description>
+    <enableFeeds>false</enableFeeds>
+    <label>2c9 Employee Portal Settings</label>
+    <visibility>Public</visibility>
+    <fields>
+        <fullName>Use_Echosign__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>if enabled the Portal will look for echosign agreements on Payee or Placement objects and complete any necessary logic.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>if enabled the Portal will look for echosign agreements on Payee or Placement objects and complete any necessary logic.</inlineHelpText>
+        <label>Use Echosign</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Primary_Colour__c</fullName>
+        <description>this is the main colour for the Portal Logo Bar</description>
+        <externalId>false</externalId>
+        <inlineHelpText>this is the main colour for the Portal Logo Bar</inlineHelpText>
+        <label>Primary Colour</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tertiary_Colour__c</fullName>
+        <description>this is the colour for the sideBar menu highlight</description>
+        <externalId>false</externalId>
+        <inlineHelpText>this is the colour for the sideBar menu highlight</inlineHelpText>
+        <label>Tertiary Colour</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Secondary_Colour__c</fullName>
+        <description>this is the colour for the sideBar background</description>
+        <externalId>false</externalId>
+        <inlineHelpText>this is the colour for the sideBar background</inlineHelpText>
+        <label>Secondary Colour</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AddressAutocompleteGoogleKey__c</fullName>
+        <description>Your Google API Key, used to authenticate with Google server.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Your Google API Key, used to authenticate with Google server.</inlineHelpText>
+        <label>AddressAutocompleteGoogleKey__c</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+</CustomObject>

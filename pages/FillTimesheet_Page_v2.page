@@ -1,0 +1,1415 @@
+<!--
+        Page          :     FillTimesheet_Page_v2.page
+        @Author       :     Ponni Priyadharshni
+        @Description  :        
+     
+ -->
+<apex:page id="pageId" showHeader="false" sidebar="false" controller="Ctrl_FillTimeSheet_v2" standardStylesheets="false" docType="html-5.0" language="{!Locale}" >
+<head>
+
+    <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" media="print" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" /> -->
+
+  <!--  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> -->
+  <!-- jQuery -->
+<!-- <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<!-- BS JavaScript -->
+<!-- <script type="text/javascript" src="js/bootstrap.js"></script> -->
+
+<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
+<script>
+function openCancle() {
+            var urlString = '{!$Site.CurrentSiteUrl}';
+               window.open(urlString,"_self");
+        }
+</script>
+
+</head> 
+
+<html>  
+    
+     
+    <noscript Id = "noscript-warning">This page is best viewed with JavaScript Enabled</noscript>
+  
+    <style >
+        /*#noscript-warning {
+            background-color: #0073FF;
+            color: #FFFFFF; 
+            font-family: sans-serif;
+            font-size: 120%;
+            font-weight: bold;
+            left: 0;
+            padding: 5px 0;
+            position: fixed;
+            text-align: center;
+            top: 0; 
+            width: 100%;
+            z-index: 101;
+        }*/
+        .table, .panel, .row{
+            min-width: 1050px; 
+        }
+         .text-muted {
+            color: #5F5F5F;
+        } 
+        textarea.form-control{ 
+            height: 34px;
+        }
+        .col-xs-1{
+            min-width: 110px;
+        }
+        .table > thead > tr > th{
+            vertical-align: middle;
+            text-align: center;
+        }
+       .table > tbody > tr > td{
+            text-align: center;
+        }
+        .disabled{
+            opacity: 0.6;
+            pointer-events:none;
+            border:0px 0px 0.5px 0px;
+            box-shadow: none;
+        }
+        input{
+            border: 0.5px solid #ccc;
+            border-radius: 4px;
+            color: #555;
+            padding-left: 6px;
+            height: 34px;
+        }
+        
+        
+        .onoffswitch {
+            position: relative; width: 99px; 
+            -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+        }
+        .onoffswitch-checkbox {
+            display: none;
+        }
+        .onoffswitch-label {
+            display: block; overflow: hidden; cursor: pointer;
+            border: 2px solid #999999; border-radius: 20px;
+            height:auto !important;letter-spacing: 0px;
+        }
+        .onoffswitch-inner {
+            display: block; width: 200%; margin-left: -100%;
+            -moz-transition: margin 0.3s ease-in 0s; -webkit-transition: margin 0.3s ease-in 0s;
+            -o-transition: margin 0.3s ease-in 0s; transition: margin 0.3s ease-in 0s;
+        }
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+            font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+            -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+        }
+        .onoffswitch-inner:before {
+            content: "12 Hour";
+            padding-left: 10px;
+            background-color: #8B9294; color: #FFFFFF;
+        }
+        .onoffswitch-inner:after {
+            content: "24 Hour";
+            padding-right: 7px;
+            background-color: #EEEEEE; color: #999999;
+            text-align: right;
+        }
+        .onoffswitch-switch {
+            display: block; width: 18px; margin: 6px;
+            background: #FFFFFF;
+            border: 2px solid #999999; border-radius: 20px;
+            position: absolute; top: 0; bottom: 0; right: 65px;
+            -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
+            -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+         /*.btLink {
+             background:none!important;
+             border:none; 
+             padding:0!important;
+             font: inherit;
+             cursor: pointer;
+             color:#3898cb;
+             
+        }
+        .btLink:hover{
+        text-decoration:underline;
+        }*/
+
+        /* Timesheet note styling*/
+       .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup 
+            displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can add 
+            the height property for a fixed size pop up if you want.*/
+            width: 400px;
+            margin-left: -250px;
+            top:200px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+
+    </style>
+  
+    <script>
+        $(document).ready(function() {
+            refreshExpenses({!expenseWList.size});
+        });
+    
+        
+        
+        isFirst = true;
+        function isValidInput(field) {          
+            var re = /^[0-9:]*$/;
+            if (!re.test(field.value)  ) {
+                field.value = "";
+            }
+            else if(field.value.length > 2){
+                field.value=field.value.substring(0,3);
+            }
+           
+        }
+       
+       
+        
+        function isValidHours(field,frmt,inptime){
+            var hrs= $('#'+field).val();
+            var isEmpty = true;
+            if(frmt=='12'){
+                if(hrs!=null && hrs!='' && !isNaN(hrs) && Number(hrs)>=0 && Number(hrs)<=12)
+                    isEmpty= false;
+            }
+            if(frmt=='24'){
+                if(hrs!=null && hrs!='' && !isNaN(hrs) && Number(hrs)>=0 && Number(hrs)<=24)
+                    isEmpty= false;
+            }
+            if(isEmpty){
+                alert("Please input a valid Time!"); 
+                $('#'+field).val('');
+                window.setTimeout(function () {document.getElementById(field).focus();}, 0); 
+            }
+            else{
+            var tseId = field.substring(0,field.indexOf('_'));
+                if(hrs.length==1)
+                    $('#'+field).val('0'+hrs);
+                if(hrs.length>2 && hrs.indexOf('0')==0)
+                {
+                    hrs=hrs.replace(/^0+/, '');
+                    if(hrs.length==1)
+                        hrs ='0'+hrs;
+                    $('#'+field).val(hrs);
+                }
+                setInputtime(inptime,frmt);
+                if(frmt=='24')
+                    calculateHoursActual(tseId);
+                if(frmt=='12')
+                    calculateHoursActual12Hour(tseId);
+                    
+            }
+        }
+         function setInputtime(inptime,frmt){
+            
+            var rowNum = inptime.split('_')[0];
+            var startOrEnd = inptime.split('_')[1];
+            console.log(startOrEnd);
+            if(startOrEnd=='s'){
+                if(frmt=='24'){
+                    var shr= $('#'+rowNum+'_shr1').val();
+                    var smin=$('#'+rowNum+'_smin1').val();
+                    
+                }
+                if(frmt=='12'){
+                    var id1 = $("select[Id*='"+rowNum+":selected_list']").attr('id');
+                    var shr= $('#'+rowNum+'_shr2').val();
+                    if(document.getElementById(id1).value=='AM'){
+                     
+                        if(parseInt(shr,10) == 12)
+                            shr = "00";
+                          
+                    }
+                    else{
+                         if(parseInt(shr,10) < 12)                           
+                           shr = parseInt(shr,10) + 12;                          
+                            
+                    }
+                     var smin=$('#'+rowNum+'_smin2').val();
+                }
+                console.log(shr+':'+smin);
+                $('#'+inptime).children().val(shr+':'+smin);
+            }
+            if(startOrEnd=='e'){
+                if(frmt=='24'){
+                    var ehr= $('#'+rowNum+'_ehr1').val();
+                    var emin=$('#'+rowNum+'_emin1').val();
+                    
+                }
+                if(frmt=='12'){
+                    var id1 = $("select[Id*='"+rowNum+":selected_list1']").attr('id');
+                    var ehr= $('#'+rowNum+'_ehr2').val();
+                    console.log(id1+'***');
+                    if(document.getElementById(id1).value=='AM'){
+                        if(parseInt(ehr,10) == 12)
+                           ehr = "00";
+                              
+                    }
+                    else{
+                         if(parseInt(ehr,10) < 12)                         
+                            ehr = parseInt(ehr,10) + 12;                          
+                             
+                    }
+                    console.log($('#'+id1).val()+'&&');
+                    var emin=$('#'+rowNum+'_emin2').val();
+                }
+                console.log('----'+ehr+':'+emin);
+                $('#'+inptime).children().val(ehr+':'+emin);
+            }
+        }
+        function isValidMinutes(field,frmt,inptime){
+            var mins=$('#'+field).val();
+            var isEmpty = true;
+            if(mins!=null && mins!='' && !isNaN(mins) && Number(mins)>=0 && Number(mins)<=59)
+                    isEmpty= false;
+            if(isEmpty){
+                alert("Please input a valid Time!"); 
+                $('#'+field).val('');
+                window.setTimeout(function () {document.getElementById(field).focus();}, 0); 
+            }
+            else{
+            var tseId = field.substring(0,field.indexOf('_'));
+                if(mins.length==1)
+                    $('#'+field).val('0'+mins);
+                if(mins.length>2 && mins.indexOf('0')==0)
+                {
+                    mins=mins.replace(/^0+/, '');
+                    if(mins.length==1)
+                        mins='0'+mins;
+                    $('#'+field).val(mins);
+                }
+                setInputtime(inptime,frmt);
+                if(frmt=='24')
+                    calculateHoursActual(tseId);
+                if(frmt=='12')
+                    calculateHoursActual12Hour(tseId);
+            }       
+        }
+        
+       function refreshExpenses(rows){
+        for(var i=0;i<rows;i++){
+            calcExpenseValues(i);
+        }
+        }
+        function calcExpenseValues(rowNumber){
+        if($('#Taxablerow-'+rowNumber).find('input').is(":checked")){
+            $('#Prevaluerow-'+rowNumber).find('input').val($('#Inctaxrow-'+rowNumber).find('input').val() - $('#taxAmountrow-'+rowNumber).find('input').val());
+            $('#taxAmountrow-'+rowNumber).find('input').removeClass('disabled');
+        }
+        else{
+            $('#taxAmountrow-'+rowNumber).find('input').addClass('disabled');
+            $('#taxAmountrow-'+rowNumber).find('input').val('0');
+            $('#Prevaluerow-'+rowNumber).find('input').val($('#Inctaxrow-'+rowNumber).find('input').val());
+        }
+            if(isNaN($('#Inctaxrow-'+rowNumber).find('input').val()) || isNaN($('#taxAmountrow-'+rowNumber).find('input').val())){
+               $('#Prevaluerow-'+rowNumber).find('input').val('0');
+             }
+            var num= Number($('#Prevaluerow-'+rowNumber).find('input').val());
+            $('#Prevaluerow-'+rowNumber).find('input').val(num.toFixed(2));
+        }
+       
+        function makeEmpty(inputValue){
+            var value = document.getElementById(inputValue).value;
+            if(value == 0){
+                value = null;
+                document.getElementById(inputValue).value = '';                
+            }
+        }
+        
+        function updateTotalHours(inputTotal,actualTotal){
+        console.log('totalhours');
+            var tseId = inputTotal.substring(0,inputTotal.indexOf('_'));
+            $('#'+actualTotal+' input').each(function(){
+                $(this).val(document.getElementById(inputTotal).value);
+                isFirst = false;
+                calculateTotalHours(tseId);                 
+            });
+        }        
+      
+       
+        function calculateTotalHours(tseId){
+            var hours  =    document.getElementById(tseId +'_hours').value;
+            console.log('hrs :: ' + hours);
+            var minutes =    document.getElementById(tseId +'_mins').value;
+            
+            var hrs; 
+            if(hours == '')
+                hrs = 0;
+            else if (hours != '')
+                hrs = parseInt(hours);
+                
+            var mins; 
+            if(minutes == '')
+                mins = 0;
+            else if (minutes != '')
+                mins = parseInt(minutes);       
+            
+            if (hrs==null || hrs.length == 0 || hrs>23 || mins> 59 || hrs<0 || mins < 0 ){
+                alert("Please input a valid Time!");
+                if(hrs==null || hrs.length == 0 || hrs>23 || hrs<0){
+                    document.getElementById(tseId +'_hours').value = 0;
+                    hrs = 0;
+                }
+                if(mins> 59 || mins < 0){
+                    document.getElementById(tseId +'_mins').value = 0;
+                    mins = 0;
+                }
+            }
+            var tothrs = (hrs +(mins/60)).toFixed(2);
+            if(tothrs=='NaN')
+                tothrs = '0.00';
+                
+            document.getElementById(tseId+'_tothrs').innerHTML = tothrs;
+        }        
+        function calculateHoursActual(tseId){
+        
+        console.log('houractual');
+        
+            var today      =  new Date();
+            var yr         =  2011;
+            var mon         =  5;
+            var dat         =  6;
+
+            var hrStart  =    document.getElementById(tseId +'_shr1').value;               
+            var minStart =    document.getElementById(tseId +'_smin1').value;   
+            var hrEnd      =    document.getElementById(tseId +'_ehr1').value;              
+            var minEnd   =    document.getElementById(tseId +'_emin1').value;               
+            var break1   =    document.getElementById(tseId +'_b1_inp').value;
+            
+
+
+
+
+
+            if({!showSection['Break2']} == true){
+                var break2   =    document.getElementById(tseId +'_b2_inp').value;
+            }
+                    
+            var startDT     = new Date(yr, mon, dat, parseInt(hrStart,10), parseInt(minStart,10), 0);
+            var endDT     = new Date(yr, mon, dat, parseInt(hrEnd,10)  , parseInt(minEnd,10)  , 0);
+            var minutesDiff    = get_time_difference(startDT, endDT);
+           
+            if(minutesDiff < 0){
+                 startDT        = new Date(yr, mon, dat, parseInt(hrStart,10), parseInt(minStart,10), 0);
+                 endDT          = new Date(yr, mon, dat+1, parseInt(hrEnd,10)  , parseInt(minEnd,10)  , 0);
+                 minutesDiff    = get_time_difference(startDT, endDT);
+            }
+            
+            if(break1!=null && break1!='')
+                minutesDiff -= parseInt(break1,10);
+            
+            if({!showSection['Break2']} == true){
+            if(break2!=null && break2!='')
+                minutesDiff -= parseInt(break2,10);
+            }
+            var hoursDiff    = (minutesDiff/60).toFixed(2);
+            if(hoursDiff=='NaN')
+                hoursDiff = '0.00';
+
+            document.getElementById(tseId+'_tot').innerHTML = hoursDiff;    
+        }
+        
+        function calculateHoursActual12Hour(tseId){
+        
+        
+        console.log('houractual 12');
+            var today      =  new Date();
+            var yr         =  2011;
+            var mon         =  5;
+            var dat         =  6;
+
+            var hrStart  =    document.getElementById(tseId +'_shr2').value;
+            var minStart =    document.getElementById(tseId +'_smin2').value;
+            var hrEnd      =    document.getElementById(tseId +'_ehr2').value;
+            var minEnd   =    document.getElementById(tseId +'_emin2').value;
+            var break1   =    document.getElementById(tseId +'_b1_inp').value;
+            if({!showSection['Break2']} == true){
+                var break2   =    document.getElementById(tseId +'_b2_inp').value;
+            }
+            var sid1 = $("select[Id*='"+tseId+":selected_list']").attr('id');
+            if(document.getElementById(sid1).value == 'PM'){
+                if(parseInt(hrStart,10) < 12){
+                    hrStart = parseInt(hrStart,10) + 12;
+                }                                 
+            }
+            else {
+                if(parseInt(hrStart,10) == 12){
+                    hrStart = parseInt(hrStart,10) - 12;
+                }
+            }
+            
+            var sid2 = $("select[Id*='"+tseId+":selected_list1']").attr('id');
+            if(document.getElementById(sid2).value == 'PM'){
+
+                if(parseInt(hrEnd,10) < 12){
+                    hrEnd = parseInt(hrEnd,10) + 12 ;
+
+                }                                
+            }
+            else if(parseInt(hrEnd,10) == 12){
+                hrEnd = parseInt(hrEnd,10) - 12 ;
+            }
+            var startDT     = new Date(yr, mon, dat, parseInt(hrStart,10), parseInt(minStart,10), 0);
+            var endDT     = new Date(yr, mon, dat, parseInt(hrEnd,10)  , parseInt(minEnd,10)  , 0);
+            var minutesDiff    = get_time_difference(startDT, endDT);
+            if(minutesDiff < 0){
+                 startDT        = new Date(yr, mon, dat, parseInt(hrStart,10), parseInt(minStart,10), 0);
+                 endDT          = new Date(yr, mon, dat+1, parseInt(hrEnd,10)  , parseInt(minEnd,10)  , 0);
+                 minutesDiff    = get_time_difference(startDT, endDT);                   
+            }
+            
+           console.log('endDT:'+endDT);
+
+            if(break1!=null && break1!='')
+                minutesDiff -= parseInt(break1,10);
+            
+            if({!showSection['Break2']} == true){
+            if(break2!=null && break2!='')
+                minutesDiff -= parseInt(break2,10);
+            }
+            var hoursDiff    = (minutesDiff/60).toFixed(2);
+            if(hoursDiff=='NaN')
+                hoursDiff = '0.00';
+                console.log('hoursdiff :' + hoursDiff);
+                
+            document.getElementById(tseId+'_tot').innerHTML = hoursDiff;    
+        }
+        function get_time_difference(earlierDate,laterDate){
+            var nTotalDiff = laterDate.getTime() - earlierDate.getTime();   
+            minDiff = Math.floor(nTotalDiff/1000/60);
+            return minDiff;
+        }
+        function checkdate(field,src){
+            //var dateVal = field.value;
+            if(src == 'ts'){
+                //checkdateFieldTS(dateVal);
+                checkdateFieldTS(field);
+            }
+        }
+        function openDialogForExpAttach(parentId, isExp, isTS,type){  
+             alert('kk');        
+            if(parentId!=''){
+                var pageName = "{!JSENCODE(PageName_AddAttachment)}";
+                if(isExp=='true'){
+                    var urlString = '{!$Site.CurrentSiteUrl}apex/'+pageName+'?parentId='+parentId+'&isExpense='+isExp+'&attId=';
+                    $("#theIframeExp").attr('src',urlString);
+                }
+                if(isTS == 'true'){
+                var urlString='';
+                    if(type!='')
+                        urlString = '{!$Site.CurrentSiteUrl}apex/'+pageName+'?parentId='+parentId+'&selectedType='+type+'&isExpense='+isExp+'&attId=';
+                    else
+                        urlString = '{!$Site.CurrentSiteUrl}apex/'+pageName+'?parentId='+parentId+'&isExpense='+isExp+'&attId=';
+                        
+                    $("#theIframeTS").attr('src',urlString);
+                }
+                if(pageName != null && pageName != ''){
+                    openDialog(isExp, isTS);
+                }
+                else
+                    alert('Attachment currently not available. Please contact admin.');                 
+            }
+        }
+            
+            function openDialog(isExp, isTS){            
+            if(isExp=='true')
+                $('#myModalExp').modal('show');
+            else if(isTS == 'true')
+              alert('open dialog');
+                $('#myModalTS').modal('show');
+            }
+        function closeDialog(isExp, isTS){
+               if(isExp=='true')
+                   $('#myModalExp').modal('hide');
+               else if(isTS == 'true')
+               alert('close dialog');
+                   $('#myModalTS').modal('hide');                   
+               var urlString='';
+                $("#theIframe").attr('src',urlString);
+                console.log('----');
+                toRerender();
+        }
+        
+            function checkforStartTimeAndEndTimeOnSubmitOrSave(isTimesheetEntryinhours, saveOrSubmit){
+            var isError = false;
+            
+            if(isTimesheetEntryinhours == 'false'){
+                $("[id$='_shr']").each(function(){ 
+                    if($(this).val() == '' || $(this).val().length > 2){ 
+                        $(this).css({"border-color": "red"});
+                        isError = true; 
+                    }
+                    else if($(this).val().length == 2){ 
+                        $(this).css({"border-color": "#ccc"});  
+                    }   
+                
+                });
+               
+                
+                $("[id$='_ehr']").each(function(){ 
+                    if($(this).val() == '' || $(this).val().length > 2){ 
+                        $(this).css({"border-color": "red"});
+                        isError = true; 
+                    }
+                    else if($(this).val().length == 2){ 
+                        $(this).css({"border-color": "#ccc"});  
+                    }   
+                
+                });
+                 
+                  
+                $("[id$='_smin']").each(function(){ 
+                    if($(this).val() == '' || $(this).val().length > 2){ 
+                        $(this).css({"border-color": "red"}); 
+                        isError = true;
+                    }
+                    else if($(this).val().length == 2){ 
+                        $(this).css({"border-color": "#ccc"});  
+                    }   
+                
+                });
+                
+                
+                
+                $("[id$='_emin']").each(function(){ 
+                    if($(this).val() == '' || $(this).val().length > 2){ 
+                        $(this).css({"border-color": "red"}); 
+                        isError = true;
+                    }
+                    else if($(this).val().length == 2){ 
+                        $(this).css({"border-color": "#ccc"});  
+                    }   
+                
+                });
+                if(!isError){
+                    if(saveOrSubmit == 'Submit')
+                        submitTheTSpage();
+                    else if(saveOrSubmit == 'Save')
+                        saveTheTSpage();
+                }
+                else{
+                    alert('Please enter the Start time and End time in the correct format (Eg: 08:00).')
+                }
+            }
+             
+            else if(isTimesheetEntryinhours == 'true'){
+                if(saveOrSubmit == 'Submit')
+                    submitTheTSpage();
+                else if(saveOrSubmit == 'Save')
+                    saveTheTSpage();
+            }  
+        }
+         
+        var a;
+        $(document).ready(function(){         
+            a = '{!toDisplay12HourFormat}';
+            console.log('toggkle'+'{!toDisplay12HourFormat}');
+            if(a=="false"){            
+                $(".onoffswitch-switch").trigger("click"); 
+            }               
+        });
+         function toggleSwitch(ele) {
+             var offSwitchEle = document.getElementsByClassName('onoffswitch-checkbox')[0];
+             if(!offSwitchEle.checked) {
+                offSwitchEle.checked = 'checked';
+                 callsetTimesheetFormat('true');
+             } else {
+                offSwitchEle.checked = false;
+                 callsetTimesheetFormat('false');
+             }
+             
+             
+         }
+        function toggleChangeHour(ele){   
+            a = !a;
+            callsetTimesheetFormat(a);
+            document.getElementById(ele.id).disabled = true;
+            
+        } 
+
+
+    </script>
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">    
+        <apex:define name="body">
+        <head>
+            <title>Premier Timesheet Portal</title>
+        </head>
+
+        <div class="sideBar ">
+                    <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks"><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks sidebarHighlight"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalPlacementHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Placement History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks "><i class="icon-profilegrey"></i>My Profile</a>
+                    <a href="https://access.paylocity.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Paylocity Portal</a>
+                    <a href="http://support.pstaffing.com/" target="_blank" class="sideBarLinks"> <i class="icon-search"></i>Support Center</a>
+            </div>
+           
+            <apex:outputPanel rendered="{! if(ISPICKVAL($User.UserType,'Guest'), 'true', 'false')}">
+                <c:CommunitySiteLogin id="CommSiteLogin"/>                
+            </apex:outputPanel>            
+            <apex:outputPanel rendered="{! if(NOT(ISPICKVAL($User.UserType,'Guest')), 'true', 'false')}">
+                <apex:form id="theForm"> 
+                <div id="main" class="pageContent">
+                  <div id="weekViewLink">
+                        <a href="{!$Site.Prefix}/PortalTimesheetsHome">
+                            <i class="icon-chevronblue iconMain iconHInv"></i><p class="linkText">Back to Timesheets</p>
+                        </a>
+                    </div>
+
+                    <div id="weekView">
+                                <p style="line-height:0pt;">{!timeSheet.Name}</p>
+                                <p class="clientMob">{!ClientName}</p>
+                                <h2 class="dtInfo">{!JobName}</h2>
+                                <p class="tsPgDate" >
+                                    <apex:outputText value="{0,date,MMM d}"><apex:param value="{!timeSheet.tc9_ti__Start_Date__c}"/>
+                                    </apex:outputText>&nbsp;-&nbsp;<apex:outputText value="{0,date,MMM d, YYYY}">
+                                    <apex:param value="{!timeSheet.tc9_ti__End_Date__c}"/>
+                                </apex:outputText>
+                                </p>
+
+                                <!-- <apex:outputPanel id="weeklyTotal_Panel">
+                                    <div  style="{!IF(AND(tsStatus != 'Submitted',tsStatus != 'Approved', canEdit), 'display:block','display:none')}">
+                                        <p class="tsPgTotal dtInfo">{!timeSheet.tc9_ti__WeeklyActualHours__c}&nbsp;hrs
+                                            <apex:commandbutton id="submitButton1" value="Submit" action="{!submitTS}" styleClass="tsPgSubmit"/>
+                                        </p>
+                                        <p class="tsMobPgTotal">
+                                            <apex:commandbutton id="submitButton2" value="Submit {!weeklyTotalHrs} hrs" action="{!submitTS}" styleClass="mobileTSEbutton "/>
+                                        </p>
+
+                                    </div>
+                                    <div  style="{!IF(tsStatus == 'Approved', 'display:block','display:none')}">
+                                        <p class="tsPgTotal dtInfo">{!timeSheet.tc9_ti__WeeklyActualHours__c}&nbsp;hrs
+                                        </p>
+                                    </div>
+                                    <div style="{!IF(AND(tsStatus == 'Submitted',resubmitDisabled == false), 'display:block','display:none')}">
+                                        <p class="tsPgTotal dtInfo">{!timeSheet.tc9_ti__WeeklyActualHours__c}&nbsp;hrs
+                                            <apex:commandbutton id="submitButton3" value="Resubmit" action="{!resubmitTS}" styleClass="tsPgSubmit"/>
+                                        </p>
+                                        <p class="tsMobPgTotal ">
+                                            <apex:commandbutton value="Resubmit" action="{!resubmitTS}" styleClass="mobileTSEbutton"/>
+                                        </p>
+                                    </div>
+                                </apex:outputPanel> -->
+
+
+                                <div>
+
+                                    <table class="tsPgDate" id="table_id">
+                                        <tbody>
+                                        <tr>
+                                            <td class="status ">
+                                                <div id="theStatus" class="statusText ">{!timeSheet.tc9_ti__Status__c}</div>
+
+                                            </td>
+                                            <td>
+                                                <p class="tsMobPgTotalW">{!timeSheet.tc9_ti__WeeklyActualHours__c}&nbsp;hrs</p>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div style="clear:both;"></div>
+                                <div class="vImpMsgBox" style="{!IF(tsStatus == 'Rejected','display:block;','display:none;')}" >
+                                    <p class="vimpMessage">Your timesheet has been rejected for the following reason:</p>
+                                    <p class="vimpMessage">{!tsRejectionReason}</p>
+                                </div>
+
+                            </div>
+                    
+                    <script>
+                         function updateActuals(inputBreak, actualBreak, tseId){         
+                             var tseId = inputBreak.substring(0,inputBreak.indexOf('_'));           
+                             $('#'+actualBreak +' input').each(function(){
+                                 $(this).val(document.getElementById(inputBreak).value);
+                                 isFirst = false;
+                                 var format3 = '{!UserTimeSheetFormat}';
+                                 console.log('Format3 '+format3);
+                                 if(format3=='12 Hour')
+                                    calculateHoursActual12Hour(tseId);
+                                 else
+                                    calculateHoursActual(tseId);
+                             });
+                        }
+                    </script>             
+                    <apex:actionFunction action="{!setUserTimesheetFormat}" name="callsetTimesheetFormat" rerender="timeSection,theForm " status="searchProcessImgTimesheet" oncomplete="setStyle()">
+                        <apex:param value="" name="param1" assignTo="{!TimesheetFormatFromPage}"/>
+                    </apex:actionFunction>
+                    <apex:actionFunction action="{!fetchAttachments}" name="toRerender" rerender="attachmentSection" status="deleteStatus" />
+
+                
+                    <apex:actionFunction action="{!verifydate}" rerender="pageMessage" name="checkdateFieldTS" status="searchProcessImgTimesheet">
+                        <apex:param name="tsIndex" value="" />
+                    </apex:actionFunction>
+                
+                    <apex:actionFunction action="{!doSubmit}" rerender="theForm,headerSection,pageMessage"  status="searchProcessImgExpense" name="submitTheTSpage" oncomplete="setStyle()"/>
+                    <apex:actionFunction action="{!saveAll}" rerender="theForm,headerSection,pageMessage"  status="searchProcessImgExpense" name="saveTheTSpage" oncomplete="setStyle()"/>                  
+                    <apex:actionFunction action="{!refreshExpenses}" rerender="expenseSection" name="refreshExp" status="searchProcessImgExpense" />                
+                    <apex:actionFunction action="{!projectCodeOption}" rerender="theForm" name="getprojCodeList" status="searchProcessImgTimesheet" />                    
+                    <apex:actionFunction action="{!toggleProjComponent}" rerender="theForm,ProjectSection" name="toggleProjComp" status="searchProcessImgTimesheet" />
+                        
+                    <!-- TIMESHEET FORMAT SELECTOR STARTS-->            
+                    <apex:outputPanel id="togglesection" style="display:{!IF(AND(hide12HourToggle=='No',showSection['Time'] == false),'','none')}">
+                        Timesheet Format:
+                        <div class="onoffswitch" id="toggleSwitch1">                   
+                        <apex:inputCheckbox onchange="toggleChangeHour(this);" id="myonoffswitch" selected="true" styleClass="onoffswitch-checkbox"> 
+                        </apex:inputCheckbox>
+                        <label class="onoffswitch-label" id="toggleSwitch" for="pageId:CommunityTemplate:theForm:myonoffswitch">
+                            <span class="onoffswitch-inner" data-before="12 Hour" data-after="24 Hour" onclick="toggleSwitch('{!$Component.myonoffswitch}')"></span>
+                            <span class="onoffswitch-switch" ></span>
+                        </label>
+                        </div> 
+                    </apex:outputPanel>
+                    <br/>
+                    <apex:messages id="messages" styleClass="errMsg"/>
+                    <!-- TIMESHEET FORMAT SELECTOR ENDS-->
+                                      
+                    <!-- <apex:outputPanel id="headerSection">           
+                        <table id="headerTable" columns="3" class="table table-condensed">
+                            <tr class="col-xs-12">
+                                <td style="border: none; padding-bottom: 0px;padding-top: 0px;" class="col-xs-6">
+                                    <h3 align="left"><span class="text-muted"><b>Client : {!ClientName}</b></span></h3>
+                                </td>
+                                <td style="border: none; padding-bottom: 0px;padding-top: 0px;" >
+                                   <h3 align="center"></h3>
+                                </td>
+                                <td style="border: none; padding-bottom: 0px;padding-top: 0px;" class="col-xs-6">
+                                    <h3 align="right"><span class="text-muted"><b>Timesheet Period : &nbsp;<c:Locale_Formatted_Date date_value="{!timeSheet.tc9_ti__Start_Date__c}" rendered="{!IF(ISBLANK(timeSheet.Id),false,true)}"/>&nbsp;to&nbsp;<c:Locale_Formatted_Date date_value="{!timeSheet.tc9_ti__End_Date__c}" rendered="{!IF(ISBLANK(timeSheet.Id),false,true)}"/></b></span></h3>
+                                </td>
+                                <td style="border: none; padding-bottom: 0px;padding-top: 0px;" class="col-xs-2">
+                                    <h3  align="right">
+                                        <span class= "text-muted">
+                                            <b>
+                                            Timesheet Status : &nbsp;
+                                            <apex:outputLabel value="{!timeSheet.tc9_ti__Status__c}" styleClass="label label-warning" rendered="{!IF(timeSheet.tc9_ti__Status__c == 'New',true, false)}"></apex:outputLabel>
+                                            <apex:outputLabel value="{!timeSheet.tc9_ti__Status__c}" styleClass="label label-primary" rendered="{!IF(timeSheet.tc9_ti__Status__c == 'Submitted',true, false)}"></apex:outputLabel>
+                                            <apex:outputLabel value="{!timeSheet.tc9_ti__Status__c}" styleClass="label label-success" rendered="{!IF(timeSheet.tc9_ti__Status__c == 'Approved',true, false)}"></apex:outputLabel>
+                                            <apex:outputLabel value="{!timeSheet.tc9_ti__Status__c}" styleClass="label label-danger" rendered="{!IF(timeSheet.tc9_ti__Status__c == 'Rejected',true, false)}"></apex:outputLabel>
+                                            </b>
+                                        </span>
+                                    </h3>
+                                </td>
+                            </tr>
+                            <tr class="col-xs-12">
+                                <!-- <td style="border: none; padding-bottom: 0px;padding-top: 0px;" class="col-xs-2"> 
+                                    <h3 align="left">
+                                        <span class="text-muted"><b>Job : {!JobName}</b></span>
+                                    </h3>
+                                </td> 
+                                <td style="border: none; padding-bottom: 0px;padding-top: 0px;" class="col-xs-1">
+                                    <h2 align="center">
+                                        <label class="label label-default"><span>{!timeSheet.tc9_ti__WeeklyActualHours__c} hours</span></label>
+                                    </h2>
+                                </td>
+                                
+                            </tr>               
+                        </table>
+                    </apex:outputPanel> -->
+                    
+                    <!-- <apex:pageMessages id="pageMessage" />   -->        
+                    <apex:outputPanel rendered="{!IF(timeSheet.tc9_ti__Status__c == 'Submitted',true, false)}">
+                        <div class="alert alert-warning" role="alert"><strong>Note: </strong>{!$Label.Submit_Mode_TS_alert}</div>
+                    </apex:outputPanel>
+                   <center><apex:outputPanel rendered="{!IF(timeSheet.tc9_ti__Status__c == 'Rejected',true, false)}" style="font-weight:bold;color:#CD274B;text-align:center;font-size: 16px;">Rejection Reason: {!timesheet.tc9_ti__Rejection_Reason__c}</apex:outputPanel></center>
+                   <!--  <apex:outputPanel >                        
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <apex:commandLink styleClass="btn btn-xs" action="{!prev}" rendered="{!isPrev}">
+                                   <apex:image value="{!URLFOR($Resource.Left_Right_Arrows, 'LeftLight.png')}" width="30" height="30" title="Previous"/>
+                                </apex:commandLink>
+                            </div>
+                            <div class="col-xs-6" align="right">
+                                <apex:commandLink styleClass="btn btn-xs" action="{!next}" rendered="{!isNext}">
+                                   <apex:image value="{!URLFOR($Resource.Left_Right_Arrows, 'RightLight.png')}" width="30" height="30" title="Next"/>
+                                </apex:commandLink>
+                            </div>
+                        </div>                    
+                    </apex:outputPanel> -->                    
+                    <apex:outputPanel id="timeSection">                        
+                        <div id="thediv" class="panel panel-default">
+                            <!-- <div id="innerPannel" class="panel-heading">
+                                <h4 align="center">                                    
+                                    <span class="text-muted"><b>{!$Label.TimeSheet_Entry_Table_Header}</b></span>                                    
+                                </h4>
+                            </div> -->
+                            <apex:outputText styleClass="text-muted" value="No records to display" style="display:{!IF(isTseAvail,'none','')}" />
+
+                            <!-- TABLE START -->
+                            <table id="tseTable" border="true" class="table table-bordered table-condensed" style="display:{!IF(isTseAvail,'','none')}">
+                                    <!-- Headings --> 
+                                    <thead>
+                                        <tr>
+                                            <th align="center" style="width:40px;"><apex:outputText styleClass="text-muted" value="Date"></apex:outputText></th>
+                                            <th align="center"><apex:outputText styleClass="text-muted" value="Day"></apex:outputText></th>
+                                            <!-- <th align="center" style="display:{!IF(showSection['ProjectCodes']==true,'','none')}"><apex:outputLabel styleClass="text-muted" style="margin-bottom: 0px" value="{!$Label.Project_Code}" /></th>  -->
+                                            <th align="center" style="display:{!IF(showSection['Time']==false,'','none')}"><apex:outputText styleClass="text-muted" value="Start"/></th> 
+                                            <th align="center" style="display:{!IF(showSection['Time']== false,'','none')}"><apex:outputText styleClass="text-muted" value="End"/></th> 
+                                            <th align="center" style="display:{!IF(showSection['Time']==false,'','none')}; min-width:55px;"><apex:outputText styleClass="text-muted" value="Break Time (mins)" /></th> 
+                                            <th align="center" style="display:{!IF(showSection['Time']==true,'','none')}"><apex:outputText styleClass="text-muted" value="Hours"/></th> 
+                                            <th align="center" style="display:{!IF(showSection['Time']==true,'','none')}"><apex:outputText styleClass="text-muted" value="Mins"/></th> 
+                                            <th align="center" style="display:{!IF (AND(showSection['Break2']==true,showSection['Time']==false),'','none')}; min-width:55px;"><apex:outputText styleClass="text-muted" value="{!$Label.BreakTime2}" ></apex:outputText></th>
+                                            <th align="center" style="width:120px;"><apex:outputText styleClass="text-muted" value="Missed Break Reason"></apex:outputText></th>
+                                            <th align="center"><apex:outputText styleClass="text-muted" value="Type of Leave"></apex:outputText></th>                                           
+                                            <th align="center"><apex:outputText styleClass="text-muted" value="Total"></apex:outputText></th>                                           
+                                            <th align="center" style="display:{!IF(showSection['LeaveButton']==true,'','none')}"><apex:outputText styleClass="text-muted" value="Type of Leave"></apex:outputText></th>
+                                           
+
+                                            <th align="center" style="display:{!IF(AND(timesheet.tc9_ti__Status__c != 'Approved', timesheet.tc9_ti__Status__c != 'Submitted'),'','none')}; min-width:110px; max-width:110px"><apex:outputText styleClass="text-muted" value="Actions"></apex:outputText></th>
+                                        </tr>
+                                    </thead>
+                                    <!-- display existing entries -->
+                                    <tbody>
+                                        <apex:variable var="existingTSEIndex" value="{!0}"/>
+                                        <apex:repeat value="{!tseList}" var="tse" id="repeat"> 
+                                            <apex:variable var="newTSEIndex" value="{!FLOOR(existingTSEIndex)}"/>
+                                            <apex:variable var="existingTSEIndex" value="{!FLOOR(existingTSEIndex + 1)}"/>
+                                            <tr id="{!ROUND(newTSEIndex,0)}">
+                                                <td class="col-xs-1">
+                                                    <span class="text-muted">
+                                                        <c:Locale_Formatted_Date date_value="{!tse.tc9_ti__WorkDate__c}" rendered="{!IF(ISBLANK(tse.Id),false,true)}"/>
+                                                        <apex:inputField id="wrkDate" styleClass="form-control" value="{!tse.tc9_ti__WorkDate__c}" onchange="checkdate({!ROUND(newTSEIndex,0)},'ts')" rendered="{!IF(ISBLANK(tse.Id),true,false)}"/>
+                                                    </span>
+                                                </td>   
+                                                <td style="min-width: 40px">
+                                                    <span class="text-muted">
+                                                        <apex:outputField styleClass="text-muted" value="{!tse.tc9_ti__WorkDay__c}" />
+                                                    </span>
+                                                </td>
+                                                <!-- <td style="display:{!IF(showSection['ProjectCodes']==true,'','none')}" class="col-xs-2">
+                                                     <span class="text-muted">
+                                                        <apex:selectList styleClass="form-control" value="{!tse.tc9_ti__Project_Code__c}" rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false)}" multiselect="false" size="1" style="height:34px">
+                                                            <apex:selectOptions value="{!ProjectCodes}" />
+                                                        </apex:selectList>
+                                                        <apex:outputField value="{!tse.tc9_ti__Project_Code_Name__c}"  rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false)}" style="height 34px"/>
+                                                    </span>
+                                                </td> -->
+                                               
+                                                <td style="display:{!IF(showSection['Time']==false,'','none')};min-width:125px" align="center" class="col-xs-2" id="starttd" >
+                                                    <apex:outputPanel rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false)}" id="startpanel">     
+                                                        <span class="text-muted">
+                                                             <table width="100%" id="innerStartTable">
+                                                                 <tr id ="startrow">
+                                                                    <td>
+                                                                        <div width="75%"  style="display:{!IF(UserTimesheetFormat == '24 Hour','','none')}">
+                                                                            <input value="{!Left(tse.tc9_ti__StartTime__c, 2)}" id="{!ROUND(newTSEIndex,0)}_shr1" onblur="isValidHours(this.id,'24','{!ROUND(newTSEIndex,0)}_s');"  size="2" style="height:34px" /><b>:</b><input value="{!RIGHT(tse.tc9_ti__StartTime__c,2)}" id="{!ROUND(newTSEIndex,0)}_smin1" onblur="isValidMinutes(this.id,'24','{!ROUND(newTSEIndex,0)}_s')" size="2" style="height:34px" />
+                                                                        </div>
+                                                                        <div style="display:{!IF(UserTimesheetFormat == '12 Hour','','none')}"> 
+                                                                            <input value="{!IF( VALUE(LEFT(tse.tc9_ti__StartTime__c , 2)) > 12 , IF(VALUE(LEFT(tse.tc9_ti__StartTime__c , 2))-12<10, '0' & TEXT(VALUE(LEFT(tse.tc9_ti__StartTime__c,2))-12) , TEXT(VALUE(LEFT(tse.tc9_ti__StartTime__c,2))-12)) ,IF(VALUE(LEFT(tse.tc9_ti__StartTime__c , 2))==0,TEXT(VALUE(LEFT(tse.tc9_ti__StartTime__c,2))+12),IF(VALUE(LEFT(tse.tc9_ti__StartTime__c , 2))<10, '0' & TEXT(VALUE(LEFT(tse.tc9_ti__StartTime__c,2))), TEXT(VALUE(LEFT(tse.tc9_ti__StartTime__c,2))))))}" id="{!ROUND(newTSEIndex,0)}_shr2"  onblur="isValidHours(this.id,'12','{!ROUND(newTSEIndex,0)}_s');" size="2" style="height:34px" /><b>:</b><input value="{!RIGHT(tse.tc9_ti__StartTime__c,2)}" id="{!ROUND(newTSEIndex,0)}_smin2" onblur="isValidMinutes(this.id,'12','{!ROUND(newTSEIndex,0)}_s')" size="2" style="height:34px" />
+                                                                        </div>
+                                                                        <div id="{!ROUND(newTSEIndex,0)}_s" >
+                                                                             <apex:inputHidden value="{!tse.tc9_ti__StartTime__c}" id="sTime" /> 
+                                                                        </div>
+                                                                    </td>                                                                    
+                                                                    <td id="pickliststart">                                                                   
+                                                                        <apex:outputPanel id="StartAMPM" rendered="{!IF(UserTimesheetFormat=='12 Hour','','none')}">
+                                                                            <apex:selectList id="selected_list" value="{!tse.tc9_ti__Start_Meridian__c}" required="false" size="1" onchange="setInputtime('{!ROUND(newTSEIndex,0)}_s','12'),calculateHoursActual12Hour({!ROUND(newTSEIndex,0)})">
+                                                                                <apex:selectOption itemvalue="AM" itemLabel="AM" />
+                                                                                <apex:selectOption itemvalue="PM" itemLabel="PM" />                                                                             
+                                                                            </apex:selectList>                                                                        
+                                                                         </apex:outputPanel>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>     
+                                                        </span>
+                                                    </apex:outputPanel>
+
+
+
+                                                    <span class="text-muted" style="display:{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),'','none')}">
+                                                        <apex:outputText value="{!tse.tc9_ti__StartTime__c}" rendered="{!IF(UserTimesheetFormat == '24 Hour', true, false)}" />
+                                                        <apex:outputText value="{!tse.tc9_ti__StartTime12Hour__c}" rendered="{!IF(UserTimesheetFormat == '12 Hour', true, false)}" />
+                                                    </span>                                              
+                                                </td>
+                                              
+                                                <td style="display:{!IF(showSection['Time']==false,'','none')};min-width:125px" align="center" class="col-xs-2">
+                                                    <span class="text-muted">
+                                                        <apex:outputPanel rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false)}" id="endpanel">     
+                                                             <table width="100%"> 
+                                                                 <tr id = "endrow">
+                                                                    <td>
+                                                                        <div width="75%"  style="display:{!IF(UserTimesheetFormat == '24 Hour','','none')}">
+                                                                            <input value="{!Left(tse.tc9_ti__EndTime__c, 2)}" id="{!ROUND(newTSEIndex,0)}_ehr1" onblur="isValidHours(this.id,'24','{!ROUND(newTSEIndex,0)}_e')"  size="2" style="height:34px" /><b>:</b><input value="{!RIGHT(tse.tc9_ti__EndTime__c,2)}" id="{!ROUND(newTSEIndex,0)}_emin1" onblur="isValidMinutes(this.id,'24','{!ROUND(newTSEIndex,0)}_e')" size="2" style="height:34px" />
+                                                                        </div>                                                                      
+                                                                        <div style="display:{!IF(UserTimesheetFormat == '12 Hour','','none')}"> 
+                                                                            <input value="{!IF( VALUE(LEFT(tse.tc9_ti__EndTime__c , 2)) > 12 , IF(VALUE(LEFT(tse.tc9_ti__EndTime__c , 2))-12<10, '0' & TEXT(VALUE(LEFT(tse.tc9_ti__EndTime__c,2))-12) , TEXT(VALUE(LEFT(tse.tc9_ti__EndTime__c,2))-12)) ,IF(VALUE(LEFT(tse.tc9_ti__EndTime__c , 2))==0,TEXT(VALUE(LEFT(tse.tc9_ti__EndTime__c,2))+12),IF(VALUE(LEFT(tse.tc9_ti__EndTime__c , 2))<10, '0' & TEXT(VALUE(LEFT(tse.tc9_ti__EndTime__c,2))), TEXT(VALUE(LEFT(tse.tc9_ti__EndTime__c,2))))))}" id="{!ROUND(newTSEIndex,0)}_ehr2"  onblur="isValidHours(this.id,'12','{!ROUND(newTSEIndex,0)}_e')"  size="2" style="height:34px" /><b>:</b><input value="{!IF(UserTimesheetFormat == '12 Hour',MID(tse.tc9_ti__EndTime__c,4, 2),RIGHT(tse.tc9_ti__EndTime__c,2))}" id="{!ROUND(newTSEIndex,0)}_emin2" onblur="isValidMinutes(this.id,'12','{!ROUND(newTSEIndex,0)}_e')" size="2" style="height:34px" />
+                                                                        </div>
+                                                                        <div id="{!ROUND(newTSEIndex,0)}_e" >
+                                                                            <apex:inputHidden value="{!tse.tc9_ti__EndTime__c}" id="eTime" /> 
+                                                                        </div>
+                                                                    </td>
+                                                                    <td  id="picklistend">                                                                       
+                                                                        <apex:outputPanel id="EndAMPM" rendered="{!IF(UserTimesheetFormat=='12 Hour','','none')}">
+                                                                            <apex:selectList id="selected_list1" value="{!tse.tc9_ti__End_Meridian__c}"  required="false" size="1" onchange="setInputtime('{!ROUND(newTSEIndex,0)}_e','12'),calculateHoursActual12Hour({!ROUND(newTSEIndex,0)})">
+                                                                                <apex:selectOption itemvalue="AM" itemLabel="AM"/>
+                                                                                <apex:selectOption itemvalue="PM" itemLabel="PM"/>
+                                                                            </apex:selectList>                                                                     
+                                                                        </apex:outputPanel>
+                                                                    </td>                                                                
+                                                                </tr>
+                                                            </table>        
+                                                        </apex:outputPanel>
+                                                        <apex:outputText value="{!tse.tc9_ti__EndTime__c}" rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false) && (UserTimesheetFormat == '24 Hour')}" />
+                                                        <apex:outputText value="{!tse.tc9_ti__EndTime12Hour__c}" rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false) && (UserTimesheetFormat == '12 Hour')}" />
+                                                    </span> 
+                                                </td>
+                                                <td style="display:{!IF(showSection['Time']==false,'','none')}">
+                                                    <span class="text-muted">
+                                                        <apex:outputPanel rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false)}" >
+                                                            <input class="form-control" value="{!IF(ROUND(tse.tc9_ti__BreakTime__c,0)==0,'',ROUND(tse.tc9_ti__BreakTime__c,0))}" id="{!ROUND(newTSEIndex,0)}_b1_inp" size="2" onkeyup="isValidInput(this);" onblur="updateActuals('{!ROUND(newTSEIndex,0)}_b1_inp', '{!ROUND(newTSEIndex,0)}_b1_actual', '{!ROUND(newTSEIndex,0)}');"/>
+                                                            <span id="{!ROUND(newTSEIndex,0)}_b1_actual">
+                                                                <apex:inputHidden value="{!tse.tc9_ti__BreakTime__c}" id="b1Time" />
+                                                            </span>
+                                                        </apex:outputPanel>
+                                                        <apex:outputField value="{!tse.tc9_ti__BreakTime__c}" style="width:30px;" rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false)}" /> 
+                                                    </span>
+                                                </td>
+                                                <td style="display:{!IF (AND(showSection['Break2']==true,showSection['Time']==false),'','none')}">
+                                                    <span class="text-muted">
+                                                         <apex:outputPanel rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false)}"  >
+                                                            <input class="form-control" value="{!ROUND(tse.tc9_ti__BreakTime2__c,0)}" id="{!ROUND(newTSEIndex,0)}_b2_inp"  size="1" onkeyup="isValidInput(this);" onblur="updateActuals('{!ROUND(newTSEIndex,0)}_b2_inp', '{!ROUND(newTSEIndex,0)}_b2_actual', '{!ROUND(newTSEIndex,0)}');"/>
+                                                            <div id="{!ROUND(newTSEIndex,0)}_b2_actual">
+                                                                <apex:inputHidden value="{!tse.tc9_ti__BreakTime2__c}" id="b2Time" />
+                                                            </div>
+                                                         </apex:outputPanel>
+                                                         <apex:outputField value="{!tse.tc9_ti__BreakTime2__c}" style="width:30px;" rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false)}" /> 
+                                                    </span>
+                                                </td>
+                                                 <!--Missed Break Reason-->
+                                                 <td style="display:{!IF(showSection['Time']==false,'','none')}">
+                                                   <span class="text-muted" >
+                                                        <apex:outputPanel rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false)}"  >
+                                                           <!-- <apex:selectList size="1" value="{!selectedname}">
+                                                            <apex:selectOptions value="{!BreakReasons}"/>
+                                                        </apex:selectList> -->
+                                                         <apex:inputField value="{!tse.Missed_Break_Reason__c}" />
+                                                         
+                                                    </apex:outputPanel>
+                                                     <apex:outputField value="{!tse.Missed_Break_Reason__c}" style="width:30px;" rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false)}" /> 
+                                                    </span>
+                                                </td>
+                                                 <td style="display:{!IF(showSection['Time']==false,'','none')}">
+                                                   <span class="text-muted" >
+                                                        <apex:outputPanel >
+                                                           <!-- <apex:selectList size="1" value="{!selectedname}">
+                                                            <apex:selectOptions value="{!BreakReasons}"/>
+                                                        </apex:selectList> -->
+                                                        <apex:outputField value="{!tse.tc9_ti__Type_of_Leave__c}" /> 
+                                                        
+                                                         
+                                                    </apex:outputPanel>
+                                                    </span>
+                                                </td>
+                                                <!--End-->
+                                                <td style="display:{!IF(showSection['Time']==true,'','none')}" class="col-xs-2">
+                                                    <span class="text-muted">    
+                                                        <apex:outputPanel rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false)}">     
+                                                           <!--  Avoid Decimals- SC-3939  --> 
+                                                            <div class="input-group">
+                                                                <input class="form-control" value="{!ROUND(tse.tc9_ti__Total_Time_hours__c,0)}" id="{!ROUND(newTSEIndex,0)}_hours"  size="1" onkeyup="isValidInput(this);"  onclick="makeEmpty('{!ROUND(newTSEIndex,0)}_hours')" onblur="updateTotalHours('{!ROUND(newTSEIndex,0)}_hours', '{!ROUND(newTSEIndex,0)}_act_hours');" aria-describedby="minAdd"/>
+                                                                <span class="input-group-addon" id="hoursAdd">Hrs</span>                                                             
+                                                            </div>                                                                                                     
+                                                            <div id="{!ROUND(newTSEIndex,0)}_act_hours"> 
+                                                                <apex:inputHidden value="{!tse.tc9_ti__Total_Time_hours__c}" id="hours" />
+                                                            </div>
+                                                         </apex:outputPanel>
+                                                        <apex:outputField styleClass="text-muted" value="{!tse.tc9_ti__Total_Time_hours__c}"  rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false)}" /> 
+                                                    </span>
+                                                </td>
+                                                
+                                                <td style="display:{!IF(showSection['Time']==true,'','none')}" class="col-xs-2">   
+                                                    <span class="text-muted">
+                                                        <apex:outputPanel rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false)}">     
+                                                            <!--  Avoid Decimals- SC-3939  --> 
+                                                            <div class="input-group">
+                                                                <input class="form-control" value="{!ROUND(tse.tc9_ti__Total_Time_mins__c,0)}" id="{!ROUND(newTSEIndex,0)}_mins"  size="1" onkeyup="isValidInput(this);" onclick="makeEmpty('{!ROUND(newTSEIndex,0)}_mins')" onblur="updateTotalHours('{!ROUND(newTSEIndex,0)}_mins','{!ROUND(newTSEIndex,0)}_act_mins' );" aria-describedby="minAdd"/>
+                                                                <span class="input-group-addon" id="minAdd">Mins</span>
+                                                            </div>                                                         
+                                                            <div id="{!ROUND(newTSEIndex,0)}_act_mins"> 
+                                                                <apex:inputHidden value="{!tse.tc9_ti__Total_Time_mins__c}" id="mins" />
+                                                            </div>
+                                                         </apex:outputPanel>
+                                                        <apex:outputField styleClass="text-muted" value="{!tse.tc9_ti__Total_Time_mins__c}"  rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false)}" /> 
+                                                    </span>
+                                                </td>
+                                                
+                                                <td style="vertical-align: middle;">
+                                                    <span class="text-muted">
+                                                        <apex:outputPanel rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false) && (showSection['Time'] == false) }">
+                                                            <span id="{!newTSEIndex}_tot"> {!tse.tc9_ti__HoursAcutal__c} </span>
+                                                            <script type="text/javascript">
+                                                                    isFirst = true;
+                                                                    var format = '{!UserTimeSheetFormat}';
+                                                                    if(format=='12 Hour')
+                                                                        calculateHoursActual12Hour('{!newTSEIndex}'); 
+                                                                    else
+                                                                        calculateHoursActual('{!newTSEIndex}');
+                                                            </script>
+                                                        </apex:outputPanel>
+                                                        
+                                                        <apex:outputText value="{!tse.tc9_ti__HoursAcutal__c}hrs" rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false) && (showSection['Time'] == false)}"></apex:outputText>
+                                                        <apex:outputText value="{!tse.tc9_ti__HoursAcutal__c}hrs" rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false) && (showSection['Time'] == true)}"></apex:outputText>
+                                                        
+                                                        <apex:outputPanel rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false) && (showSection['Time'] == true)}">
+                                                            <span id="{!existingTSEIndex}_tothrs"> {!tse.tc9_ti__Total_Hours__c} </span>
+                                                            <script type="text/javascript">
+                                                                isFirst = true;
+                                                                calculateTotalHours('{!existingTSEIndex}');
+                                                            </script>
+                                                        </apex:outputPanel>
+                                                    </span>
+                                                </td> 
+                                                <td class="col-xs-2" style="display:{!IF(showSection['LeaveButton']==true,'','none')}">
+                                                    <span class="text-muted">
+                                                        <apex:outputPanel rendered="{!IF(OR(tse.tc9_ti__Status__c == 'Approved',tse.tc9_ti__Status__c == 'Submitted'),true, false)}">
+                                                            <apex:outputText styleClass="text-muted" value="{!tse.tc9_ti__Type_of_Leave__c}" rendered="{!IF(tse.tc9_ti__Type_of_Leave__c=='','false','true')}"/>
+                                                            <apex:outputText styleClass="text-muted" rendered="{!IF(tse.tc9_ti__Type_of_Leave__c=='','true','false')}">
+                                                                &nbsp;&nbsp;-
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        <apex:selectList size="1" value="{!tse.tc9_ti__Type_of_Leave__c}" styleClass="form-control"  multiselect="false" rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false)}">
+                                                            <apex:selectOptions value="{!leaveList}" ></apex:selectOptions>
+                                                        </apex:selectList>
+                                                    </span>
+                                                </td>
+
+                                                <td style="display:{!IF(AND(timesheet.tc9_ti__Status__c != 'Approved', timesheet.tc9_ti__Status__c != 'Submitted'),'','none')}" > 
+
+                                                  <apex:commandLink styleClass="btn btn-xs" action="{!showPopup}" reRender="tstpopup"  rendered="{!IF(AND(timesheet.tc9_ti__Status__c != 'Approved',timesheet.tc9_ti__Status__c != 'Submitted'),true, false)}"> 
+                                                       
+                                                        <apex:param name="entryNumber" value="{!existingTSEIndex}"/>
+                                                        <apex:image value="{!$Resource.Note}" width="20" height="20" title="Click here to add a timesheet note"/>
+                                                   </apex:commandLink>
+                                                    <apex:outputPanel id="tstpopup">
+                                                  
+                                                        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+                                                            <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+                                                                Please enter any time entry notes below:<br/><br/>
+                                                               <apex:inputTextarea value="{!tse.tc9_ti__Notes_Talent__c}" style="width:300px;height:60px"
+                                                               />
+                                                                <br/>
+                                                                <apex:commandButton value="Close" action="{!closePopup}" rerender="tstpopup"/>
+                                                                <apex:commandButton value="Save" action="{!SaveN}" rerender="tstpopup"/>
+                                                            </apex:outputPanel>
+                                                        </apex:outputPanel>
+                                                   
+
+
+                                                    <apex:commandLink styleClass="btn btn-xs" action="{!addNewTSEntry}" reRender="timeSection,pageMessage" status="searchProcessImgTimesheet" rendered="{!IF(AND(timesheet.tc9_ti__Status__c != 'Approved',timesheet.tc9_ti__Status__c != 'Submitted', showSection['NewButton'] == true),true, false)}">
+                                                        <apex:param name="entryNumber" value="{!existingTSEIndex}"/>
+                                                        <apex:image value="{!$Resource.New}" width="20" height="20" title="Click here to insert a timesheet line below"/>
+                                                    </apex:commandLink>
+
+                                                   <!--  <apex:commandLink styleClass="btn btn-xs" action="{!fillDown}" reRender="timeSection,pageMessage" status="searchProcessImgTimesheet" rendered="{!IF(AND(timesheet.tc9_ti__Status__c != 'Approved',timesheet.tc9_ti__Status__c != 'Submitted'),true, false)}">
+                                                        <apex:param name="entryNumber" value="{!existingTSEIndex}"/>
+                                                        <apex:image value="{!URLFOR($Resource.UI,'res/img/copydown.jpg')}" width="23" height="23" title="Copy Down"/>
+                                                    </apex:commandLink>               -->                                    
+                                                    <apex:commandLink styleClass="btn btn-xs" action="{!deleteTSEntry}" onclick="if(confirm('Are you sure you want to delete this day?')==false) return;" reRender="timeSection,pageMessage" status="searchProcessImgTimesheet" immediate="true" rendered="{!IF(AND(tse.tc9_ti__Status__c != 'Approved',tse.tc9_ti__Status__c !='Submitted'),true, false)}">
+                                                        <apex:param name="entryNumber" value="{!existingTSEIndex}"/>
+                                                        <apex:image value="{!URLFOR($Resource.UI,'res/img/DeleteButtonSmall.png')}" width="20" height="20" title="Delete"/>
+                                                    </apex:commandLink>                                                
+                                                 </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>                                    
+                                </table> 
+
+
+                                <div>
+                                    <h6 align="center">
+                                        <apex:actionStatus id="searchProcessImgTimesheet">
+                                            <apex:facet name="
+                                            ">
+                                                <img src="/img/loading.gif" />
+                                            </apex:facet>
+                                         </apex:actionStatus>
+                                    </h6>
+                                </div>
+                        </div>
+                    </apex:outputPanel> 
+                    
+                    <div class="page-header" align="center">
+                        <apex:outputPanel rendered="{!IF(AND(showSection['ProjectCodesButton'], timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}">    
+                            <apex:commandButton styleClass="btn btn-primary" action="{!toggleProjComponent}" value="{!$Label.TimesheetCommunity_Add_Project_Code}" reRender="ProjectSection,theForm" status="searchProcessImgTimesheet"/>&nbsp;&nbsp;
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(AND(showSection['IncludeAttachForTS'], timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}" >
+                            <input type = "button" class = "btn btn-primary" value="{!$Label.TimesheetCommunity_Attach_Timesheet_Invoice}" onclick ="openDialogForExpAttach('{!timeSheet.Id}','false','true','');" />&nbsp;&nbsp; 
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(AND(showSection['EnableCustomExpense'],timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true,false)}">
+                            <input type="button" class="btn btn-primary"  value="Sick Leave" onclick="window.open('{!$Site.Prefix}/apex/{!PageName_CustomExpensePage}?tsId={!timesheet.id}')" formtarget="_blank" />
+                        </apex:outputPanel>
+                                                    
+                    </div>         
+                 
+                     <!-- ---------------------------------------- EXPENSES UNDER THE TIMESHEET : DISPLAY SECTION --------------------------------------- -->
+                    <!-- <apex:pageMessages id="pageMessageExp" /> -->
+                   <!--  <apex:outputPanel rendered="{!AND(showSection['Enable Expense'],NOT(projCodeView))}"  id="expenseSection">
+                        
+                        <div id="thediv" class="panel panel-default">
+                            <div id="innerPannel" class="panel-heading"><h4 align="center"><span class="text-muted">{!$Label.Expenses_Table_Header}</span></h4></div>
+                                
+                                <apex:outputText styleClass="text-muted" value="There are no Expenses to display" style="display:{!IF(expenseWList.size>0,'none','')}" />
+                                
+                                <apex:variable var="expNumber" value="{!0}"/>
+                                 <table  class="table table-condensed table-bordered" style="display:{!IF(expenseWList.size>0,'','none')}">
+                                    <thead>
+                                        <tr>
+                                            <th align="center">  <apex:outputText styleClass="text-muted" value="{!$Label.WorkingDate}" /> </th>
+                                            <th align="center">  <apex:outputText styleClass="text-muted" value="{!$Label.Title}" /> </th>
+                                            <th align="center">  <apex:outputText styleClass="text-muted" value="{!$Label.Expense_Total_Including_Tax}" /> </th>
+                                            <th align="center" style="min-width: 75px;">  <apex:outputText styleClass="text-muted" value="{!$Label.IncGST}" /> </th>
+                                            <th align="center">  <apex:outputText styleClass="text-muted" value="{!$Label.Tax_Amount}" /> </th>
+                                            <th align="center">  <apex:outputText styleClass="text-muted" value="{!$Label.Amount}" /> </th>
+                                            <th align="center">  <apex:outputText styleClass="text-muted" value="{!$Label.Type}" /> </th>
+                                            <th align="center" style="display:{!IF(AND(timesheet.tc9_ti__Status__c != 'Approved', timesheet.tc9_ti__Status__c != 'Submitted'),'','none')}">  <apex:outputText styleClass="text-muted" value="Actions" /> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!expenseWList}" var="expWrap" >
+                                            <tr>
+                                                <td class="col-xs-1">
+                                                    <span class="text-muted">
+                                                        <c:Locale_Formatted_Date date_value="{!expWrap.expense.tc9_ti__Date_Incurred__c}" rendered="{!IF(OR(timeSheet.tc9_ti__Status__c == 'Approved',timeSheet.tc9_ti__Status__c == 'Submitted'),true, false)}"/>
+                                                        <!-- <apex:outputField styleClass="text-muted" value="{!expWrap.expense.Date_Incurred__c}"  rendered="{!IF(OR(timeSheet.Status__c == 'Approved',timeSheet.Status__c == 'Submitted'),true, false)}"/> 
+                                                        <apex:inputField id="dateIncr" styleClass="form-control" value="{!expWrap.expense.tc9_ti__Date_Incurred__c}" required="true" rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}"/>
+                                                    </span>
+                                                </td>
+                                                <td class="col-xs-3">
+                                                    <span class="text-muted">
+                                                        <apex:outputText styleClass="text-muted" value="{!expWrap.expense.tc9_ti__Title__c}"  rendered="{!IF(OR(timeSheet.tc9_ti__Status__c == 'Approved',timeSheet.tc9_ti__Status__c == 'Submitted'),true, false)}"/>
+                                                        <apex:inputField styleClass="form-control" value="{!expWrap.expense.tc9_ti__Title__c}" required="true" rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}"/>
+                                                    </span>
+                                                </td>
+                                                
+                                                <td class="col-xs-2" id="Inctaxrow-{!expNumber}">
+                                                    <span class="text-muted">
+                                                        <apex:outputfield styleClass="text-muted" value="{!expWrap.expense.tc9_ti__Expense_Total_including_Tax__c}"  rendered="{!IF(OR(timeSheet.tc9_ti__Status__c == 'Approved',timeSheet.tc9_ti__Status__c == 'Submitted'),true, false)}"/>
+                                                        <apex:outputPanel rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon" id="userglify">$</span>
+                                                                <apex:inputtext styleClass="form-control" value="{!expWrap.expense.tc9_ti__Expense_Total_including_Tax__c}" onkeyup="calcExpenseValues({!expNumber});"/>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </span>
+                                                </td>
+                                                
+                                                <td id="Taxablerow-{!expNumber}">
+                                                    <span class="text-muted">
+                                                        <apex:outputField styleClass="text-muted" value="{!expWrap.expense.tc9_ti__Taxable__c}"  rendered="{!IF(OR(timeSheet.tc9_ti__Status__c == 'Approved',timeSheet.tc9_ti__Status__c == 'Submitted'),true, false)}"/>
+                                                        <apex:inputfield styleClass="ftsExpenseCol_4_Txt" value="{!expWrap.expense.tc9_ti__Taxable__c}" onchange="calcExpenseValues({!expNumber});" rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}"/>
+                                                    </span>
+                                                </td>
+                                                <td class="col-xs-2" id="taxAmountrow-{!expNumber}">
+                                                    <span class="text-muted">
+                                                        <apex:outputfield styleClass="text-muted" value="{!expWrap.expense.tc9_ti__Tax_Amount__c}"  rendered="{!IF(OR(timeSheet.tc9_ti__Status__c == 'Approved',timeSheet.tc9_ti__Status__c == 'Submitted'),true, false)}"/>
+                                                        <apex:outputPanel rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon" id="userglify">$</span>
+                                                                <apex:inputtext value="{!expWrap.expense.tc9_ti__Tax_Amount__c}" styleClass="form-control {!IF(expWrap.expense.tc9_ti__Taxable__c,'','disabled')}" onkeyup="calcExpenseValues({!expNumber});"/>
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </span>
+                                                </td>
+                                                <td class="col-xs-2" id="Prevaluerow-{!expNumber}">
+                                                    <span class="text-muted">
+                                                        <apex:outputfield styleClass="text-muted" value="{!expWrap.expense.tc9_ti__Value__c}"  rendered="{!IF(OR(timeSheet.tc9_ti__Status__c == 'Approved',timeSheet.tc9_ti__Status__c == 'Submitted'),true, false)}"/>
+                                                        <apex:outputPanel rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon" id="userglify" style="border-color: #ccc !important;border:1px;border-style: solid;border-radius: 4px;">$</span>
+                                                                <apex:inputtext styleClass="form-control" value="{!expWrap.expense.tc9_ti__Value__c}" style="pointer-events:none;border:none;box-shadow: none;" required="true" />
+                                                            </div>
+                                                        </apex:outputPanel>
+                                                    </span>
+                                                </td>
+                                                <td class="col-xs-2">
+                                                    <span class="text-muted">
+                                                        <apex:outputText styleClass="text-muted" value="{!expWrap.expense.tc9_ti__Type__c}"  rendered="{!IF(OR(timeSheet.tc9_ti__Status__c == 'Approved',timeSheet.tc9_ti__Status__c == 'Submitted'),true, false)}"/>
+                                                        <apex:inputField styleClass="form-control" value="{!expWrap.expense.tc9_ti__Type__c}"  rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}" />
+                                                    </span>
+                                                    <apex:variable var="expNumber" value="{!expNumber+1}"/>
+                                                </td>
+                                                <td style="display:{!IF(AND(timesheet.tc9_ti__Status__c != 'Approved', timesheet.tc9_ti__Status__c != 'Submitted'),'','none')}; min-width: 150px;">
+                                                    <apex:outputpanel rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved'),true, false)}" >
+                                                      <apex:commandButton styleClass="btn btn-primary" id="attachButton" value="{!expWrap.isAttach}" action="{!saveEditDeleteExpense}" oncomplete="openDialogForExpAttach('{!expenseIdForAttach}','true','false','');" reRender="expenseSection,pageMessageExp,attachmentSection" status="searchProcessImgExpense" rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}">
+                                                        <apex:param name="expNumber" value="{!expNumber}"/>
+                                                        <apex:param name="actionToDo" value="attachSave"/>
+                                                        </apex:commandButton>
+                                                    </apex:outputpanel>                                                      
+                                                    &nbsp;&nbsp;
+                                                    <apex:commandLink styleClass="btn btn-xs btn-link" action="{!saveEditDeleteExpense}" onclick="if(confirm('{!$Label.Delete_Expense}')==false) return;" reRender="expenseSection,pageMessageExp,attachmentSection" status="searchProcessImgExpense" immediate="true" rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}">
+                                                         <apex:param name="expNumber" value="{!expNumber}"/>
+                                                         <apex:param name="actionToDo" value="delete"/>
+                                                         <apex:image value="{!$Resource.Delete}" width="20" height="20" title="Delete"/>
+                                                    </apex:commandLink>                                                   
+                                                </td>
+                                            </tr>                                           
+                                        </apex:repeat>
+                                    </tbody>
+                                 </table>
+                                <div>
+                                    <h6 align="center">                                        
+                                        <apex:commandButton styleClass="btn btn-default" value="{!$Label.TimesheetCommunity_Add}" action="{!addExpense}" rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}" reRender="expenseSection,pageMessageExp" status="searchProcessImgExpense" onComplete="refreshExpenses({!expenseWList.size})" />
+                                        <apex:commandButton styleClass="btn btn-default" style="display:{!IF(expenseWList.size>0,'','none')}" value="{!$Label.TimesheetCommunity_Save}" action="{!saveExpenses}" reRender="expenseSection,pageMessageExp" status="searchProcessImgExpense" rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}" onComplete="refreshExpenses({!expenseWList.size})" />
+                                    </h6>                           
+                                </div>
+                                <div>
+                                    <h6 align="center">                                         
+                                        <apex:actionStatus id="searchProcessImgExpense">
+                                            <apex:facet name="start">
+                                                <img src="/img/loading.gif" />
+                                            </apex:facet>
+                                         </apex:actionStatus>                                         
+                                    </h6>                                
+                                </div>
+                            </div>
+                        </apex:outputPanel> -->
+                        <div>
+                         <apex:actionStatus id="Deletestatus">
+                            <apex:facet name="start">
+                               <img src="/img/loading.gif" />
+                            </apex:facet>
+                         </apex:actionStatus>
+                        </div>
+                         <apex:outputPanel id="attachmentSection">
+                        
+                        <div id="attachdiv" class="panel panel-default" style="display:{!IF(listOfAttachmentsToBeDisplayed.size>0,'','none')}">
+                            <div id="innerPannel" class="panel-heading"><h4 align="center"><span class="text-muted"><b>Attachments</b></span></h4></div>
+                                
+                                <apex:outputText styleClass="text-muted" value="There are no Attachments to display" style="display:{!IF(listOfAttachmentsToBeDisplayed.size>0,'none','')}" />
+                                
+                                <apex:variable var="expNumber" value="{!0}"/>
+                                 <table  class="table table-condensed table-bordered" style="display:{!IF(listOfAttachmentsToBeDisplayed.size>0,'','none')}">
+                                    <thead>
+                                        <tr>
+                                            <th align="center">  <apex:outputText styleClass="text-muted" value="Name" /> </th>
+                                            <th align="center">  <apex:outputText styleClass="text-muted" value="Type" /> </th>
+                                            <th align="center">  <apex:outputText styleClass="text-muted" value="Description" /> </th>
+                                            <th align="center">  <apex:outputText styleClass="text-muted" value="Created Date" /> </th>
+                                         </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!listOfAttachmentsToBeDisplayed}" var="attach" >
+                                            <tr>
+                                                <td class="col-xs-2">
+                                                    <span class="text-muted">
+                                                        <apex:outputLink value="/servlet/servlet.FileDownload?file={!attach.Id}" target="_blank">{!attach.Name}</apex:outputLink>
+                                                        
+                                                    </span>
+                                                </td>
+                                                <td class="col-xs-2">
+                                                    <span class="text-muted">
+                                                        <apex:outputText styleClass="text-muted" value="{!attach.ContentType}"  />
+                                                        
+                                                    </span>
+                                                </td>
+                                                <td class="col-xs-2">
+                                                    <span class="text-muted">
+                                                        <apex:outputField styleClass="text-muted" value="{!attach.Description}" />
+                                                    </span>
+                                                </td>
+                                                <td class="col-xs-2">
+                                                    <span class="text-muted">
+                                                        <c:Locale_Formatted_Date date_value="{!attach.CreatedDate}" />
+                                                    </span>
+                                                </td>
+                                                 <td class="col-xs-2">
+                                                    <span class="text-muted">
+                                                       <apex:outputLink value="/servlet/servlet.FileDownload?file={!attach.Id}" target="_blank">View</apex:outputLink>&nbsp;
+                                                       <apex:outputpanel rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted',attach.Description=='Expense'),true, false)}">
+                                                       <input type = "button" class="btLink" value="Update" onclick ="openDialogForExpAttach('{!attach.parentId}','true','false','');"  />&nbsp;
+                                                       </apex:outputpanel>
+                                                        <apex:outputpanel rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted',attach.Description!='Expense'),true, false)}">
+                                                       <input type = "button" class="btLink" value="Update" onclick ="openDialogForExpAttach('{!timeSheet.Id}','false','true','{!attach.Description}');"  />&nbsp;
+                                                       </apex:outputpanel>
+                                                      
+                                                       <apex:outputpanel rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}">
+                                                           <input type="button" class="btLink" value="Delete" onclick="deleteAttachment('{!attach.Id}');" />&nbsp;
+                                                          
+                                                       </apex:outputpanel>
+
+                                                   </span>
+                                                </td>                                                 
+                                            </tr>                                           
+                                        </apex:repeat>
+                                    </tbody>
+                                 </table>
+                                
+                                
+                            </div>
+                            
+                            <apex:actionFunction action="{!deleteAttach}" name="deleteAttachment" rerender="attachmentSection,expenseSection" status="Deletestatus">
+                                  <apex:param name="currentAttachId2" assignTo="{!currentAttachId}" value="" />
+                              </apex:actionFunction>
+                        </apex:outputPanel>
+                       
+                        <apex:outputPanel rendered="{!!projCodeView}">
+                            <div class="page-header" align="center">                            
+                                <apex:outputPanel rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}">
+                                    <input type="button" class="tsTableth_Button" value="{!$Label.TimesheetCommunity_Save_Timesheet}" onclick="checkforStartTimeAndEndTimeOnSubmitOrSave('{!showSection['Time']}', 'Save')" />&nbsp;&nbsp;
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(AND(timeSheet.tc9_ti__Status__c != 'Approved',timeSheet.tc9_ti__Status__c != 'Submitted'),true, false)}">
+                                    <input type="button" class="btn btn-primary"  value="{!$Label.TimesheetCommunity_Submit_Timesheet_for_Approval}" onclick="checkforStartTimeAndEndTimeOnSubmitOrSave('{!showSection['Time']}','Submit')" />&nbsp;&nbsp;
+                                </apex:outputPanel>
+                                <!-- <apex:outputPanel >
+                                    <input type="button" class="btn btn-primary"  value="Print Timesheet" onclick="window.open('{!$Site.Prefix}/apex/{!Page_PrintTimeSheetEntry}?tsId={!timesheet.id}')"/>&nbsp;&nbsp;
+                                </apex:outputPanel> -->
+
+                            </div>
+                        <div class="page-header" align="center">
+                            <apex:outputPanel >
+                                <input type="button" class="btn btn-primary" onclick= "openCancle();" value = "Cancel" />&nbsp;&nbsp;
+                                
+                            </apex:outputPanel>
+                        </div>
+                    </apex:outputPanel>
+                 
+                </div>
+                
+                </apex:form>
+                
+                <!-- ProjectCode section -->
+                
+                    <!-- <apex:outputPanel id="ProjectSection">
+                         <c:AddProjCodeComponent rendered="{!projCodeView}"/>                        
+                         <apex:outputPanel rendered="{!projCodeView}">
+                            <div class="page-header" id="doneDiv" align="center">
+                                <input type="button" class="btn btn-primary" value="{!$Label.TimesheetCommunity_Done}" onclick="toggleProjComp();" />                         
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>  -->                   
+                </apex:outputPanel> 
+            </apex:define>
+        </apex:composition>
+    </html>
+</apex:page>

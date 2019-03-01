@@ -1,0 +1,200 @@
+<!--
+ Created by Adelaide Greenaway on 30/10/17.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Home --- Portal_Home_Controller
+ *
+ -->
+
+<apex:page id="Portal_ChangeAvatar" title="2cloudnine Community Portal" docType="html-5.0" controller="Portal_Home_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false">
+<head>
+    <title>Premier Timesheet Portal</title>
+</head>
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+            <body>
+            <div class="sideBar">
+                    <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalPlacementHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Placement History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks "><i class="icon-profilegrey"></i>My Profile</a>
+                    <a href="https://access.paylocity.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Paylocity Portal</a>
+                    <a href="http://support.pstaffing.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Support Center</a>
+                </div>
+
+            <apex:form >
+                <div id="main" class="pageContent">
+                    <div class="notificationBox">
+                        <h1>Change Profile Avatar  </h1>
+                        <div >
+                            <input type="file" id="attachmentFile{!contractor.Id}" multiple="1"/>
+                            <input type="button" value = "Save Photo" class="save-file-button  pageButton" onclick="uploadFile('{!contractor.Id}','attachmentFile','attachmentPanel')"/>
+                        </div>
+                    </div>
+                    <apex:outputPanel rendered="{!IF(portalAvatar != null,true,false)}">
+                        <div class="notificationBox">
+                            <p class="boxHeading">Portal Avatar  </p>
+                          
+                          
+                            <apex:image value="{!URLFOR($Action.Attachment.Download, portalAvatar.Id)}" height="1300px" width="auto">
+                           
+                            </apex:image>
+                        </div>
+                    </apex:outputPanel>
+
+                </div>
+
+            </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+    <!--</html>-->
+    <script>
+        var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters
+    var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
+    var chunkSize = 950000;
+
+    function uploadFile(parentId,attachmentFile,attachmentPanel)
+    {
+        var filesabcd = document.getElementById(attachmentFile+parentId).files;
+
+        $('.save-file-button').after('<span class="save-file-uploading">... please wait while file is uploading...</span>');
+        for(var i = 0; i < filesabcd.length; i++)
+        {
+            if(filesabcd[i].size <= maxFileSize)
+            {
+                attachsample(filesabcd[i],parentId,attachmentPanel);
+                console.log('filesabcd:: ');
+                console.log(filesabcd);
+            }
+            else
+            {
+                $('.save-file-uploading').remove();
+                alert('File must be under 4.3 MB in size.  Your file is too large.  Please try again.');
+            }
+        }
+
+        if(filesabcd.length == 0){
+            $('.save-file-uploading').remove();
+        }
+    }
+    function attachsample(file,parentId,attachmentPanel)
+    {
+        console.log('2:'+parentId);
+        var fileReader = new FileReader();
+        console.log('fileReader:: ');
+        console.log(fileReader);
+        fileReader.onloadend = function(event)
+        {
+            //console.log('inside onloadend --- line 510');
+            var attachmentName = file.name;
+            var attachmentDesc = 'Profile photo for Employee Portal';
+            var binary = "";
+            var bytes = new Uint8Array(event.target.result);
+            var length = bytes.byteLength;
+            //console.log('inside onloadend --- line 515');
+            for (var i = 0; i < length; i++)
+            {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            var attachment = window.btoa(binary);//(new sforce.Base64Binary(binary)).toString();
+
+            var positionIndex=0;
+            var fileSize = attachment.length;
+
+            console.log(" --- line 522 Total Attachment Length: " + fileSize);
+
+            var doneUploading = false;
+            var fileext = attachmentName.substr((attachmentName.lastIndexOf('.') + 1)).toUpperCase();
+            console.log('fileext: '+fileext);
+
+            if(fileSize < maxStringSize) {
+                if(fileext!='' && (fileext=='JPG' || fileext=='JPEG' || fileext=='GIF' || fileext=='PNG'))
+                {
+                    attachmentName = 'portalAvatar.'+fileext;
+                    console.log(' --- line 531 attachname'+attachmentName);
+
+                    uploadChunk(parentId,null,attachmentName,attachment,positionIndex,fileSize,doneUploading,attachmentPanel,attachmentDesc);
+                }
+                else{
+                    $('.save-file-uploading').remove();
+                    alert('Only images of type .jpg, .gif and .png files allowed');
+                }
+            } else {
+                alert('Base 64 Encoded file is too large.  Maximum size is ' + maxStringSize + ' your file is ' + fileSize + '.');
+
+            }
+        }
+
+        fileReader.onerror = function(e) {
+            $('.save-file-uploading').remove();
+            alert('There was an error reading the file.  Please try again.');
+        }
+        fileReader.onabort = function(e) {
+            $('.save-file-uploading').remove();
+            alert('There was an error reading the file.  Please try again.');
+        }
+
+        fileReader.readAsArrayBuffer(file);  //Read the body of the file
+    }
+
+    //Method to send a file to be attached to the parent
+    //Sends parameters: Parent Id, Attachment (body), Attachment Name, and the Id of the Attachment if it exists to the controller
+    function uploadChunk(parentId, fileId, attachmentName, attachment, positionIndex,fileSize,doneUploading,attachmentPanel,attachmentDesc) {
+
+        console.log(' --- line 560 came inside'+attachmentName);
+        var attachmentBody = "";
+
+        if(fileSize <= positionIndex + chunkSize) {
+            attachmentBody = attachment.substring(positionIndex);
+            doneUploading = true;
+        } else {
+            attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
+        }
+        console.log(" --- line 569 Uploading " + parentId+":"+fileId+":"+ attachmentBody.length + " chars of " + fileSize);
+
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.Portal_Home_Controller.doUploadAttachment}',
+            parentId, attachmentBody, attachmentName, fileId,attachmentDesc,
+            function(result, event) {
+            console.log(result);
+            if(event.type === 'exception') {
+                console.log(" --- line 577 exception");
+                console.log(event);
+            } else if(event.status) {
+                if(result.substring(0,3) == '00P') {
+                    console.log(" --- line 585 --- result");
+                    if(doneUploading == true) {
+                        $('.save-file-uploading').remove();
+                        //alert('File uploaded successfully!');
+                        alert('File uploaded successfully!');
+                        location.reload();
+
+                        var hrefString = '/{!$Site.Name}/servlet/servlet.FileDownload?file='+result;
+
+                        $('#'+attachmentPanel+parentId).prepend('<a href="'+hrefString+'" target="_blank" class="attachment-link">'+attachmentName+'</a>');
+                        updateAttachmentList();
+                    } else {
+                        positionIndex += chunkSize;
+                        uploadChunk(parentId,result,attachmentName,attachment,positionIndex,fileSize,doneUploading,attachmentPanel,attachmentDesc);
+                    }
+                }
+            } else {
+                $('.save-file-uploading').remove();
+                //alert('Could not upload file!');
+                alert('Could not upload file!');
+                console.log(event.message);
+                console.log('all done?  --- line 601')
+            }
+            $('.file-input-opacity').val('');
+            $('.file-area label.jcf-fake-input span em').html('');
+        },
+        {buffer: false, escape: true, timeout: 120000}
+        );
+    }
+    </script>
+</apex:page>

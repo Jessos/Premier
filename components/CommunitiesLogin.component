@@ -1,0 +1,45 @@
+<apex:component controller="SiteLoginController" id="communityLoginComponent">
+    <style>
+        .form-signin{
+            max-width: 300px;
+            min-width: 300px;
+        }
+    
+    </style>
+    
+    <div align="center">
+    <h2 class="form-signin-heading">Welcome to Community Portal</h2><br/>
+    <apex:form id="loginForm" forceSSL="true" styleClass="form-signin">
+            <apex:actionfunction name="loginJS" action="{!login}" />
+            <apex:outputPanel >
+                <h4 align="left" class="form-signin-heading">Please Log in</h4>
+                <apex:pageMessages id="error"/>
+                
+                <apex:outputLabel value="{!$Label.site.username}" for="username" styleClass="sr-only"/>
+                <div class="input-group">
+                  <span class="input-group-addon" id="userglify"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                  <apex:inputText id="username" value="{!username}" styleClass="form-control" html-placeholder="Username"/>
+                </div>
+                <apex:outputLabel value="{!$Label.site.password}" for="password" styleClass="sr-only"/>
+                <div class="input-group">
+                  <span class="input-group-addon" id="lockglify"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
+                  <apex:inputSecret id="password" value="{!password}" styleClass="form-control" html-placeholder="Password"/>
+                </div>
+                
+                <br/>
+                <button type="button" class="btn btn-md btn-primary btn-block" onclick="loginJS()">
+                  <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> {!$Label.site.login_button}
+                </button>
+                <br/><br/>
+                <a href="{!$Page.tc9_ti__Community_ForgotPassword}">{!$Label.site.forgot_your_password_q}</a>
+                <!-- <apex:outputLink value="{!$Page.ForgotPassword}"> {!$Label.site.forgot_your_password_q}</apex:outputLink><br/> -->
+                <!-- <apex:commandLink value="Terms & Conditions"/> -->
+                
+                <!-- <apex:outputText value=" | " rendered="{!$Site.RegistrationEnabled}" />
+                <apex:outputLink value="{!$Page.SiteRegister}" rendered="{!$Site.RegistrationEnabled}">{!$Label.site.new_user_q}</apex:outputLink> -->
+            </apex:outputPanel>
+
+    </apex:form>
+        
+    </div>
+</apex:component>

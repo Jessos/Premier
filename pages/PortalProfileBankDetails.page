@@ -1,0 +1,459 @@
+<!--
+ Created by Adelaide Greenaway on 6/11/17.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Profile Bank Details --- Portal_ProfileBankDetails_Controller
+ * NOTE: Refer to SiteTemplate and customPortalJS for any scripts that are used on this page
+ *
+ -->
+
+<apex:page id="PortalProfileBankDetails" controller="Portal_ProfileBankDetails_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false" docType="html-5.0">
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+            <body>
+                <div class="sideBar">
+                    <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalContracts" class="sideBarLinks"><i class="icon-ContractG"></i>Contracts</a>
+                    <a href="{!$Site.Prefix}/PortalPolicies" class="sideBarLinks "><i class="icon-ContractG"></i>Policies</a>
+                    <a href="{!$Site.Prefix}/PortalPaymentHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Payment History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks sidebarHighlight"><i class="icon-profilegrey"></i>My Profile</a>
+                </div>
+
+                <apex:form >
+                    <div class="pageContent">
+                        <apex:outputPanel rendered="{!IF(payeeEarnerType == 'PAYG',true, false)}">
+                            <h1> My Profile </h1>
+
+                            <ul class="tab dtInfo">
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfilePersonalDetails"  >Personal Details</a>
+                                <a class="active tabPadding" href="#" >Bank Details</a>
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileSuperDetails" >Superannuation Details</a>
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileTaxDetails" >Tax Details</a>
+                            </ul>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!OR(payeeEarnerType == 'PTY / LTD', payeeEarnerType == 'Managed Company Contractor')}">
+                            <h1> My Profile </h1>
+                            <ul class="tab dtInfo">
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfilePersonalDetails"  >Personal Details</a>
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileCompanyDetails" >Company Details</a>
+                                <a class="active tabPadding" href="#" >Bank Details</a>
+                            </ul>
+                        </apex:outputPanel>
+                    <div >
+                        <apex:pageMessages id="messages" />
+                    </div>
+                    <div id="BankDetailsM" >
+                        <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="tsTabBack">
+                            <i class="icon-chevronblue iconMain iconHInv"></i><p class="linkText">Back to My Profile</p>
+                        </a>
+                        <!--<div id="contentToToggle" style="display:{!IF(showContent,"block","none")};">-->
+                        <div id="readBlock">
+                    <!--<div id="contentToToggle" style="display:{!IF(showContent,"block","none")};">-->
+                            <apex:outputPanel rendered="{!IF(bankTypeSelected == 'Australian',true,false)}" >
+                                <div >
+                                    <apex:outputPanel >
+
+                                        <apex:outputPanel rendered="{!IF(bankAcc_2_BSB != null,true,false)}">
+                                            <h2>Bank Account 1 Details</h2>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!IF(bankAcc_2_BSB == null,true,false)}">
+                                            <h2>Bank Account Details</h2>
+                                        </apex:outputPanel>
+                                        <apex:outputlabel >Account Name  </apex:outputlabel>
+                                        <p class="roText">{!bankAcc_1_Name} </p>
+
+                                        <apex:outputlabel >Account BSB  </apex:outputlabel>
+                                        <p class="roText">{!bankAcc_1_BSB}</p>
+
+                                        <apex:outputlabel >Account Number  </apex:outputlabel>
+                                        <p class="roText">{!bankAcc_1_Number}</p>
+
+                                        <apex:outputPanel rendered="{!bankAcc_1_PayEntireBal}">
+                                            <p class="roText">Pay entire Balance</p>
+                                            <!--<apex:outputlabel >Pay Entire Balance</apex:outputlabel>-->
+                                            <!--<apex:inputCheckbox value="{!bankAcc_1_PayEntireBal}" onClick="return false;"/>-->
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!IF(bankAcc_1_AllocPc != null,true,false)}" >
+                                            <apex:outputlabel >%  Allocation</apex:outputlabel>
+                                            <p class="roText">{!bankAcc_1_AllocPc}</p>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!IF(bankAcc_1_FixedAmt != null,true,false)}" >
+                                            <apex:outputlabel >Fixed Amount Allocation </apex:outputlabel>
+                                            <p class="roText">{!bankAcc_1_FixedAmt}</p>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                    <hr />
+                                    <apex:outputPanel rendered="{!IF(bankAcc_2_BSB != null, true,false)}">
+                                        <h2 >Bank Account 2 Details</h2>
+                                        <apex:outputlabel >Account Name  </apex:outputlabel>
+                                        <p class="roText">{!bankAcc_2_Name}</p>
+                                        <apex:outputlabel >Account BSB  </apex:outputlabel>
+                                        <p class="roText">{!bankAcc_2_BSB}</p>
+                                        <apex:outputlabel >Account Number  </apex:outputlabel>
+                                        <p class="roText">{!bankAcc_2_Number}</p>
+                                        <apex:outputPanel rendered="{!bankAcc_2_PayRemaining}">
+                                            <p class="roText">Pay Remaining Balance</p>
+                                            <!--<apex:outputlabel >Pay Entire Balance</apex:outputlabel>-->
+                                            <!--<apex:inputCheckbox value="{!bankAcc_1_PayEntireBal}" onClick="return false;"/>-->
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!IF(bankAcc_2_AllocPc != null,true,false)}" >
+                                            <apex:outputlabel >%  Allocation  </apex:outputlabel>
+                                            <p class="roText">{!bankAcc_2_AllocPc}</p>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!IF(bankAcc_2_FixedAmt != null,true,false)}" >
+                                            <apex:outputlabel >Fixed Amount Allocation  </apex:outputlabel>
+                                            <p class="roText">{!bankAcc_2_FixedAmt}</p>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+                                    <hr />
+                                    <apex:outputPanel rendered="{!IF(bankAcc_3_BSB != null, true,false)}">
+                                        <h2 >Bank Account 3 Details</h2>
+                                        <apex:outputlabel >Account Name  </apex:outputlabel>
+                                        <p class="roText">{!bankAcc_3_Name}</p>
+                                        <apex:outputlabel >Account BSB  </apex:outputlabel>
+                                        <p class="roText">{!bankAcc_3_BSB}</p>
+                                        <apex:outputlabel >Account Number  </apex:outputlabel>
+                                        <p class="roText">{!bankAcc_3_Number}</p>
+                                        <apex:outputlabel >Pay Remaining Balance</apex:outputlabel>
+                                        <apex:outputPanel rendered="{!IF(bankAcc_3_AllocPc != null,true,false)}" >
+                                            <apex:outputlabel >%  Allocation  </apex:outputlabel>
+                                            <p class="roText">{!bankAcc_3_AllocPc}</p>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!IF(bankAcc_3_FixedAmt != null,true,false)}" >
+                                            <apex:outputlabel >Fixed Amount  </apex:outputlabel>
+                                            <p class="roText">{!bankAcc_3_FixedAmt}</p>
+                                        </apex:outputPanel>
+                                    </apex:outputPanel>
+
+                                </div>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!IF(bankTypeSelected == 'International',true,false)}" >
+                                <div id="" >
+                                    <apex:outputPanel >
+                                        <h2 >International Bank Account Details</h2>
+                                        <apex:outputlabel >Country  </apex:outputlabel>
+                                        <p class="roText">{!intCountry}</p>
+                                        <apex:outputLabel >Currency </apex:outputLabel>
+                                        <p class="roText">{!intCurrency}</p>
+                                        <apex:outputlabel >Bank Name  </apex:outputlabel>
+                                        <p class="roText">{!intBankName}</p>
+                                        <apex:outputlabel >Bank Address  </apex:outputlabel>
+                                        <p class="roText">{!intBankAddress}</p>
+                                        <apex:outputlabel >Account Number / IBAN</apex:outputlabel>
+                                        <p class="roText">{!intAccNumIBAN}</p>
+                                        <apex:outputlabel >Swift/BIC  </apex:outputlabel>
+                                        <p class="roText">{!intSwiftBIC}</p>
+                                        <apex:outputlabel >Recipient Name  </apex:outputlabel>
+                                        <p class="roText">{!intRecipientName}</p>
+                                        <apex:outputlabel >Recipient Address  </apex:outputlabel>
+                                        <p class="roText">{!intRecipientAddress}</p>
+
+                                    </apex:outputPanel>
+                                </div>
+                            </apex:outputPanel>
+                            <div>
+                                <apex:commandbutton value="Update Bank Details" styleClass="pageButton" onComplete="toggleEntry(event, 'editBlock', 'readBlock');"/>
+                                <!--<apex:commandbutton value="Update Bank Details" action="{!loadSelectionDetails}" styleClass="pageButton" />-->
+                            </div>
+                        </div>
+                    </div>
+                        <div id="editBlock" >
+                        <apex:outputPanel rendered="{!IF(bankTypeSelected == 'NONE',true,false)}">
+                            <p class="impMessage">Please provide Bank Details</p>
+                        </apex:outputPanel>
+                            <apex:outputlabel styleClass="mobileLabel">Select either Australian or International Bank Details to be Submitted</apex:outputlabel>
+                            <apex:selectRadio layout="pageDirection" id="radios" value="{!bankTypeSelected}" onChange="radioBankType(event,this);"  >
+                                <apex:selectOption itemLabel="Australian Bank" itemValue="aus1" id="ausSel"  />
+                                <apex:selectOption itemLabel="International Bank" itemValue="int1" id="intSel" />
+                            </apex:selectRadio>
+                            <!--updateBankDetails(this);-->
+                            <div id="divAusBank" >
+
+                                You can provide up to 3 Australian bank accounts
+
+
+                                <div >
+                                    <h2 >Bank Account 1 Details</h2>
+                                    <div>
+                                        <apex:outputlabel >Account Name  </apex:outputlabel>
+                                        <div >
+                                            <apex:inputText styleClass="pageInput"  value="{!bankAcc_1_Name}" id="BA1_Name"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <apex:outputlabel >Account BSB  </apex:outputlabel>
+                                        <!--<apex:actionFunction name="paraFunction1" action="{!getBSB}" reRender="thenew">-->
+                                        <!--<apex:param id="aname" assignTo="{!bankAcc_1_BSB}" name="bsbCode" value=""/>-->
+                                        <!--</apex:actionFunction>-->
+                                        <!--<apex:inputText id="bsbTextBox" value="{!selectedBSB1}" styleClass="placeHolder" />-->
+                                        <!--<apex:inputHidden id="searchBSBId" value="{!selectedBSB1}"  />-->
+                                        <div>
+                                            <apex:inputText styleClass="pageInput"  value="{!bankAcc_1_BSB}" onkeypress="return isNumberKey(event)" maxLength="6" id="BA1_Number"/>
+                                            <!--<apex:inputText styleClass="pageInput"  value="{!bankAcc_1_BSB}" />-->
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <apex:outputlabel >Account Number  </apex:outputlabel>
+                                        <div>
+                                            <apex:input type="number" styleClass="pageInput"  value="{!bankAcc_1_Number}" />
+                                        </div>
+                                    </div>
+
+                                    <div id="chooseAlloc_BA1">
+                                        <apex:outputlabel styleClass="mobileLabel">Please select either Allocated Percentage or Fixed Amount for Bank Account 1: </apex:outputlabel>
+                                        <!--</apex:outputPanel>-->
+                                        <apex:selectRadio layout="pageDirection" id="Allocation1" value="{!getSelectedItem1}" onChange="radio_Allocation1(event,this);">
+                                            <!--<apex:selectOption itemLabel="Pay Entire Balance" itemValue="payEntire"/>-->
+                                            <apex:selectOption itemLabel="% Allocation" itemValue="percent1" />
+                                            <apex:selectOption itemLabel="Fixed Amount" itemValue="fixed1" />
+                                        </apex:selectRadio>
+                                    </div>
+
+                                    <div id="divPercent1" style="{!IF(getSelectedItem1 == 'percent1','display:block;','display:none;')}">
+                                        <font color="red">
+                                            <div id="showTotalInfo_overA" class="mobileLabel">
+                                                Total allocation across all bank accounts is above 100% please correct.
+                                            </div>
+                                        </font>
+                                        <apex:outputlabel >Allocated %  </apex:outputlabel>
+                                        <div>
+                                            <apex:input type="number" styleClass="pageInput"  value="{!bankAcc_1_AllocPc}" id="perTot1" onKeyUp="checkPercentTotal();" onkeypress="return isNumberKey(event)"/>
+                                        </div>
+                                    </div>
+
+                                    <div id="divFixed1" style="{!IF(getSelectedItem1 == 'fixed1','display:block;','display:none;')}">
+                                        <font color="red">
+                                            <div id="showFixedErrorA" class="mobileLabel">
+                                                Only numbers with up to 2 decimal places are allowed.
+                                            </div>
+                                        </font>
+                                        <apex:outputlabel >Fixed Amount  </apex:outputlabel>
+                                        <div>
+                                            <apex:input type="number" styleClass="pageInput"  value="{!bankAcc_1_FixedAmt}" id="BA1_FixedAm" onKeyUp="return isMoney(this, jQuery('[id$=showFixedErrorA]'))" onKeyPress="return isNumberDecimal(event)"/>
+                                        </div>
+                                    </div>
+                                    <div id="pR1info">
+                                        <p>Your entire balance will be paid to Bank Account 1</p>
+                                    </div>
+                                </div>
+
+                                <div id="divBankAcc2" >
+                                    <apex:outputlabel styleClass="mobileLabel">Would you like to submit a second Bank Account?</apex:outputlabel>
+
+                                    <apex:selectRadio layout="pageDirection" id="chgBA2" value="{!addBA2}" onChange="radio_chgBA2(event,this);">
+                                        <apex:selectOption itemLabel="Yes" itemValue="Yes" />
+                                        <apex:selectOption itemLabel="No" itemValue="No" />
+
+                                    </apex:selectRadio>
+
+                                    <div id="divYes2" >
+
+                                        <h2>Bank Account 2 Details</h2>
+                                        <div>
+                                            <apex:outputlabel >Account Name  </apex:outputlabel>
+                                            <div>
+                                                <apex:inputText styleClass="pageInput"  value="{!bankAcc_2_Name}"/>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputlabel >Account BSB  </apex:outputlabel>
+                                            <div>
+                                                <!--<apex:actionFunction name="paraFunction2" action="{!getBSB}" reRender="thenew2">-->
+                                                <!--<apex:param id="aname2" assignTo="{!bankAcc_2_BSB}" name="bsbCode2" value=""/>-->
+                                                <!--</apex:actionFunction>-->
+                                                <!--<apex:inputText id="bsbTextBox2" value="{!selectedBSB2}" styleClass="placeHolder" />-->
+                                                <!--<apex:inputHidden id="searchBSBId2" value="{!selectedBSB2}"  />-->
+                                                <apex:inputText styleClass="pageInput"  value="{!bankAcc_2_BSB}" onkeypress="return isNumberKey(event)" maxLength="6"/>
+                                                <!--<apex:inputText styleClass="pageInput"  value="{!bankAcc_2_BSB}" />-->
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputlabel >Account Number  </apex:outputlabel>
+                                            <div>
+                                                <apex:inputText styleClass="pageInput"  value="{!bankAcc_2_Number}"/>
+                                            </div>
+                                        </div>
+                                        <div id="pR2info">
+                                            <p>Any remaining balance will be paid to Bank Account 2</p>
+                                        </div>
+
+                                        <div id="chooseAlloc_BA2">
+                                            <apex:outputlabel styleClass="mobileLabel">Please select either Allocated Percentage or Fixed Amount for Bank Account 2:</apex:outputlabel>
+                                            <apex:selectRadio layout="pageDirection" id="Allocation2" value="{!getSelectedItem2}" onChange="radio_Allocation2(event,this);">
+                                                <!--<apex:selectOption itemLabel="Pay Remaining Balance" itemValue="payRemain2"/>-->
+                                                <apex:selectOption itemLabel="% Allocation" itemValue="percent2" />
+                                                <apex:selectOption itemLabel="Fixed Amount" itemValue="fixed2"/>
+                                            </apex:selectRadio>
+                                        </div>
+
+                                        <div id="divPercent2" style="{!IF(getSelectedItem2 == 'percent2','display:block;','display:none;')}">
+                                            <font color="red">
+                                                <div id="showTotalInfo_overB" class="mobileLabel">
+                                                    Total allocation across all bank accounts is above 100% please correct.
+                                                </div>
+                                            </font>
+                                            <apex:outputlabel >Allocated %  </apex:outputlabel>
+                                            <div>
+                                                <apex:input type="number" styleClass="pageInput"  value="{!bankAcc_2_AllocPc}" id="perTot2" onKeyUp="checkPercentTotal();" onkeypress="return isNumberKey(event)"/>
+                                            </div>
+                                            <!--<input type="text" id="perTot2" onkeyup="checkPercentTotal();" value="{!bankAcc_2_AllocPc}"/>-->
+                                        </div>
+
+                                        <div id="divFixed2" style="{!IF(getSelectedItem2 == 'fixed2','display:block;','display:none;')}">
+                                            <font color="red">
+                                                <div id="showFixedErrorB" class="mobileLabel">
+                                                    Only numbers with up to 2 decimal places are allowed.
+                                                </div>
+                                            </font>
+                                            <apex:outputlabel >Fixed Amount  </apex:outputlabel>
+                                            <div>
+                                                <apex:input type="number" styleClass="pageInput"  value="{!bankAcc_2_FixedAmt}" onKeyUp="return isMoney(this, jQuery('[id$=showFixedErrorB]'))"  onKeyPress="return isNumberDecimal(event)"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div id="divBankAcc3" >
+                                    <apex:outputlabel styleClass="mobileLabel">Would you like to submit a third Bank Account?</apex:outputlabel>
+                                    <apex:selectRadio layout="pageDirection" id="chgBA3" value="{!getSelectedItem3}" onChange="radio_chgBA3(event,this);">
+                                        <apex:selectOption itemLabel="Yes" itemValue="Yes" />
+                                        <apex:selectOption itemLabel="No" itemValue="No" />
+                                    </apex:selectRadio>
+
+                                    <div id="divYes3">
+                                        <h2 >Bank Account 3 Details</h2>
+
+                                        <div>
+                                            <apex:outputlabel >Account Name  </apex:outputlabel>
+                                            <div>
+                                                <apex:inputText styleClass="pageInput"  value="{!bankAcc_3_Name}"/>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputlabel >Account BSB  </apex:outputlabel>
+                                            <!--<apex:actionFunction name="paraFunction3" action="{!getBSB}" reRender="thenew3">-->
+                                            <!--<apex:param id="aname3" assignTo="{!bankAcc_3_BSB}" name="bsbCode3" value=""/>-->
+                                            <!--</apex:actionFunction>-->
+                                            <!--<apex:inputText id="bsbTextBox3" value="{!selectedBSB3}" styleClass="placeHolder"/>-->
+                                            <!--<apex:inputHidden id="searchBSBId3" value="{!selectedBSB3}"  />-->
+                                            <div>
+                                                <apex:inputText styleClass="pageInput"  value="{!bankAcc_3_BSB}" onkeypress="return isNumberKey(event)" maxLength="6"/>
+                                                <!--<apex:inputText styleClass="pageInput"  value="{!bankAcc_3_BSB}" />-->
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <apex:outputlabel >Account Number  </apex:outputlabel>
+                                            <div>
+                                                <apex:input type="number" styleClass="pageInput"  value="{!bankAcc_3_Number}"/>
+                                            </div>
+                                            <p>Any remaining balance will be paid to Bank Account 3</p>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div id="theSave">
+                                    <apex:commandButton action="{!submitAus_BankDetails}" value="Save Details" styleClass="pageButton"/>
+                                    <apex:commandButton action="{!cancel}" value="Cancel" styleClass="pageButton" />
+                                </div>
+                                <font color="red">
+                                    <div id="showSaveError" class="mobileLabel">
+                                        You are unable to save due to total allocation is above 100% please correct.
+                                    </div>
+                                </font>
+                                <div id="theCancel" >
+                                    <apex:commandButton action="{!cancel}" value="Cancel" styleClass="pageButton" />
+                                </div>
+
+                            </div>
+
+                            <div id="divIntBank" >
+                                You can only provide 1 International account
+
+                                <apex:outputPanel >
+                                    <h2 >International Bank Account Details</h2>
+                                    <div>
+                                        <apex:outputlabel >Country  </apex:outputlabel>
+                                        <div>
+                                            <apex:selectList id="country" size="1" value="{!intCountry}">
+                                                <apex:selectOptions value="{!countries}"/>
+                                            </apex:selectList>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <apex:outputlabel >Bank Name  </apex:outputlabel>
+                                        <div>
+                                            <apex:inputText styleClass="pageInput"  value="{!intBankName}"/>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <apex:outputlabel >Bank Address  </apex:outputlabel>
+                                        <div>
+                                            <apex:inputText styleClass="pageInput"  value="{!intBankAddress}"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <apex:outputlabel >Account Number / IBAN</apex:outputlabel>
+                                        <div>
+                                            <apex:inputText styleClass="pageInput"  value="{!intAccNumIBAN}"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <apex:outputlabel >Swift/BIC  </apex:outputlabel>
+                                        <div>
+                                            <apex:inputText styleClass="pageInput" value="{!intSwiftBIC}"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <apex:outputLabel >Receiving Currency</apex:outputLabel>
+                                        <div>
+                                            <apex:selectList id="currency" size="1" value="{!intCurrency}">
+                                                <apex:selectOptions value="{!intCurrencies}"/>
+                                            </apex:selectList>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <apex:outputlabel >Recipient Name  </apex:outputlabel>
+                                        <div>
+                                            <apex:inputText styleClass="pageInput"  value="{!intRecipientName}"/>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <apex:outputlabel >Recipient Address  </apex:outputlabel>
+                                        <div>
+                                            <apex:inputText styleClass="pageInput"  value="{!intRecipientAddress}"/>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            <!--</div>-->
+                                <!--</apex:outputPanel>-->
+                                <div>
+                                    <apex:commandButton action="{!submitInt}" value="Save Details" styleClass="pageButton"/>
+                                    <apex:commandButton action="{!cancel}" value="Cancel" styleClass="pageButton"/>
+                                </div>
+                            </div>
+                            <!--<div id="theSave">-->
+                                <!--<apex:commandButton action="{!submitAus}" value="Save" styleClass="pageButton"/>&nbsp;-->
+                                <!--<apex:commandButton action="{!cancel}" value="Cancel" styleClass="pageButton"/>-->
+                            <!--</div>-->
+
+                        </div>
+                    </div>
+                </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+</apex:page>

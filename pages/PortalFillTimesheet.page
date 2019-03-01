@@ -1,0 +1,844 @@
+<apex:page controller="PortalFillTimesheetController" showHeader="false" sidebar="false" id="thePage">
+<head>
+    <title>Premier Timesheet Portal</title>
+</head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <noscript Id = "noscript-warning">This page is best viewed with JavaScript Enabled</noscript>
+    <!--<style >
+        #noscript-warning {
+            background-color: #0073FF;
+            color: #FFFFFF;
+            font-family: sans-serif;
+            font-size: 120%;
+            font-weight: bold;
+            left: 0;
+            padding: 5px 0;
+            position: fixed;
+            text-align: center;
+            top: 0;
+            width: 70%;
+            z-index: 101;
+        }
+        
+        #content {
+            padding: 0;
+            position: relative;
+            width: 90%;
+        }   
+        
+        
+        /*.ftsTalentHeader    {border:1px solid #000000;}*/
+        .ftsTalentInfo      {width:80%;}
+        .ftsTalentGrid      {margin-top:1em; width:100%;}
+        
+        .ftsTSHeader        {width: 100%;clear:both;padding-top:6px;}
+        
+        .ftsLinkButton      {text-decoration:none;}
+        .ftsTableWrapper    {width:60%;vertical-align:top}
+        .ftsHeaderLine      {width: 100%; align:left}
+        
+        .ftsTimesheetEntryTable {float:left;width:80%}
+        .ftsExpenseTable{}
+        .ftsExpenseSection {clear:left;display:block;}
+        
+        .ftsBreakpointTable     {width:40%;}
+        .ftsBreakpointButton    {float:right;}
+        .bp_Panel{width:40%;}
+        
+        .ftsLightBoxCancel      {float:right}
+        .ftsFloatBreak          {clear:both}
+        
+        .timeEntryError     {border: 3px solid red;}
+        .subHeaders {padding-left: 1%;padding-top: 1%;display: block;}
+    </style>-->
+    
+    <!-- ------------------------------------------ INPUT CALCULATIONS & VALIDATIONS --------------------------------------- -->
+    
+    <script>
+    
+        window.onload = function(){
+            if('{!JSENCODE(theUser.ContactId)}' == ''){
+                location.href = "{!$site.CurrentSiteUrl}";
+            }
+            //console.log('sads{!theUser.ContactId} {!$site.CurrentSiteUrl}');
+        }
+        isFirst = true;
+        function isValidInput(field) {
+            var re = /^[0-9:]*$/;
+            if (!re.test(field.value)  ) {
+                field.value = "";
+            }
+            else if(field.value.length > 2){
+                field.value=field.value.substring(0,3);
+            }
+        }
+        
+        function GoToCustomExpensePageForTimesheet(timesheetId, Isexception){
+            //console.log(Isexception);
+            if(Isexception != "true"){
+                
+                window.open('{!PageAPIName['PageName_CustomExpensePage']}?tsId='+timesheetId, '_self');
+            }
+        }
+        
+        function GoToClientProjectCodeForTimesheet(timesheetId, Isexception){
+            //console.log(Isexception);
+            if(Isexception != "true"){
+                
+                window.open('{!PageAPIName['PageName_ClientProjectCode']}?tsId='+timesheetId, '_self');
+            }
+        }
+        
+        
+        function GoToCustomExpensePage(){
+            var win=window.open('{!PageAPIName['PageName_CustomExpensePage']}', '_blank');
+            win.focus();
+        }
+
+        function isValidTime(h, m, t, el)
+        {
+            //console.log(el);
+            var tseId = h.substring(0,h.indexOf('_'));
+            var isEmpty = false;
+            var hr = document.getElementById(h).value;
+            var min = document.getElementById(m).value;
+            
+            if (hr==null || hr.length == 0){
+                $('#'+t +' input').each(function(){
+                        $(this).val('');
+                  });
+                isEmpty = true;
+            }
+
+            if (min==null || min.length == 0){
+                $('#'+t +' input').each(function(){
+                        $(this).val('');
+                  });
+                isEmpty = true;
+            }
+
+            //24 hour
+            var re = /^([01][0-9]|2[0-3]):[0-5][0-9]$/;
+            if (isEmpty == false){
+                if (!re.test(hr+':'+min) ){
+                    //console.log("Please input a valid Time!"+ hr);
+                    document.getElementById(el).className = 'timeEntryError'
+                    document.getElementById(m).value = "";
+                    document.getElementById(t).value = "";
+                    document.getElementById(h).value = "";
+                    document.getElementById(h).focus();
+                }
+                else{
+                    $('#'+t +' input').each(function(){
+                        $(this).val(hr + ':' + min);
+                    });
+                    isFirst = false;
+                    calculateHoursActual(tseId);
+                }
+            }
+        }
+
+        function updateTotalHours(inputTotal,actualTotal){
+         //console.log("insidee" );
+         var tseId = inputTotal.substring(0,inputTotal.indexOf('_'));
+         //console.log(inputTotal + '-' + actualTotal);
+         //console.log($('#'+actualTotal+' input'));
+             $('#'+actualTotal+' input').each(function(){
+             //console.log(inputTotal + '-' + actualTotal);
+                 $(this).val(document.getElementById(inputTotal).value);
+                 isFirst = false;
+                 calculateTotalHours(tseId);
+             });
+        }
+        
+        
+        function calculateTotalHours(tseId){
+            //console.log("calculateTotalHours");
+            var hrs  =    parseInt(document.getElementById(tseId +'_hours').value);
+            var mins =    parseInt(document.getElementById(tseId +'_mins').value);
+            
+            //console.log(hrs );
+            if (hrs==null || hrs.length == 0 || hrs>23 || mins> 59 || hrs<0 || mins < 0 ){
+                alert("Please input a valid Time!");
+            }
+            
+             var tothrs = (hrs +(mins/60)).toFixed(2);
+             //console.log(tothrs );
+             if(tothrs=='NaN')
+                tothrs = '0.00';
+                
+             document.getElementById(tseId+'_tothrs').innerHTML = tothrs;
+             
+            
+        }
+         function updateActuals(inputBreak, actualBreak, tseId){
+         var tseId = inputBreak.substring(0,inputBreak.indexOf('_'));
+         //console.log(inputBreak + '-' + actualBreak);
+             $('#'+actualBreak +' input').each(function(){
+                 $(this).val(document.getElementById(inputBreak).value);
+                 isFirst = false;
+                 calculateHoursActual(tseId);
+             });
+         }
+
+        function calculateHoursActual(tseId){
+
+            var today      =  new Date();
+            var yr         =  2011;
+            var mon         =  5;
+            var dat         =  6;
+
+            var hrStart  =    document.getElementById(tseId +'_shr').value;
+            var minStart =    document.getElementById(tseId +'_smin').value;
+
+            var hrEnd      =    document.getElementById(tseId +'_ehr').value;
+            var minEnd   =    document.getElementById(tseId +'_emin').value;
+
+            var break1   =    document.getElementById(tseId +'_b1_inp').value;
+            //console.log({!displayBreakEntry});
+            if({!displayBreakEntry} == true){
+            var break2   =    document.getElementById(tseId +'_b2_inp').value;
+            }
+            var startDT     = new Date(yr, mon, dat, parseInt(hrStart,10), parseInt(minStart,10), 0);
+            var endDT     = new Date(yr, mon, dat, parseInt(hrEnd,10)  , parseInt(minEnd,10)  , 0);
+            //console.log(startDT + ' - ' + endDT);
+            var minutesDiff    = get_time_difference(startDT, endDT);
+            
+            if(minutesDiff < 0){
+                 startDT        = new Date(yr, mon, dat, parseInt(hrStart,10), parseInt(minStart,10), 0);
+                 endDT          = new Date(yr, mon, dat+1, parseInt(hrEnd,10)  , parseInt(minEnd,10)  , 0);
+                 minutesDiff    = get_time_difference(startDT, endDT);
+            }
+            
+            //console.log(minutesDiff);
+
+            if(break1!=null && break1!='')
+                minutesDiff -= parseInt(break1,10);
+            
+            if({!displayBreakEntry} == true){
+            if(break2!=null && break2!='')
+                minutesDiff -= parseInt(break2,10);
+            }
+            
+            var hoursDiff    = (minutesDiff/60).toFixed(2);
+            if(hoursDiff=='NaN')
+                hoursDiff = '0.00';
+
+            document.getElementById(tseId+'_tot').innerHTML = hoursDiff;
+
+        }
+
+        function get_time_difference(earlierDate,laterDate)
+        {
+           var nTotalDiff = laterDate.getTime() - earlierDate.getTime();
+
+           minDiff = Math.floor(nTotalDiff/1000/60);
+          // console.log(minDiff);
+
+           return minDiff;
+         }
+    </script>
+    <noscript>You have disabled Java script in your browser</noscript>
+
+ <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+
+    <apex:define name="body">
+
+    <div class="sideBar ">
+                    <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks"><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/Communities_LandingPage_v2" class="sideBarLinks sidebarHighlight"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalPlacementHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Placement History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks "><i class="icon-profilegrey"></i>My Profile</a>
+                    <a href="https://access.paylocity.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Paylocity Portal</a>
+                    <a href="http://support.pstaffing.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Support Center</a>
+            </div>
+
+    <apex:form >
+    <div id="main" class="pageContent">
+        <h1>Time Entry</h1>
+    <script>
+        var tsePublicHolidayList = [];
+        var tsePublicHolidayStr = '';
+        var tseIdList = [];
+        var tses;
+        var i=0, totalIdNum = 0;
+        function Timesheetentry(tsId, jobname, date, start, end, breaktime)
+        {
+                this.TsId = tsId;
+                this.JobName = jobname;
+                this.WorkDate = date;
+                this.StartTime = start;
+                this.EndTime = end;
+                this.breakTime = breaktime
+        }
+        tses = [];
+    </script>
+
+    <apex:pagemessages > </apex:pagemessages>
+    <apex:actionFunction name="save" action="{!Save}" oncomplete="console.log('inside js {!StringId}');GoToCustomExpensePageForTimesheet('{!StringId}','{!Isexception}')" rerender="theForm" >
+                        <apex:param name="param1" value="" assignTo="{!StringId}" />                        
+    </apex:actionFunction>
+    <apex:actionFunction name="saveProjectCode" action="{!Save}" oncomplete="console.log('inside js {!StringId}');GoToClientProjectCodeForTimesheet('{!StringId}','{!Isexception}')" rerender="theForm" >
+                        <apex:param name="param1" value="" assignTo="{!StringId}" />                        
+    </apex:actionFunction>
+    <apex:actionStatus id="searchProcessImgTop">
+        <apex:facet name="start">
+            <img src="/img/loading.gif" align="left" />
+        </apex:facet>
+    </apex:actionStatus>
+
+    <apex:variable value="{!0}" var="jobNumber"/>
+    <apex:repeat value="{!jobWList}" var="tsWrap">
+    
+        <!-- ------------------------------------------ LATEST TIMESHEET FOR THE JOB: Details --------------------------------------- -->
+        <hr class="ftsTalentHeader"/>
+        <apex:outputPanel styleClass="ftsTalentInfo">
+            <apex:panelGrid columns="6" styleClass="ftsTalentGrid">
+                
+                <apex:outputLabel value="JOB NAME: " styleClass="ftsTalentInfoLable"/>
+                <apex:outputText value="{!tsWrap.jobName}" styleClass="ftsTalentInforLable"/>
+    
+                <apex:outputLabel value="CLIENT NAME: " styleClass="ftsTalentInfoLable"/>
+                <apex:outputText value="{!tsWrap.clientName}" styleClass="ftsTalentInforLable"/>
+            </apex:panelGrid>
+            
+            
+    
+        </apex:outputPanel>
+        <br />
+
+        <apex:outputPanel >
+        
+
+            <apex:variable var="tsNumber" value="{!0}"/>
+            <apex:repeat value="{!tsWrap.timeSheetWList}" var="tsW">
+            
+                <!-- ------------------------------------------ TIMESHEET SECTION  --------------------------------------- -->
+                
+                <div class="tsTab">
+                    <apex:outputPanel style="{!if(tsW.timeSheet.tc9_ti__End_Date__c > TODAY(), 'color: black;', 'color: red;')}">
+                        <apex:outputLabel value="Timesheet: "/><apex:outputField value="{!tsW.timeSheet.Name}" styleClass="ftsTalentInforLable"/>&nbsp;
+                        <apex:outputLabel value="Week Ended: "/><apex:outputfield value=" {!tsW.timeSheet.tc9_ti__End_Date__c}"/> &nbsp;
+                        <apex:outputLabel value="Status: " />     <apex:outputField value=" {!tsW.timeSheet.tc9_ti__Status__c}" />
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!NOT(isEdit)}">
+                        <apex:outputPanel onclick=" doSubmit('{!tsW.timeSheet.id}', '{!tsW.isHours}');" styleClass="btn" rendered="{!IF(tsW.timeSheet.tc9_ti__Status__c='Submitted', 'false', 'true')}">
+                            {!$Label.Submit}
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+
+                    <apex:outputPanel rendered="{!NOT(isEdit)}" >
+                        <a href="{!$Site.CurrentSiteUrl}apex/{!PageAPIName['PageName_PrintTs']}?tsId={!tsW.timeSheet.id}" target="_blank" class="ftsLinkButton">
+                            <apex:outputPanel styleClass="btn" >
+                                {!$Label.Print}
+                            </apex:outputPanel>
+                        </a>
+                    </apex:outputPanel>                     
+                    <hr class="ftsHeaderLine"/>
+                </div>
+                
+                <apex:repeat value="{!tsW.timeSheet.tc9_ti__Time_Sheet_Entries__r}" var="tse" >
+                    <script>
+                        var theWorkDate = "{!Day(tse.tc9_ti__WorkDate__c)}/{!Month(tse.tc9_ti__WorkDate__c)}/{!Year(tse.tc9_ti__WorkDate__c)}";
+                        if ({!tse.tc9_ti__IsPublicHoliday__c} && tsePublicHolidayStr.indexOf(theWorkDate)< 0){
+                            tsePublicHolidayStr += ',' + theWorkDate;
+                            tsePublicHolidayList.push(new Timesheetentry("{!tse.tc9_ti__Time_Sheet__c}", "{!tse.tc9_ti__Time_Sheet__r.tc9_ti__Placement__r.ts2__Job__r.Name}", "{!tse.tc9_ti__WorkDate__c}", "{!tse.tc9_ti__StartTime__c}", "{!tse.tc9_ti__EndTime__c}", "{!tse.tc9_ti__BreakTime__c}"));
+                        }
+                        //console.log('*xxx*' + theWorkDate + ' - ' + tsePublicHolidayList);
+                        if({!tsW.isHours} == false)
+                            a = new Timesheetentry("{!tse.tc9_ti__Time_Sheet__c}", "{!tse.tc9_ti__Time_Sheet__r.tc9_ti__Placement__r.ts2__Job__r.Name}", "{!tse.tc9_ti__WorkDate__c}", "{!tse.tc9_ti__StartTime__c}", "{!tse.tc9_ti__EndTime__c}", "{!tse.tc9_ti__BreakTime__c}");
+                        else
+                            a = new Timesheetentry("{!tse.tc9_ti__Time_Sheet__c}", "{!tse.tc9_ti__Time_Sheet__r.tc9_ti__Placement__r.ts2__Job__r.Name}", "{!tse.tc9_ti__WorkDate__c}", "{!tse.tc9_ti__Total_Time_hours__c}", "{!tse.tc9_ti__Total_Time_mins__c}", "{!tse.tc9_ti__BreakTime__c}");
+                        tses.push(a);
+                    </script>
+                </apex:repeat>
+                
+                <!-- ------------------------------------------ ENTRIES UNDER THE TIMESHEET : EDIT/DISPLAY mode --------------------------------------- -->
+                <apex:variable var="tseNumber" value="{!0}"/>
+                <apex:datatable value="{!tsW.tseList}" var="tse" width="80%" style=" width: 80% !important;" border="0.5" styleClass="ftsTimesheetEntryTable" >
+                   
+                    <apex:column >
+                        <apex:variable var="tseNumber" value="{!tseNumber+1}"/>
+    
+                        <apex:facet name="header" > <apex:outputLabel value="WORKING DATE"/> </apex:facet>
+                         <apex:outputField value="{!tse.tc9_ti__WorkDay__c} "/>
+                         <apex:outputtext value=", " />
+                         <apex:outputField value="{!tse.tc9_ti__WorkDate__c}"/>
+                    </apex:column>
+                    
+                    
+                    
+                    <apex:column styleClass="ftsTimesheetEntryTableCol_3_1" rendered="{!showSection['ProjectCodes']}">
+    
+                        <apex:facet name="header" > <apex:outputLabel value="{!$Label.Project_Code}" styleClass="ftsTimesheetEntryTableCol_3_Label"/> </apex:facet>
+                        <apex:selectList value="{!tse.tc9_ti__Project_Code__c}" rendered="{!AND(isEdit,OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)),ISNULL(tse.tc9_ti__Type_of_Leave__c))}" multiselect="false" size="1">
+                            <apex:selectOptions value="{!job_ProjectCodes[tsWrap.jobId]}" />
+                        </apex:selectList>
+                         <apex:outputField value="{!tse.tc9_ti__Project_Code_Name__c}" styleClass="ftsTimesheetEntryTableCol_3_Txt" rendered="{!NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) ))}" />
+                    </apex:column>
+    
+                    <apex:column styleClass="ftsTimesheetEntryTableCol_4" rendered="{!!tsW.isHours}">
+                        <apex:facet name="header" > <apex:outputLabel value="START TIME" styleClass="ftsTimesheetEntryTableCol_4_Label"/>  </apex:facet>
+                        <apex:outputPanel rendered="{!AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) )}" >
+                            <input value="{!Left(tse.tc9_ti__StartTime__c, 2)}" id="{!tse.id}_shr"  onkeyup="isValidInput(this);"  onblur="isValidTime('{!tse.id}'+'_shr', '{!tse.id}'+'_smin', '{!tse.id}_s' , '{!tse.id}_shr');"  size="1"  class="ftsTimesheetEntryTableCol_4_Txt"/>:
+                            <input value="{!Right(tse.tc9_ti__StartTime__c, 2)}" id="{!tse.id}_smin"  onkeyup="isValidInput(this);" onblur="isValidTime('{!tse.id}'+'_shr', '{!tse.id}'+'_smin', '{!tse.id}_s' , '{!tse.id}_smin');" size="1"  class="ftsTimesheetEntryTableCol_4_Txt"/>
+                            <div id="{!tse.id}_s" >
+                                <apex:inputHidden value="{!tse.tc9_ti__StartTime__c}" id="sTime" />
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputField value="{!tse.tc9_ti__StartTime__c}"  rendered="{!NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) ))}" styleClass="ftsTimesheetEntryTableCol_4_Txt" />
+                    </apex:column>
+    
+                    <apex:column styleClass="ftsTimesheetEntryTableCol_5" rendered="{!!tsW.isHours}">
+                        <apex:facet name="header" > <apex:outputLabel value="END TIME" styleClass="ftsTimesheetEntryTableCol_5_Label" /> </apex:facet>
+                            <apex:outputPanel rendered="{!AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) )}" >
+                                <input value="{!Left(tse.tc9_ti__EndTime__c, 2)}" id="{!tse.id}_ehr"  onkeyup="isValidInput(this);"  onblur="isValidTime('{!tse.id}'+'_ehr', '{!tse.id}'+'_emin', '{!tse.id}_e', '{!tse.id}_ehr');"  size="1" class="ftsTimesheetEntryTableCol_5_Txt" />:
+                                <input value="{!Right(tse.tc9_ti__EndTime__c, 2)}" id="{!tse.id}_emin"  onkeyup="isValidInput(this);" onblur="isValidTime('{!tse.id}'+'_ehr', '{!tse.id}'+'_emin', '{!tse.id}_e' , '{!tse.id}_emin');" size="1" class="ftsTimesheetEntryTableCol_5_Txt" />
+                                <div id="{!tse.id}_e" >
+                                    <apex:inputHidden value="{!tse.tc9_ti__EndTime__c}" id="eTime" />
+                                </div>
+                            </apex:outputPanel>
+                         <apex:outputField value="{!tse.tc9_ti__EndTime__c}"  rendered="{!NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) ) )}" styleClass="ftsTimesheetEntryTableCol_5_Txt" />
+                    </apex:column>
+    
+                    <apex:column styleClass="ftsTimesheetEntryTableCol_6" rendered="{!!tsW.isHours}">
+                        <apex:facet name="header" > <apex:outputLabel value="BREAK TIME" styleClass="ftsTimesheetEntryTableCol_6_Label" /> </apex:facet>
+                         <apex:outputPanel rendered="{!AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) )}" >
+                             <input value="{!ROUND(tse.tc9_ti__BreakTime__c,0)}" id="{!tse.Id}_b1_inp"  size="1" class="ftsTimesheetEntryTableCol_6_Txt" onkeyup="isValidInput(this);" onblur="updateActuals('{!tse.Id}_b1_inp', '{!tse.id}_b1_actual', '{tse.Id}');"/>
+                             <span id="{!tse.id}_b1_actual">
+                                 <apex:inputHidden value="{!tse.tc9_ti__BreakTime__c}" id="b1Time" />
+                             </span>
+                         </apex:outputPanel>
+                         <apex:outputField value="{!tse.tc9_ti__BreakTime__c}"  rendered="{!NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) ) )}" />
+                    </apex:column>
+    
+                    <apex:column styleClass="ftsTimesheetEntryTableCol_7" rendered="{!AND(displayBreakEntry,NOT(tsW.isHours))}" >
+                        <apex:facet name="header" > <apex:outputLabel value="{!$Label.BreakTime2}" styleClass="ftsTimesheetEntryTableCol_7_Label" /> </apex:facet>
+                        <apex:outputPanel rendered="{!AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) )}" >
+                             <input value="{!ROUND(tse.tc9_ti__BreakTime2__c,0)}" id="{!tse.Id}_b2_inp"  size="1" class="ftsTimesheetEntryTableCol_7_Txt" onkeyup="isValidInput(this);" onblur="updateActuals('{!tse.Id}_b2_inp', '{!tse.id}_b2_actual', '{tse.Id}');"/>
+                             <div id="{!tse.id}_b2_actual">
+                                 <apex:inputHidden value="{!tse.tc9_ti__BreakTime2__c}" id="b2Time" />
+                             </div>
+                         </apex:outputPanel>
+                         <apex:outputField value="{!tse.tc9_ti__BreakTime2__c}"  rendered="{!NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) ) )}" />
+                    </apex:column>
+                    
+                    
+                    <apex:column styleClass="ftsTimesheetEntryTableCol_3_2" rendered="{!tsW.isHours}">
+                        <apex:facet name="header" > <apex:outputLabel value="Hours" styleClass="ftsTimesheetEntryTableCol_3_Label" /> </apex:facet>
+                            <apex:outputPanel rendered="{!AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) )}" >
+                                <input value="{!ROUND(tse.tc9_ti__Total_Time_hours__c,0)}" id="{!tse.id}_hours" size="1" onkeyup="isValidInput(this);" onblur="updateTotalHours('{!tse.id}_hours', '{!tse.id}_act_hours');"/> hours
+                               
+                                <div id="{!tse.id}_act_hours" >
+                                    <apex:inputHidden value="{!tse.tc9_ti__Total_Time_hours__c}" id="Hours" /> 
+                                </div>
+                            </apex:outputPanel>
+                         <apex:outputField value="{!tse.tc9_ti__Total_Time_hours__c}"  rendered="{!NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)),NOT(ISBLANK(tse.tc9_ti__Total_Time_hours__c)), ISNULL(tse.tc9_ti__Type_of_Leave__c) ) )}" styleClass="ftsTimesheetEntryTableCol_5_Txt" />
+                        <apex:outputText value="0 "  rendered="{!AND (NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c)) ),ISBLANK(tse.tc9_ti__Total_Time_hours__c))}" styleClass="ftsTimesheetEntryTableCol_5_Txt" />
+                    </apex:column>
+                    
+                    <apex:column styleClass="ftsTimesheetEntryTableCol_3_3" rendered="{!tsW.isHours}">
+                        <apex:facet name="header" > <apex:outputLabel value="Mins" styleClass="ftsTimesheetEntryTableCol_3_Label" /> </apex:facet>
+                            <apex:outputPanel rendered="{!AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) )}" >
+                                <input value="{!ROUND(tse.tc9_ti__Total_Time_mins__c,0)}" id="{!tse.id}_mins" size="1" onkeyup="isValidInput(this);" onblur="updateTotalHours('{!tse.id}_mins','{!tse.id}_act_mins' );"/> mins
+                               
+                                <div id="{!tse.id}_act_mins" >
+                                    <apex:inputHidden value="{!tse.tc9_ti__Total_Time_mins__c}" id="Mins" />
+                                </div>
+                            </apex:outputPanel>
+                         <apex:outputField value="{!tse.tc9_ti__Total_Time_mins__c}"  rendered="{!NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) ) )}" styleClass="ftsTimesheetEntryTableCol_5_Txt" />
+                         <apex:outputText value="0 "  rendered="{!AND (NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)))  ),ISBLANK(tse.tc9_ti__Total_Time_mins__c))}" styleClass="ftsTimesheetEntryTableCol_5_Txt" />
+                    </apex:column>
+                    
+                    
+                    <apex:column styleClass="ftsTimesheetEntryTableCol_8">
+                        <apex:facet name="header" > <apex:outputLabel value="{!$Label.ActualHours}" styleClass="ftsTimesheetEntryTableCol_8_Label"/> </apex:facet>
+                        <apex:outputPanel rendered="{!AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)), ISNULL(tse.tc9_ti__Type_of_Leave__c) ) && (tsW.isHours == false)}" >
+                            <span id="{!tse.id}_tot"> <apex:outputText value="{!tse.tc9_ti__HoursAcutal__c}" /> </span>
+                            <script type="text/javascript">
+                                    isFirst = true;
+                                    calculateHoursActual('{!tse.Id}');
+                            </script>
+                        </apex:outputPanel>
+                        
+                        <apex:outputField value="{!tse.tc9_ti__HoursAcutal__c}"  rendered="{!NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)) ) )&& (tsW.isHours == false)}" />
+                        
+                        
+                        <apex:outputPanel rendered="{!AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)) ) && (tsW.isHours == true)}">
+                                    <span id="{!tse.id}_tothrs"> {!tse.tc9_ti__Total_Hours__c} </span>
+                                    <script type="text/javascript">
+                                    isFirst = true;
+                                    calculateTotalHours('{!tse.Id}');
+                            </script>
+                        </apex:outputPanel>
+                        
+                        <apex:outputField value="{!tse.tc9_ti__HoursAcutal__c}"  rendered="{!NOT( AND(isEdit, OR(IF(tse.tc9_ti__Status__c='Rejected', TRUE, False), IF(tse.tc9_ti__Status__c='New', TRUE, False)) ) )&& (tsW.isHours == true)}" />
+                        
+                        
+                    </apex:column>
+                
+                    <apex:column styleClass="ftsTimesheetEntryTableCol_9" rendered="{!AND(NOT(isEdit), showSection['LeaveButton'])}">
+                        <apex:facet name="header" > <apex:outputLabel value="{!$Label.Type_of_Leave}" styleClass="ftsTimesheetEntryTableCol_9_Label"/> </apex:facet>
+                        <apex:outputField value="{!tse.tc9_ti__Type_of_Leave__c}"/>
+                    </apex:column>
+    
+                    <apex:column styleClass="ftsTimesheetEntryTableCol_12" rendered="{!NOT(isEdit)}">
+                    <apex:facet name="header" > <apex:outputLabel value="{!$Label.Notes}" styleClass="ftsTimesheetEntryTableCol_12_Label"/> </apex:facet>
+                        <apex:outputPanel >
+                            <apex:image url="{!$Resource.TimeSheetEntryFullNote}" onclick="lightBox('Add Note', '{!tse.id}');"  width="25" height="25" title="Add Note" rendered="{!(LEN(tse.tc9_ti__Notes_Talent__c))>0}"/>
+                            <apex:image url="{!$Resource.TimeSheetEntryEmptyNote}" onclick="lightBox('Add Note', '{!tse.id}');" width="25" height="25" title="Add Note" rendered="{!(LEN(tse.tc9_ti__Notes_Talent__c))=0}"/>
+                        </apex:outputPanel>
+                    </apex:column>
+                </apex:datatable>
+                
+                <apex:outputPanel rendered="{!IF(showSection['BreakpointTable'],'true','false')}" styleClass="bp_Panel" >
+                    <div id="{!tsW.timeSheet.id}_bpTable">
+                        <c:BreakpointTable simWrapper="{!simWrapMap[tsW.timeSheet.Id]}" rendered="{!IF(showSection['BreakpointTable'],'true','false')}"/>
+                        <div class="ftsBreakpointButton">
+                            <apex:commandButton value="{!$Label.update_table}" action="{!getUpdateTable}" reRender="theForm" status="searchProcessImg" rendered="{!AND(isEdit, OR(IF(tsW.timeSheet.tc9_ti__Status__c='Rejected', TRUE, False), IF(tsW.timeSheet.tc9_ti__Status__c='New', TRUE, False)) )}">
+                                 <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                  <apex:param name="jobNumber" value="{!jobNumber}"/>
+                            </apex:commandButton> 
+                        </div>
+                    </div>
+                </apex:outputPanel> 
+                
+                <div id="floatBreak_{!jobNumber}_{!tsNumber}" class="ftsFloatBreak"></div>
+                
+                <div>
+                    <apex:actionStatus id="searchProcessImg">
+                        <apex:facet name="start">
+                            <img src="/img/loading.gif" align="left" />
+                        </apex:facet>
+                    </apex:actionStatus>
+                </div>
+                
+                <!-- ------------------------------------------EXPENSES UNDER THE TIMESHEET : ADD BUTTON --------------------------------------- -->
+                <apex:outputPanel rendered="{!showSection['Enable Expense']}" styleClass="ftsExpenseSection">
+                    
+                    <apex:outputPanel styleClass="subHeaders" rendered="{!AND(isEdit, showSection['Enable Expense'],  OR(IF(tsW.timeSheet.tc9_ti__Status__c='Rejected', TRUE, False), IF(tsW.timeSheet.tc9_ti__Status__c='New', TRUE, False))  )}">
+                        <b><apex:outputText value="{!$Label.Expenses}" /> &nbsp;&nbsp;</b>
+                        <apex:commandButton value="{!$Label.Add}" action="{!addExpense}" reRender="theForm" status="searchProcessImg">
+                                    <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                    <apex:param name="jobNumber" value="{!jobNumber}"/>
+                        </apex:commandButton>
+                        <br/>
+                    </apex:outputPanel> 
+                    
+                    <!-- ---------------------------------------- EXPENSES UNDER THE TIMESHEET : DISPLAY SECTION --------------------------------------- -->
+                    
+                    <apex:variable var="expNumber" value="{!0}"/>
+                    <apex:datatable value="{!tsW.expenseWList}" var="expWrap" style="width:100% !important" width="90%" border="0.5" styleClass="ftsExpenseTable" rendered="{!IF(tsW.expenseWList.size>0,'true','false')}" columnsWidth="15%,20%,10%,10%,10%,10%,10%" >
+        
+                        <apex:column styleClass="ftsExpenseCol_1" style="min-width: 150px;display:block;">
+        
+                            <apex:facet name="header" > <apex:outputLabel value="{!$Label.WorkingDate}" styleClass="ftsExpenseCol_1_Label"/> </apex:facet>
+                            <apex:outputField value="{!expWrap.expense.tc9_ti__Date_Incurred__c}"  styleClass="ftsExpenseCol_1_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),FALSE,TRUE)}"/>
+                            <apex:inputField value="{!expWrap.expense.tc9_ti__Date_Incurred__c}"  styleClass="ftsExpenseCol_1_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),TRUE,FALSE)}"/>
+                        </apex:column>
+                        
+                        <apex:column styleClass="ftsExpenseCol_2">
+                            <apex:facet name="header" > <apex:outputLabel value="{!$Label.Title}" styleClass="ftsExpenseCol_2_Label"/> </apex:facet>
+                            <apex:outputText value="{!expWrap.expense.tc9_ti__Title__c}"  styleClass="ftsExpenseCol_2_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),FALSE,TRUE)}"/>
+                            <apex:inputField value="{!expWrap.expense.tc9_ti__Title__c}"  styleClass="ftsExpenseCol_2_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),TRUE,FALSE)}"/>
+                        </apex:column>
+        
+                        <apex:column styleClass="ftsExpenseCol_3">
+                            <apex:facet name="header" > <apex:outputLabel value="{!$Label.Amount}" styleClass="ftsExpenseCol_3_Label"/> </apex:facet>
+                            <apex:outputText value="{!expWrap.expense.tc9_ti__Value__c}"  styleClass="ftsExpenseCol_3_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),FALSE,TRUE)}"/>
+                            <apex:inputField value="{!expWrap.expense.tc9_ti__Value__c}"  styleClass="ftsExpenseCol_3_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),TRUE,FALSE)}"/>
+                        </apex:column>
+        
+                        <apex:column styleClass="ftsExpenseCol_4">
+                            <apex:facet name="header" > <apex:outputLabel value="{!$Label.IncGST}" styleClass="ftsExpenseCol_4_Label"/> </apex:facet>
+                            <apex:outputField value="{!expWrap.expense.tc9_ti__Taxable__c}"  styleClass="ftsExpenseCol_4_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),FALSE,TRUE)}"/>
+                            <apex:inputField value="{!expWrap.expense.tc9_ti__Taxable__c}"  styleClass="ftsExpenseCol_4_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),TRUE,FALSE)}"/>
+                        </apex:column>
+        
+                        <apex:column styleClass="ftsExpenseCol_5">
+                            <apex:facet name="header" > <apex:outputLabel value="{!$Label.Tax_Amount}" styleClass="ftsExpenseCol_5_Label"/> </apex:facet>
+                            <apex:outputText value="{!expWrap.expense.tc9_ti__Tax_Amount__c}"  styleClass="ftsExpenseCol_5_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),FALSE,TRUE)}"/>
+                            <apex:inputField value="{!expWrap.expense.tc9_ti__Tax_Amount__c}"  styleClass="ftsExpenseCol_5_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),TRUE,FALSE)}"/>
+                        </apex:column>
+        
+                        <apex:column styleClass="ftsExpenseCol_6">
+                            <apex:facet name="header"> <apex:outputLabel value="{!$Label.Type}" styleClass="ftsExpenseCol_6_Label"/> </apex:facet>
+                            <apex:outputText value="{!expWrap.expense.tc9_ti__Type__c}"  styleClass="ftsExpenseCol_6_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),FALSE,TRUE)}"/>
+                            <apex:inputField value="{!expWrap.expense.tc9_ti__Type__c}"  styleClass="ftsExpenseCol_6_Txt" rendered="{!IF(AND(isEdit,expWrap.Editable),TRUE,FALSE)}"/>
+                            <apex:variable var="expNumber" value="{!expNumber+1}"/>
+                        </apex:column>
+                        
+                        <!-- ------------------------------------- EXPENSES UNDER THE TIMESHEET : EDIT/DELETE/SAVE/CANCEL ---------------------- -->
+                        <apex:column rendered="{!isEdit}">
+                            <apex:facet name="header"> {!$Label.Action} </apex:facet>
+                            <apex:image url="{!$Resource.AttachmentLink}" onclick="attachmentLightBox('Add Attachment to Timesheet', '{!expWrap.expense.id}', 'true', '');" rendered="{!NOT(expWrap.Editable)}" width="25" height="25" title="Add Attachment" />
+                            <apex:commandButton value="{!$Label.Save}" action="{!saveEditDeleteExpense}" rendered="{!expWrap.Editable}" reRender="theForm" status="searchProcessImg">
+                                <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                <apex:param name="jobNumber" value="{!jobNumber}"/>
+                                <apex:param name="expNumber" value="{!expNumber}"/>
+                                <apex:param name="actionToDo" value="save"/>
+                            </apex:commandButton>
+                            <apex:commandButton value="{!$Label.Cancel}" action="{!saveEditDeleteExpense}" rendered="{!expWrap.Editable}" reRender="theForm" status="searchProcessImg" immediate="true">    <!-- SC-1033 -->
+                                <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                <apex:param name="jobNumber" value="{!jobNumber}"/>
+                                <apex:param name="expNumber" value="{!expNumber}"/>
+                                <apex:param name="actionToDo" value="cancel"/>
+                            </apex:commandButton>
+                            <apex:commandLink action="{!saveEditDeleteExpense}" rendered="{!NOT(expWrap.Editable)}" reRender="theForm" status="searchProcessImg">
+                                <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                <apex:param name="jobNumber" value="{!jobNumber}"/>
+                                <apex:param name="expNumber" value="{!expNumber}"/>
+                                <apex:param name="actionToDo" value="edit"/>
+                                <apex:image value="{!$Resource.Edit}" width="20" height="20"/>
+                            </apex:commandLink>
+                            &nbsp;&nbsp;
+                            <apex:commandLink action="{!saveEditDeleteExpense}" onclick="if(confirm('{!$Label.Delete_Expense}')==false) return;" rendered="{!NOT(expWrap.Editable)}" reRender="theForm" status="searchProcessImg">
+                                <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                <apex:param name="jobNumber" value="{!jobNumber}"/>
+                                <apex:param name="expNumber" value="{!expNumber}"/>
+                                <apex:param name="actionToDo" value="delete"/>
+                                <apex:image value="{!$Resource.Delete}" width="20" height="20"/>
+                            </apex:commandLink>
+                        </apex:column>
+        
+                    </apex:datatable>
+                    <br/>
+                </apex:outputPanel>
+                
+                <!---------------------------------------------PROJECT CODE UNDER TIMESHEET : ADD BUTTON --------------------------------------- -->
+                
+                  
+                
+                <apex:outputPanel styleClass="subHeaders" id="proCodeId" rendered="{!AND(isEdit,  showSection['ProjectCodes'], showSection['ProjectCodeButton'],  OR(IF(tsW.timeSheet.tc9_ti__Status__c='Rejected', TRUE, False), IF(tsW.timeSheet.tc9_ti__Status__c='New', TRUE, False)))}">
+                    <input type="button" value="Add Project Code" class="btn" onclick="saveProjectCode('{!tsW.timeSheet.id}')" status="searchProcessImg"/>
+                    
+                </apex:outputPanel> 
+                
+                <!---------------------------------------------CUSTOM TIMESHEET PAGE LINK UNDER THE TIMESHEET : ADD BUTTON --------------------------------------- -->
+                
+                  
+                
+                <apex:outputPanel styleClass="subHeaders" id="customId" rendered="{!AND(isEdit, strCustomExpensePage != '', showSection['EnableCustomExpense'], !showSection['EnableCustomExpenseInViewMode'],  OR(IF(tsW.timeSheet.tc9_ti__Status__c='Rejected', TRUE, False), IF(tsW.timeSheet.tc9_ti__Status__c='New', TRUE, False)))}">
+                    <input type="button" value="{!strCustomExpenseButtonLabel}" class="btn" onclick="save('{!tsW.timeSheet.id}')" status="searchProcessImg"/>
+                    
+                </apex:outputPanel>   
+                
+                <!---------------------------------------------ATTACHMENTS UNDER THE TIMESHEET : ADD BUTTON --------------------------------------- -->
+                <apex:outputPanel rendered="{!showSection['Enable Attachments']}" styleClass="ftsExpenseSection">
+                    <br/>
+                    <apex:outputPanel styleClass="subHeaders"  rendered="{!AND(tsW.attachmentWList.size < nCount, isEdit, showSection['Enable Attachments'],  OR(IF(tsW.timeSheet.tc9_ti__Status__c='Rejected', TRUE, False), IF(tsW.timeSheet.tc9_ti__Status__c='New', TRUE, False))  )}" >
+                        <b><apex:outputText value="{!$Label.Attachments}" /> &nbsp;&nbsp;</b>
+                        <apex:commandButton value="{!$Label.Add}" onclick="attachmentLightBox('Add Attachment to Timesheet', '{!tsW.timeSheet.id}', 'false', '');" reRender="theForm" status="searchProcessImg">
+                                    <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                    <apex:param name="jobNumber" value="{!jobNumber}"/>
+                        </apex:commandButton>
+                        <br/>
+                    </apex:outputPanel>
+                    
+                    <!-- ---------------------------------------- ATTACHMENTS UNDER THE TIMESHEET : DISPLAY SECTION --------------------------------------- -->
+                    
+                    <apex:variable var="attNumber" value="{!0}"/>
+                    <apex:datatable value="{!tsW.attachmentWList}" var="attWrap" width="70%" border="0.5" styleClass="ftsExpenseTable" rendered="{!IF(tsW.attachmentWList.size>0,'true','false')}">
+        
+                        <apex:column styleClass="ftsExpenseCol_2">
+                            <apex:facet name="header" > <apex:outputLabel value="{!$Label.Title}" styleClass="ftsExpenseCol_2_Label"/> </apex:facet>
+                            <apex:outputText value="{!attWrap.attachment.Name}"  styleClass="ftsExpenseCol_2_Txt" rendered="{!IF(AND(isEdit,attWrap.Editable),FALSE,TRUE)}"/>
+                            <apex:inputField value="{!attWrap.attachment.Name}"  styleClass="ftsExpenseCol_2_Txt" rendered="{!IF(AND(isEdit,attWrap.Editable),TRUE,FALSE)}"/>
+                            <apex:variable var="attNumber" value="{!attNumber+1}"/>                            
+                        </apex:column>
+        
+                        <!-- ------------------------------------- ATTACHMENTS UNDER THE TIMESHEET : EDIT/DELETE/SAVE/CANCEL ---------------------- -->
+                        <apex:column rendered="{!isEdit && (OR(IF(tsW.timeSheet.tc9_ti__Status__c = 'Rejected', true, false), IF(tsW.timeSheet.tc9_ti__Status__c = 'New', true, false)))}">
+                            <apex:facet name="header"> {!$Label.Action} </apex:facet>
+                            <apex:image url="{!$Resource.Edit}" onclick="attachmentLightBox('Add Attachment', '{!tsW.timeSheet.id}', 'false', '{!attWrap.attachment.id}');" rendered="{!NOT(attWrap.Editable) && (OR(IF(tsW.timeSheet.tc9_ti__Status__c = 'Rejected', true, false), IF(tsW.timeSheet.tc9_ti__Status__c = 'New', true, false)))}" width="25" height="25" title="Edit" />
+                            <apex:commandButton value="{!$Label.Save}" action="{!saveEditDeleteAttachment}" rendered="{!attWrap.Editable}" reRender="theForm" status="searchProcessImg">
+                                <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                <apex:param name="jobNumber" value="{!jobNumber}"/>
+                                <apex:param name="attNumber" value="{!attNumber}"/>
+                                <apex:param name="actionToDo" value="save"/>
+                            </apex:commandButton>
+                            <apex:commandButton value="{!$Label.Cancel}" action="{!saveEditDeleteAttachment}" rendered="{!attWrap.Editable && (OR(IF(tsW.timeSheet.tc9_ti__Status__c = 'Rejected', true, false), IF(tsW.timeSheet.tc9_ti__Status__c = 'New', true, false)))}" reRender="theForm" status="searchProcessImg" immediate="true"> 
+                                <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                <apex:param name="jobNumber" value="{!jobNumber}"/>
+                                <apex:param name="attNumber" value="{!attNumber}"/>
+                                <apex:param name="actionToDo" value="cancel"/>
+                            </apex:commandButton> 
+                            <!-- <apex:commandLink action="{!saveEditDeleteAttachment}" rendered="{!NOT(attWrap.Editable)}" reRender="theForm" status="searchProcessImg">
+                                <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                <apex:param name="jobNumber" value="{!jobNumber}"/>
+                                <apex:param name="attNumber" value="{!attNumber}"/>
+                                <apex:param name="actionToDo" value="edit"/>
+                                <apex:image value="{!$Resource.Edit}" width="20" height="20"/>
+                            </apex:commandLink>-->
+                            &nbsp;&nbsp;
+                            <apex:commandLink action="{!saveEditDeleteAttachment}" onclick="if(confirm('{!$Label.Delete_Attachment}')==false) return;" rendered="{!NOT(attWrap.Editable) && (OR(IF(tsW.timeSheet.tc9_ti__Status__c = 'Rejected', true, false), IF(tsW.timeSheet.tc9_ti__Status__c = 'New', true, false)))}" reRender="theForm" status="searchProcessImg"  title="Delete" >
+                                <apex:param name="tsNumber" value="{!tsNumber}"/>
+                                <apex:param name="jobNumber" value="{!jobNumber}"/>
+                                <apex:param name="attNumber" value="{!attNumber}"/>
+                                <apex:param name="actionToDo" value="delete"/>
+                                <apex:image value="{!$Resource.Delete}" width="20" height="20"/>
+                            </apex:commandLink>
+                        </apex:column>
+        
+                    </apex:datatable>
+                    <br/>
+                </apex:outputPanel>
+                <apex:variable var="tsNumber" value="{!tsNumber+1}"/>
+            </apex:repeat>
+        </apex:outputPanel>
+
+    <apex:variable var="jobNumber" value="{!jobNumber+1}"/>
+    </apex:repeat>
+    
+    
+    <!-- ------------------------------------------------ OTHER PAGE JS ------------------------------------- -->
+    <script>
+        function doSubmit(tsId, isTimesheetEntryinHours){
+            var submittedTimesheetPublicHolidays = []
+            var answer = true;
+
+            for (i = 0; i < tsePublicHolidayList.length; i++){
+                var tse = tsePublicHolidayList[i];
+                if (tse.TsId == tsId){
+                    submittedTimesheetPublicHolidays.push(tse.WorkDate.replace('00:00:00 GMT ',''));
+                }
+            }
+
+            if (submittedTimesheetPublicHolidays.length > 0){
+                if (submittedTimesheetPublicHolidays.length == 1)
+                    answer = confirm(submittedTimesheetPublicHolidays + ' is a public holiday!');
+                else
+                    answer = confirm(submittedTimesheetPublicHolidays + ' are public holidays!');
+            }
+
+            if(answer){ //confirm public holidays
+                var i = 0;
+                var tseConfirm = [];
+                for (i = 0; i < tses.length; i++){
+                    var tse = tses[i];
+                    if(isTimesheetEntryinHours == false) {
+                        if (tse.TsId == tsId && tse.StartTime == tse.EndTime){
+                            tseConfirm.push(tse.JobName + " : " + tse.WorkDate.replace('00:00:00 GMT ',''));
+                        }
+                    }
+                    else {
+                        if (tse.TsId == tsId && tse.StartTime == 0 && tse.EndTime == 0){
+                            tseConfirm.push(tse.JobName + " : " + tse.WorkDate.replace('00:00:00 GMT ',''));
+                        }
+                    }
+                }
+                if (tseConfirm.length > 0){
+                    answer = confirm('The following entries are incomplete: \n' + tseConfirm.join('\n') + '\n Do you want to continue?');
+                }
+                if (answer)
+                    doSubmitTs(tsId);
+                }
+        }
+    </script>
+    
+    <!-- --------------------------------------------------- PAGE BUTTONS ------------------------------------------- -->
+    <apex:outputPanel >
+        <div>
+            <apex:actionStatus id="searchProcessImg">
+                <apex:facet name="start">
+                    <img src="/img/loading.gif" align="left" />
+                </apex:facet>
+            </apex:actionStatus>
+        </div>
+        <apex:commandButton value="{!$Label.Save}" action="{!Save}" oncomplete="window.scrollTo(0,0);" rendered="{!isEdit}" reRender="theForm" status="searchProcessImg"/>
+        <apex:commandButton value="{!$Label.Edit}" action="{!EditPage}" oncomplete="window.scrollTo(0,0);" rendered="{!AND(NOT(isEdit), NOT(isSubmit))}" reRender="theForm" status="searchProcessImg"/>
+
+        <apex:outputPanel rendered="{!AND(NOT(isEdit), NOT(isSubmit), showSection['NewButton'])}" > 
+            <a href="{!$Site.CurrentSiteUrl}apex/{!PageAPIName['PageName_AddTSE']}" class="ftsLinkButton" >
+                <apex:outputPanel styleClass="btn" >
+                    {!$Label.New}
+                </apex:outputPanel>
+            </a>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!AND(NOT(isEdit), NOT(isSubmit), showSection['LeaveButton'])}" >
+            <a href="{!$Site.CurrentSiteUrl}apex/{!PageAPIName['PageName_AddTSE']}?isLeave=true"  class="ftsLinkButton" > 
+                <apex:outputPanel styleClass="btn" >
+                    {!$Label.Add_Leave}
+                </apex:outputPanel>
+            </a>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!AND(NOT(isEdit), NOT(isSubmit), showSection['LeaveButton'])}" >
+            <a href="{!$Site.CurrentSiteUrl}apex/{!PageAPIName['PageName_ShowLeaveEntries']}" class="ftsLinkButton" >
+                <apex:outputPanel styleClass="btn" >
+                    {!$Label.Show_leave_entries}
+                </apex:outputPanel>
+            </a>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!AND(NOT(isEdit), strCustomExpensePage != '', showSection['EnableCustomExpense'], showSection['EnableCustomExpenseInViewMode'])}">
+            <input type="button" value="{!strCustomExpenseButtonLabel}" class="btn" onclick="GoToCustomExpensePage()"/>
+        </apex:outputPanel>
+
+    </apex:outputPanel>
+    
+    
+    <!---------------------------------------------------------ACTION FUNCTIONS ---------------------------------------------->
+    <apex:actionFunction action="{!doSubmit}" name="doSubmitTs" rerender="thePage" >
+        <apex:param name="one" value="" />
+    </apex:actionFunction>
+    <apex:actionFunction action="{!reload}" name="reloadTs" rerender="theForm" />
+    </div>
+  </apex:form>
+
+ </apex:define>
+ </apex:composition>
+    
+    <!-- --------------------------------------------------------- LIGHTBOX SCRIPTS ------------------------------------------->
+    <script>
+        function lightBox(title, id){
+
+            var pageName = "{!JSENCODE(PageAPIName['PageName_Notes'])}";
+            var box = new window.SimpleDialog("hersh"+Math.random(), true);
+            window.box = box;
+            var duration = 0;
+            var htmlContent = "<p class=\"ftsLightBoxCancel\"><a href=\"#\" onclick=\"box.hide();reloadTs();\">Cancel</a></p>"
+            + "<iframe id=\"theIframe\" name=\"theIframe\" src=\"{!$Site.CurrentSiteUrl}apex/"+pageName+"?id="+id +"\" frameborder=0 width=\"100%\" height=\"150\">my iframe</iframe>";
+
+            box.setTitle(title);
+
+            box.createDialog();
+            box.setWidth(300);
+
+            box.setContentInnerHTML(htmlContent);
+            box.setupDefaultButtons();
+
+            box.show();
+
+            if( duration > 0 )
+            setTimeout("box.hide();",duration);
+        }
+
+        function attachmentLightBox(title, id, isExpense, attId){
+
+            var pageName = "{!JSENCODE(PageAPIName['PageName_AddAttachment'])}";
+            var box = new window.SimpleDialog("hersh"+Math.random(), true);
+            window.box = box;
+            var duration = 0;
+            var htmlContent = "<p class=\"ftsLightBoxCancel\"><a href=\"#\" onclick=\"box.hide();reloadTs();\">Cancel</a></p>"
+            + "<iframe id=\"theIframe\" name=\"theIframe\" src=\"{!$Site.CurrentSiteUrl}apex/"+pageName+"?parentId="+id +"&isExpense="+ isExpense +"&attId="+ attId +"\" frameborder=0 width=\"100%\" height=\"250\">my iframe</iframe>";
+
+            box.setTitle(title);
+
+            box.createDialog();
+            box.setWidth(400);
+
+            box.setContentInnerHTML(htmlContent);
+            box.setupDefaultButtons();
+
+            box.show();
+
+            if( duration > 0 )
+            setTimeout("box.hide();",duration);
+        }
+
+    </script>
+</apex:page>

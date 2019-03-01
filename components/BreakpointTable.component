@@ -1,0 +1,40 @@
+<apex:component >
+  <apex:attribute name="simWrapper" type="TransactionSimulatorWrapper"  description="breakpoints, breakpoint values"/>
+ <style>
+    .bp_Table{
+        background-color : #fffff1;
+        width:inherit;
+        table-layout: fixed;
+    }
+    .bp_Table .bpHeader{
+        /*background-color : orange;*/
+    }
+    .bp_Table th{
+        white-space : break-word;
+    }
+ </style>
+ <table class="bp_Table" border="collapsible">
+    <tr class="bpHeader">
+        <th>
+            Date
+        </th>
+        <apex:repeat value="{!simWrapper.breakpoints}" var="type" >
+            <th width="10%">
+                <apex:outputText value="{!type}" />
+            </th>
+        </apex:repeat>
+    </tr>
+    <apex:repeat value="{!simWrapper.simMap}" var="mainMap1" >
+        <tr>
+            <td>
+                <c:Locale_Formatted_Date date_value="{!simWrapper.simMap[mainMap1].workDate}"  />
+            </td>
+            <apex:repeat value="{!simWrapper.breakpoints}" var="type" >
+                <td>
+                    <apex:outputText value="{!simWrapper.simMap[mainMap1].type_Hours[type]}" />
+                </td>
+            </apex:repeat>
+        </tr>
+    </apex:repeat>
+</table>
+</apex:component>

@@ -1,0 +1,248 @@
+<!--
+Created by Adelaide Greenaway on 8/01/18.
+*
+* Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+* Not to be distributed without authorisation
+*
+* 2c9 Custom Portal Payment History Page --- Portal_PlacementHistory_Controller
+* NOTE: Refer to SiteTemplate and customPortalJS for any scripts that are used on this page
+* Cloned by Jesse Windebank from the Portal_PaymentHistory page
+*
+-->
+
+<apex:page id="PortalPaymentHistory" title="2cloudnine Community Portal" docType="html-5.0" controller="Portal_PlacementHistory_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false">
+<head>
+    <title>Premier Timesheet Portal</title>
+</head>
+
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+            <body>
+                <div class="sideBar">
+                    <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalPlacementHistory" class="sideBarLinks sidebarHighlight"><i class="icon-paygrey"></i>Placement History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks "><i class="icon-profilegrey"></i>My Profile</a>
+                    <a href="https://access.paylocity.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Paylocity Portal</a>
+                    <a href="http://support.pstaffing.com/" target="_blank" class="sideBarLinks"> <i class="icon-search"></i>Support Center</a>
+                </div>
+
+            <apex:form >
+                <div id="main" class="pageContent ">
+
+                    <h1>Placement History </h1>
+                    <apex:outputPanel rendered="{! !placementHistoryExists }">
+                        <h2>You currently do not have any active placements.</h2>
+                    </apex:outputPanel>
+                    <apex:pageMessages id="messages" />
+                    <div class="">
+                        <!-- Active Placement History List -->
+                        <h3>Active </h3>
+                        <apex:outputPanel rendered="{!placementHistoryExists}">
+                            <div id="All" class="tsTab" style="{!IF(pageTurn,'display:block','display:none')}">
+                                <table class="tableStyle" id="table_id">
+                                    <thead class="tableHeader">
+                                    <tr>
+                                        <th class="expTableth">Placement</th>
+                                        <th class="expTableth">Job Title</th>
+                                        <th class="expTableth">Client Name</th>
+                                        <th class="expTableth">Start Date</th>
+                                        <th class="expTableth">Candidate Manager</th>
+                                        <th class="expTableth">Pay Rate</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <apex:repeat value="{!placementHistoryToShow}" var="plcHis">
+                                     
+                                        <tr >
+                                             <td >    
+                                                <apex:outputText value="{!plcHis.name}" styleClass="dtInfo">
+                                                </apex:outputText>
+                                            </td>
+                                            <td >    
+                                                <apex:outputText value="{!plcHis.jobName}" styleClass="dtInfo">
+                                                </apex:outputText>
+                                            </td>
+                                               
+                                            <td>
+                                                <apex:outputText value="{!plcHis.clientName}" styleClass="dtInfo">
+                                                </apex:outputText>
+                                            </td>    
+
+                                            <td>
+                                                <apex:outputText value="{0,date,d MMM yyyy}" styleClass="dtInfo">
+                                                    <apex:param value="{!plcHis.startDate}"/>
+                                                </apex:outputText>
+                                            </td>
+
+                                            <td>
+                                                <apex:outputText value="{!plcHis.candidateManager}" styleClass="dtInfo">
+                                                </apex:outputText>
+                                            </td>
+
+                                            <td>
+                                                <apex:outputText value="{0,number,currency}" styleClass="dtInfo">
+                                                    <apex:param value="{!plcHis.payRate}"/>
+                                                </apex:outputText>
+                                            </td>
+
+
+                                                <!--<div class="mobExpTable">
+
+                                                    <div>
+                                                        <apex:outputlabel >Banked Amount </apex:outputlabel>
+                                                    </div>
+                                                        <p class="mobileTSinfoDate">
+                                                            <apex:outputText value="{0,number,currency}">
+                                                                <apex:param value="{!plcHis.netEarnings}"/>
+                                                            </apex:outputText>
+                                                        </p>
+                                                    <div>
+                                                        <apex:outputlabel >Paid Date </apex:outputlabel>
+                                                    </div>
+                                                    <div>
+                                                        <p class="mobileTSinfoJob"><apex:outputText value="{0,date,d MMM yyyy}"><apex:param value="{!plcHis.paidDate}"/></apex:outputText></p>
+                                                    </div>
+
+                                                    <div>
+                                                        <apex:outputlabel >Payee Type </apex:outputlabel>
+                                                    </div>
+                                                    <div>
+                                                        <p class="mobileTSinfoJob">{!plcHis.payeeType}</p>
+                                                    </div>
+                                                </div>-->
+                                            <!--</td>-->
+                                         
+                                        </tr>
+                                  
+                                    </apex:repeat>
+                                    </tbody>
+                                </table>
+
+
+                                <div>
+                                    <apex:commandButton value="<" action="{!previous}" disabled="{!disablePrevious}" styleClass="{!IF(disablePrevious != true,'nextArrowBox','disabledArrowBox')}"/>
+                                    <apex:commandButton value=">" action="{!next}" disabled="{!disableNext}" styleClass="{!IF(disableNext != true,'nextArrowBox','disabledArrowBox')}"/>
+                                    <p class="pageTurn">{!firstEntry} -  {!lastEntry} of {!totalEntry} Placements</p>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                        <br></br>
+
+                        <!-- Inactive Placement History List -->
+                        <h3>Inactive</h3>
+                    <apex:outputPanel rendered="{! !placementHistoryInactiveExists}">
+                        <h2>You currently do not have any inactive placements.</h2>
+                    </apex:outputPanel>
+                    <apex:pageMessages id="messages2" />
+                    <div class="">
+                        <apex:outputPanel rendered="{!placementHistoryInactiveExists}">
+                            <div id="All" class="tsTab" style="{!IF(pageTurnInactive ,'display:block','display:none')}">
+                                <table class="tableStyle" id="table_id">
+                                    <thead class="tableHeader">
+                                    <tr>
+                                        <th class="expTableth">Placement</th>
+                                        <th class="expTableth">Job Title</th>
+                                        <th class="expTableth">Client Name</th>
+                                        <th class="expTableth">Start Date</th>
+                                        <th class="expTableth">End Date</th>
+                                        <th class="expTableth">Candidate Manager</th>
+                                        <th class="expTableth">Pay Rate</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <apex:repeat value="{!placementInactiveHistoryToShow}" var="plcHis">
+                                    
+                                        <tr >
+                                            <td >    
+                                                <apex:outputText value="{!plcHis.name}" styleClass="dtInfo">
+                                                </apex:outputText>
+                                            </td>
+                                            <td >    
+                                                <apex:outputText value="{!plcHis.jobName}" styleClass="dtInfo">
+                                                </apex:outputText>
+                                            </td>
+                                               
+                                            <td>
+                                                <apex:outputText value="{!plcHis.clientName}" styleClass="dtInfo">
+                                                </apex:outputText>
+                                            </td>    
+
+                                            <td>
+                                                <apex:outputText value="{0,date,d MMM yyyy}" styleClass="dtInfo">
+                                                    <apex:param value="{!plcHis.startDate}"/>
+                                                </apex:outputText>
+                                            </td>
+
+                                            <td>
+                                                <apex:outputText value="{0,date,d MMM yyyy}" styleClass="dtInfo">
+                                                    <apex:param value="{!plcHis.endDate}"/>
+                                                </apex:outputText>
+                                            </td>
+
+                                            <td>
+                                                <apex:outputText value="{!plcHis.candidateManager}" styleClass="dtInfo">
+                                                </apex:outputText>
+                                            </td>
+
+                                            <td>
+                                                <apex:outputText value="{0,number,currency}" styleClass="dtInfo">
+                                                    <apex:param value="{!plcHis.payRate}"/>
+                                                </apex:outputText>
+                                            </td>
+
+
+                                                <!--<div class="mobExpTable">
+
+                                                    <div>
+                                                        <apex:outputlabel >Banked Amount </apex:outputlabel>
+                                                    </div>
+                                                        <p class="mobileTSinfoDate">
+                                                            <apex:outputText value="{0,number,currency}">
+                                                                <apex:param value="{!plcHis.netEarnings}"/>
+                                                            </apex:outputText>
+                                                        </p>
+                                                    <div>
+                                                        <apex:outputlabel >Paid Date </apex:outputlabel>
+                                                    </div>
+                                                    <div>
+                                                        <p class="mobileTSinfoJob"><apex:outputText value="{0,date,d MMM yyyy}"><apex:param value="{!plcHis.paidDate}"/></apex:outputText></p>
+                                                    </div>
+
+                                                    <div>
+                                                        <apex:outputlabel >Payee Type </apex:outputlabel>
+                                                    </div>
+                                                    <div>
+                                                        <p class="mobileTSinfoJob">{!plcHis.payeeType}</p>
+                                                    </div>
+                                                </div>-->
+                                            <!--</td>-->
+                                         
+                                        </tr>
+                                      
+                                    </apex:repeat>
+                                    </tbody>
+                                </table>
+                                 <div>
+                                    <apex:commandButton value="<" action="{!previousInactive}" disabled="{!disablepreviousinactive}" styleClass="{!IF(disablepreviousinactive != true,'nextArrowBox','disabledArrowBox')}"/>
+                                    <apex:commandButton value=">" action="{!nextInactive}" disabled="{!DisableNextInactive}" styleClass="{!IF(DisableNextInactive != true,'nextArrowBox','disabledArrowBox')}"/>
+                                    <p class="pageTurn">{!firstInactiveEntry} -  {!lastInactiveEntry} of {!totalInactiveentry} Placements</p>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+
+
+                    </div>
+
+                    </div>
+                </div>
+    </apex:form>
+    </body>
+
+        </apex:define>
+    </apex:composition>
+
+</apex:page>

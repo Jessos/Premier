@@ -1,0 +1,19 @@
+<apex:component >
+    <apex:attribute name="parentId" description="The parent Id to upload the attachements to" type="Id" required="true"/>
+    <apex:attribute name="message" description="The message apearing in the empty dropzone area" type="String" required="false" default="Drop files here to upload"/>
+    <apex:includeScript value="{!URLFOR($Resource.multiUploadResources, 'multiUploadResources/jquery-1.11.2.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.multiUploadResources, 'multiUploadResources/dropzone-min-custom.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.multiUploadResources, 'multiUploadResources/main.js')}"/>
+    <apex:styleSheet value="{!URLFOR($Resource.multiUploadResources, 'multiUploadResources/dropzone-min-custom.css')}"/>
+    <apex:includeScript value="/soap/ajax/15.0/connection.js"/>
+    <script type="text/javascript">sforce.connection.sessionId="{!$Api.Session_ID}";Dropzone.autoDiscover = false;</script>
+    <script type="text/javascript">var parentId="{!parentId}"</script>
+    <apex:variable var="objType" value="Attachment"/>
+    <script type="text/javascript">var objType="{!objType}"</script>
+    <apex:outputPanel style="display:{!IF(parentId != Null, 'block', 'none')}">
+        <div id="newDropzone" class="dropzone"></div>
+        <script type="text/javascript">var newDropzone = new Dropzone("div#newDropzone", { url: "/file/post"});</script>
+        <script type="text/javascript">$('#newDropzone .dz-message span').html('{!message}');</script>
+    </apex:outputPanel>
+    <apex:outputText style="display:{!IF(parentId == Null, 'block', 'none')}" value="Parent Id required for Multi Upload Component!" />
+</apex:component>

@@ -1,0 +1,221 @@
+<apex:page controller="AddAttachmentCtrl" sidebar="false" showheader="false" id="AttachPageId" standardStylesheets="false" docType="html-5.0" language="{!locale}" applyHTMLTag="false">
+	<head> 
+ 		<!-- Font used -->
+			<apex:stylesheet value="https://fonts.googleapis.com/css?family=Muli:300" />
+	    <apex:stylesheet value="{!URLFOR($Resource.Bootstrap3, 'bootstrap-3.3.2/dist/css/bootstrap.css')}"/>
+	    <apex:stylesheet value="{!URLFOR($Resource.Bootstrap3, 'bootstrap-3.3.2/dist/css/bootstrap.min.css')}"/>
+
+	</head>
+	<style>
+		.btn-primary, .btn-primary:focus{
+        	background-color: #3898CB;
+        	border-color: #3898CB;
+        }
+        .btn-primary:hover{
+        	background-color: #4EAFE3;
+        	border-color: #4EAFE3;
+        }
+        .btn-primary .badge{
+        	color: #3898CB;
+        }
+        
+        .btn-danger, .btn-danger:focus{
+        	background-color: #CD274B;
+        	border-color: #CD274B;
+        }
+        .btn-danger:hover{
+        	background-color: #D43F60;
+        	border-color: #D43F60;
+        }
+        .btn-danger .badge{
+        	color: #CD274B;
+        }
+        
+        .text-danger{
+        	color: #CD274B;
+        	font-family: 'Muli', sans-serif;
+        }
+        .text-success{
+        	color: #50B953;
+        	font-family: 'Muli', sans-serif;
+        }
+        /* .text-warning{
+        	color: #C9BE3D;
+        	font-family: 'Muli', sans-serif;
+        } */
+        .text-muted{
+        	font-family: 'Muli', sans-serif;
+        }
+        
+        span{ font-family: 'Muli', sans-serif; /* font-family: 'Lobster', cursive; */ }
+        
+	</style>
+	<body>
+		<div class="container" align="center">
+				
+			<apex:form id="formId"> 
+				<apex:pageMessages id="pgMsg"/>
+				
+				
+				<!-- ------------------------------Attachment for Expense------------------------------- -->
+				<apex:outputPanel rendered="{!isExpense}" >
+					<h4 align="left" class="text-muted"><span class="text-muted">Add a receipt to your expense</span></h4>
+				</apex:outputPanel>
+				
+				<br/>
+				<apex:outputPanel rendered="{!isExpense}" >
+					<div align="center">
+						<table class="table table-condensed">
+							<tr>
+								<td style="border: none;" align="center"> 
+									<apex:outputText styleClass="text-muted" value="Job Name" />
+								</td>
+								<td style="border: none;">
+									<apex:outputText styleClass="text-muted" value=": {!expense.tc9_ti__Time_Sheet__r.tc9_ti__Placement__r.ts2__Job__r.Name}"/>
+								</td>
+							</tr>
+							<tr>
+								<td style="border: none;" align="center">
+									<apex:outputText styleClass="text-muted" value="Incurred On"/>
+								</td>
+								<td style="border: none;">
+									<apex:outputText styleClass="text-muted" value=": {!expense.tc9_ti__Date_Incurred__c}" />
+								</td>
+							</tr>
+							<tr>
+								<td style="border: none;" align="center">
+									<apex:outputText styleClass="text-muted" value="Amount"/>
+								</td>
+								<td style="border: none;">
+									<apex:outputText styleClass="text-muted" value=": {!expense.tc9_ti__Value__c}" />
+								</td>
+							</tr>
+							<tr>
+								<td style="border: none;" align="center">
+									<apex:outputText styleClass="text-muted" value="Attachment"/>
+								</td>
+								<td style="border: none;">
+									<apex:outputPanel >
+										<apex:outputPanel rendered="{!attachmentAvailable}">
+											<apex:outputText styleClass="text-muted" value=": {!receipt.Name}" />
+										</apex:outputPanel>
+										
+										<apex:outputPanel rendered="{!NOT(attachmentAvailable)}">
+											<!-- <apex:outputText styleClass="text-muted" value=": "/> -->
+											<apex:inputFile value="{!receipt.body}" filename="{!receipt.name}" accept="doc,pdf" contentType="{!receipt.ContentType}"/>
+										</apex:outputPanel>
+									</apex:outputPanel>
+								</td>
+							</tr>
+						</table>
+						
+					</div>
+					<apex:outputPanel rendered="{!NOT(attachmentAvailable)}">
+						<div align="center">
+							<apex:commandButton styleClass="btn btn-sm btn-primary" value="{!$Label.TimesheetCommunity_Upload}" action="{!saveAttachment}" status="searchImgProcessAttach"/>
+								
+		                                 <apex:actionStatus id="searchImgProcessAttach">
+		                                     <apex:facet name="start">
+		                                         <img src="/img/loading.gif" />
+		                                     </apex:facet>
+		                                  </apex:actionStatus>
+						</div>
+					</apex:outputPanel>
+				</apex:outputPanel>
+				
+				
+				<!-- ------------------------------Attachment for TS------------------------------- -->
+				<apex:outputPanel rendered="{!!isExpense}" >
+					<h4 align="left" class="text-muted"><span class="text-muted">Add a attachment to your Timesheet</span></h4>
+				</apex:outputPanel>
+				
+				<br/>
+				<apex:outputPanel rendered="{!!isExpense}" >
+					<div align="left">
+						<table class="table table-condensed">
+							<tr>
+								<td style="border: none;" align="center"> 
+									<apex:outputText styleClass="text-muted" value="Job Name" />
+								</td>
+								<td style="border: none;">
+									<apex:outputText styleClass="text-muted" value=": {!timesheet.tc9_ti__Placement__r.ts2__Job__r.Name}"/>
+								</td>
+							</tr>
+							<tr>
+								<td style="border: none;" align="center">
+									<apex:outputText styleClass="text-muted" value="Placement Name"/>
+								</td>
+								<td style="border: none;">
+									<apex:outputText styleClass="text-muted" value=": {!timesheet.tc9_ti__Placement__r.Name}" />
+								</td>
+							</tr>
+							<tr>
+								<td style="border: none;" align="center">
+									<apex:outputText styleClass="text-muted" value="Timesheet Name"/>
+								</td>
+								<td style="border: none;">
+									<apex:outputText styleClass="text-muted" value=": {!timesheet.Name}" />
+								</td>
+							</tr>
+							<tr>
+								<td style="border: none;" align="center">
+									<apex:outputText styleClass="text-muted" value="Type"/>
+								</td>
+								<td style="border: none;">
+									<apex:outputPanel >
+										<!-- <apex:outputText styleClass="text-muted" value=": " /> -->
+										<apex:selectList styleClass="form-control" value="{!selectedType}" size="1"> 
+						            		<apex:actionSupport event="onchange" action="{!fetchAttachment}"/>
+						            		<apex:selectOptions value="{!listOfAttachmentTypes}"/>            		
+						            	</apex:selectList>
+						            </apex:outputPanel>	
+								</td>
+							</tr>
+							<tr>
+								<td style="border: none;" align="center">
+									<apex:outputText styleClass="text-muted" value="Attachment"/>
+								</td>
+								<td style="border: none;">
+									<apex:outputPanel rendered="{!attachmentAvailable}">
+											<apex:outputText styleClass="text-muted" value=": {!receipt.Name}" />
+									</apex:outputPanel> 
+									
+									<apex:outputPanel rendered="{!NOT(attachmentAvailable)}">
+											<!-- <apex:outputText styleClass="text-muted" value=": "/> -->
+											<apex:inputFile value="{!receipt.body}" filename="{!receipt.name}" accept="doc,pdf" contentType="{!receipt.ContentType}"/>
+										</apex:outputPanel>  
+								</td>
+							</tr>
+						</table>
+						<div align="center" style="display:{!IF(NOT(attachmentAvailable),'','none')}">
+							<apex:commandButton styleClass="btn btn-sm btn-primary" value="{!$Label.TimesheetCommunity_Upload}" action="{!saveAttachment}" status="searchImgProcessAttachTS"/>
+					                			<apex:actionStatus id="searchImgProcessAttachTS">
+		                                            <apex:facet name="start">
+		                                                <img src="/img/loading.gif" />
+		                                            </apex:facet>
+		                                         </apex:actionStatus>
+						</div>
+					</div>
+				</apex:outputPanel>
+				
+				<apex:outputPanel rendered="{!attachmentAvailable}">
+				        <div class="page-header" align="center" style="margin-bottom: 0px;margin-top: 0px;">
+				        	
+									<apex:commandButton styleClass="btn btn-sm btn-primary" action="{!editAttachment}" value="{!$Label.TimesheetCommunity_Edit}" status="searchImgProcessEditDelete">
+									</apex:commandButton> &nbsp;&nbsp;
+									<apex:commandButton styleClass="btn btn-sm btn-danger" action="{!deleteAttachment}" value="{!$Label.TimesheetCommunity_Delete}" status="searchImgProcessEditDelete">
+									</apex:commandButton>
+									
+									<apex:actionStatus id="searchImgProcessEditDelete">
+	                                            <apex:facet name="start">
+	                                                <img src="/img/loading.gif" />
+	                                            </apex:facet>
+	                                         </apex:actionStatus> 
+								
+						</div>
+					</apex:outputPanel>
+					
+			</apex:form>
+		</div>
+	</body>
+</apex:page>

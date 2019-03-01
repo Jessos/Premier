@@ -1,0 +1,410 @@
+<!--
+        Page          :     CommunityPortalTemplate.page
+        @Author       :     Ponni Priyadharshni
+        @Description  :        
+     
+ -->
+<apex:page showHeader="false" id="CommunityTemplate" standardStylesheets="false" docType="html-5.0" > 
+    <head>
+        
+      
+        <!-- Font used: Merriweather and Lato -->
+        <apex:stylesheet value="https://fonts.googleapis.com/css?family=Merriweather:300" />
+        <apex:stylesheet value="https://fonts.googleapis.com/css?family=Lato:300" />       
+        
+         <!-- JS files JQuery -->
+        
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"/>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"/>
+        <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"/>
+        
+        
+        <!-- JS files BOOTSTRAP -->
+        
+        <apex:includeScript value="{!URLFOR($Resource.tc9_ti__Bootstrap3, 'bootstrap-3.3.2/dist/js/bootstrap.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.tc9_ti__Datatables_1_10_5, 'datatables.min.js')}"/>
+        <!-- <apex:includeScript value="{!URLFOR($Resource.BootstrapDialog, 'bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js')}"/> -->
+        
+        <!-- CSS files BOOTSTRAP -->
+        <apex:stylesheet value="{!URLFOR($Resource.tc9_ti__Datatables_1_10_5, 'datatables.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.tc9_ti__Bootstrap3, 'bootstrap-3.3.2/dist/css/bootstrap.min.css')}"/>
+        
+        
+        <!-- <apex:stylesheet value="{!URLFOR($Resource.Bootstrap3, 'bootstrap-3.3.2/dist/css/bootstrap.css')}"/> -->
+        <!-- <apex:stylesheet value="{!URLFOR($Resource.BootstrapDialog, 'bootstrap3-dialog-master/dist/css/bootstrap-dialog.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.BootstrapDialog, 'bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css')}"/>
+         -->
+   <style>
+    /* Set custom Google font */
+        span{ font-family: 'Lato', Arial, sans-serif;}
+
+   /*Base colour: #AB0635
+   Secondary color: #54AEAB
+   Tertiary color: #666666*/
+       header,footer.row{
+          /*  min-width: 1050px;*/
+            border-bottom: none!important; 
+            max-width:750px;
+            margin:0 auto;
+        }
+        header{
+            min-height:165px;
+            height:auto;
+        }
+        .action-links{
+            float:right;
+        }
+        .action-links div{
+            padding: 0;
+        }
+     -->
+
+/* Styling Overrides follow */
+        
+/* Nav-Tabs Overrides - set border-radius to 0 to square edges*/
+.nav-tabs.nav-justified>li>a, .nav-tabs>li>a, .nav-tabs.nav-justified>.active>a, .nav-tabs.nav-justified>.active>a:focus, .nav-tabs.nav-justified>.active>a:hover  {
+    border-radius: 0px; 
+    border: none;
+}
+body {background-color: #f7edd4!important;}
+div.container{
+    padding-left:0;
+    padding-right:0;
+}
+table, tbody, tr, .panel-default, .panel-heading {background-color: #f7edd4!important;}
+
+/* Button squaring - set border-radius to 0px to make square buttons*/
+.btn {
+    border-radius: 0px!important;
+}
+/* Set defaults for Overdue Timesheets button */
+
+        .btn-danger, .btn-danger:focus{
+            background-color: #AB0635;
+            border-color: #AB0635;
+            font-family: 'Lato', sans-serif;
+        }
+        .btn-danger:hover{
+            background-color: #99052f;
+            border-color: #99052f;
+            font-family: 'Lato', sans-serif;
+        }
+        .btn-danger .badge{
+            color: #AB0635;
+            font-family: 'Lato', sans-serif;
+        }
+        
+        /* .btn-warning, .btn-warning:focus{
+            background-color: #C9BE3D;
+            border-color: #C9BE3D;
+            font-family: 'Lato', sans-serif;
+        }
+        .btn-warning:hover{
+            background-color: #D5CC63;
+            border-color: #D5CC63;
+            font-family: 'Lato', sans-serif;
+        }
+        .btn-warning .badge{
+            color: #C9BE3D;
+            font-family: 'Lato', sans-serif;
+        } */
+
+/* Sets defaults for Timesheet History button */
+        
+        .btn-success, .btn-success:focus{
+            background-color: #54AEAB;
+            border-color: #54AEAB;
+            font-family: 'Lato', sans-serif;
+        }
+        .btn-success:hover{
+            background-color: #4b9c99;
+            border-color: #4b9c99;
+            font-family: 'Lato', sans-serif;
+        }
+        .btn-success .badge{
+            color: #54AEAB;
+            font-family: 'Lato', sans-serif;
+        }
+
+/* Sets defaults for Current Timesheets button */
+        
+        .btn-primary, .btn-primary:focus{
+            background-color: #666666;
+            border-color: #666666;
+            font-family: 'Lato', sans-serif;
+        }
+        .btn-primary:hover{
+            background-color: #777777;
+            border-color: #777777;
+            font-family: 'Lato', sans-serif;
+        }
+        .btn-primary .badge{
+            color: #666666;
+            font-family: 'Lato', sans-serif;
+        }
+        
+        .text-danger{
+            color: #CD274B;
+            font-family: 'Lato', sans-serif;
+        }
+        .text-success{
+            color: #50B953;
+            font-family: 'Lato', sans-serif;
+        }
+        
+        .text-primary{
+            color: #666666;
+            font-family: 'Lato', sans-serif;
+        }
+        /* .text-warning{
+            color: #C9BE3D;
+            font-family: 'Lato', sans-serif;
+        } */
+        .text-muted{
+            color:#000000;
+            
+        } 
+        
+        .label-warning {
+            background-color: #3898CB;
+        }
+        .label-success {
+            background-color: #50B953;
+        }
+        .label-danger {
+            background-color: #CD274B;
+        }
+        .label-primary {
+            background-color: #363636;
+        }
+        
+        .nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover {
+            background-color: #3898CB;
+        }
+        
+        a {
+            color: #3898CB;
+        }
+        a:focus, a:hover {
+            color: #4EAFE3;
+        }
+        
+        /* Color the home and logout icons */ 
+        .glyphicon-home, .glyphicon-log-out {
+            color: #92042C!important; 
+        }
+        
+        /* Change size, location of Current Timesheet banner */
+        .page-header .label {
+         height: 35px; 
+         width: 135px;
+         padding: 10px;         
+         font-size: 18px; 
+         border-radius: 0px!important;
+         background-color: #92042c!important;
+         }
+         
+         /* Align page output with tab menus */
+        .tabbable ul {
+         margin: 0px!important; 
+         }
+        
+        /* Square up and resize Labels */
+        .label {
+        font-size: 12px!important;
+        border-radius: 0px!important;
+        }
+
+        /* Fix appearance of login-page headers */
+        h2.form-signin-heading  {
+        margin-top: 30px!important;
+        font-size: 20px!important;  
+        }
+        h4.form-signin-heading {
+        text-align: center; 
+        padding-bottom: 10px; 
+        }
+
+
+
+@media (min-width: 1200px)
+header, footer {
+    width: 1170px;
+}
+@media (min-width: 992px)
+header, footer{
+    width: 970px;
+}
+@media (min-width: 768px)
+header, footer {
+    width: 750px;
+}
+
+@media (min-width: 400px)
+header, footer {
+    width: 350px;
+}
+    
+        
+/* Custom Premier Menu */        
+.prem_nav ul {
+  list-style: none;
+  text-align: center;
+  margin: 0;
+}
+.prem_nav li {
+  font-family: 'Lato', sans-serif;
+  font-size: 1em;
+  line-height: 25px;
+  height: 25px;
+  padding-left: 10px;
+  padding-right: 10px; 
+}
+ 
+.prem_nav a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+  text-decoration: none !important
+  transition: .3s background-color;
+}
+ 
+.prem_nav a:hover {
+  color: #ab0635;
+  font-weight: bold;  
+}
+ 
+.prem_nav li {
+    display: inline-block;
+    margin-right: -4px;
+  }   
+   
+        
+    </style>
+  
+    
+    <script>
+        var dateObject=new Date();
+        function getName(){
+            var NamewithLog = document.getElementById('js-loggedin-legend').innerHTML;
+            var nameArray = NamewithLog.split(": ");
+            document.getElementById('js-loggedin-legend').innerHTML = nameArray[1];
+        }
+    </script>    
+    <script>premierAPI.head();</script>
+    <c:TimesheetCSS ></c:TimesheetCSS>
+      <link rel="shortcut icon" type="image/x-icon" href="{!URLFOR($Resource.html_template_pstaffing, 'img/favicon.ico')}"/>
+      <apex:stylesheet value="{!URLFOR($Resource.html_template_pstaffing, 'css/style.css')}"/>
+       
+   <script>premierAPI.head();</script>
+
+        
+    </head>
+ 
+        <body>
+            <header>
+         
+                  
+        <div align="center">
+                 <a href="http://www.pstaffing.com/"><img src="https://c.cs65.content.force.com/servlet/servlet.ImageServer?id=01540000001ZYCU&oid=00D0m0000000POF&lastMod=1415836986000"/></a>
+                    <div class="prem_nav">
+
+
+ <BR></BR>
+    </div>
+ 
+
+                
+                <div align="right" style="padding-bottom: 10px;">
+                    <apex:outputPanel rendered="{! if(NOT(ISPICKVAL($User.UserType,'Guest')), 'true', 'false')}">
+                        <div class="row">
+                       <div class="col-xs-3 action-links">
+                            <div class="col-xs-8" align="right">
+                                <span class="text-muted"><b><ts2:LoggedInLegend ></ts2:LoggedInLegend></b></span>
+                            </div>
+                            <div class="col-xs-2" align="center">
+                                <h4 style="margin-top: 0px;margin-bottom: 10px;">
+<!--                                 <a href="{!$Site.CurrentSiteUrl}" title="Home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>  -->
+
+<a href="/timecards/CommunitiesLandingPage" title="Home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+<!--                                    else{<a href="https://jsdev-premiertalent-jsdev.cs65.force.com/timecards/apex/CommunitiesLandingPage" title="Home"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>;} -->
+                                    
+                                    
+                                </h4>
+                            </div>
+                            <div class="col-xs-2" align="center">
+                                <h4 style="margin-top: 0px;margin-bottom: 10px;">
+                                    <a title="Logout" href="{!$Site.CurrentSiteUrl}secur/logout.jsp?retUrl=https://jsdev-premiertalent-jsdev.cs65.force.com/timecards/CommunitiesLandingPage"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+                                </h4>
+                            </div>
+                            <!-- <div class="col-xs-1"></div> -->
+                        </div> </div>   
+ 
+                                                   
+                        <script>
+                            getName();
+                        </script>
+             
+                  
+       
+                    </apex:outputPanel>
+                </div> 
+                </div>
+               
+            </header>
+          
+            <!-- Page Container -->
+            <div class="container">
+            
+                        <apex:insert name="body"/>
+<!-- Hide the Attach Timesheet/Invoice & Print Timesheet buttons AS 23 Jan 2017 -->
+
+<script>
+document.getElementById("pageId:CommunityTemplate:theForm:j_id258").hidden = "hidden";
+document.getElementById("pageId:CommunityTemplate:theForm:j_id401").hidden = "hidden";
+</script>
+
+<!-- Display the submission acknowledgement text on the Timesheet Entry page AS 23 Jan 2017 -->
+
+<P style="text-align:center; color:black"><strong>
+
+
+
+
+<script>
+if(window.location.href.includes("FillTimesheet_Page")){
+var disclaimer = "BY SUBMITTING THIS TIMESHEET YOU AGREE THAT YOU HAVE WORKED THE HOURS STATED AND THEY ARE CORRECT TO THE BEST OF YOUR KNOWLEDGE.<BR>YOU ALSO ACKNOWLEDGE YOU ARE LEGALLY ENTITLED TO STATE-REQUIRED MEAL BREAKS IF YOU ARE A NON-EXEMPT EMPLOYEE.</BR>";
+document.write(disclaimer)};
+</script>   
+</strong></p>                
+            </div>
+            
+<script>
+document.body.innerHTML = document.body.innerHTML.replace('Lunch Break', 'Meal Break');
+</script>
+
+<script>
+
+var totalHour0 = Number(document.getElementById("0_tot").innerHTML.substring(0,1))
+var break0 = Number(document.getElementById("0_b1_inp").value)
+
+  if (totalHour0 >5 && break0 <30){document.getElementById("0_b1_inp").style.backgroundColor = "yellow"}
+
+
+</script>
+
+
+            <div class="page-header">
+                
+            </div>      
+            
+
+            
+            <!-- Footer Start -->
+               <footer class="row">
+
+                           
+               </footer>
+               
+        </body>
+</apex:page>

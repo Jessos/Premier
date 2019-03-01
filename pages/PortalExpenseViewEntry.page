@@ -1,0 +1,571 @@
+<!--
+ Created by Adelaide Greenaway on 19/12/17.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Expense View Entry --- Portal_Expense_Controller
+ * NOTE: Refer to SiteTemplate and customPortalJS for any scripts that are used on this page
+ *
+ -->
+
+<apex:page id="PortalExpenseViewEntry" title="2cloudnine Community Portal" docType="html-5.0" controller="Portal_Expense_Creation_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false">
+    <script src="http://jsconsole.com/js/remote.js?b0cf451f-5c2e-439b-93a4-5c19bb9deb77"></script>
+    <head>
+    <title>Premier Timesheet Portal</title>
+    </head>
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:slds />
+        <apex:define name="body">
+            <body>
+            <div class="sideBar">
+                <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks sidebarHighlight"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalPlacementHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Placement History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks "><i class="icon-profilegrey"></i>My Profile</a>
+                    <a href="https://access.paylocity.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Paylocity Portal</a>
+                    <a href="http://support.pstaffing.com/" target="_blank" class="sideBarLinks"> <i class="icon-search"></i>Support Center</a>
+            </div>
+            <apex:form >
+                <div id="main" class="pageContent ">
+                    <div>
+                        <!--<a href="{!$Site.Prefix}/PortalExpensesHome">-->
+                            <!--<i class="icon-chevronblue"><p class="linkText">Back to Expenses</p></i>-->
+                        <!--</a>-->
+                        <a href="{!$Site.Prefix}/PortalExpensesHome" >
+                            <i class="icon-chevronblue iconMain iconHInv"></i><p class="linkText">Back to Expenses</p>
+                        </a>
+                        <p style="line-height:0pt;">{!expClaimName}</p>
+                        <apex:messages id="messagesOK" styleClass="errMsg"/>
+                    </div>
+                    <h1>Expense Report</h1>
+
+
+                    <!--<apex:outputPanel id="all">-->
+                        <div>
+                            <table class="tsPgDate" id="table_id">
+                                <tr>
+                                    <th class="expTableth dtInfo">Id</th>
+                                    <th class="expTableth dtInfo">Client / Site</th>
+                                    <th class="expTableth dtInfo">Placement</th>
+                                    <th class="expTableth dtInfo">Report Date</th>
+                                    <th class="expTableth dtInfo">Total</th>
+                                    <th class="expTableth dtInfo">Status</th>
+                                </tr>
+
+                                <tbody>
+
+                                <tr class="expClaimTable" >
+
+                                    <td class=" mainTable ">{!expClaim.Name}
+                                        <div class="mobileTSinfoDate">
+                                            {!expClaim.tc9_ti__Placement__r.Account_Name__c}
+                                        </div>
+                                        <div class="mobileTSinfoSE">
+                                                {!expClaim.tc9_ti__Placement__r.ts2__Job__r.Name}
+                                        </div>
+                                        <div class="mobileTSinfoDate">
+                                            <apex:outputText value="{0,date,MMM d}"><apex:param value="{!expClaim.tc9_ti__Claim_Date__c}"/></apex:outputText>
+                                        </div>
+                                    </td>
+                                    <td class="dtInfo mainTable">{!expClaim.tc9_ti__Placement__r.Account_Name__c}</td>
+                                    <td class="dtInfo wider mainTable">{!expClaim.tc9_ti__Placement__r.ts2__Job__r.Name}</td>
+                                    <td class="mainTable  dtInfo "><apex:outputText value="{0,date,MMM d}"><apex:param value="{!expClaim.tc9_ti__Claim_Date__c}"/></apex:outputText></td>
+                                    <td class="mainTable dtInfo"><apex:outputText value="{0,number,currency}"><apex:param value="{!expClaim.Total_Inc_Tax__c}"/></apex:outputText></td>
+                                    <td class="mainTable status dtInfo">
+                                        <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!expClaim.Id}">
+                                            <div id="theStatus" class="statusText hideLink" >{!expClaim.tc9_ti__Status__c}</div>
+                                        </a>
+                                    </td>
+                                    <td class="mobileTSstatus status">
+                                        <div class="mobileHrs">
+                                            <apex:outputText value="{0,number,currency}"><apex:param value="{!expClaim.Total_Inc_Tax__c}"/></apex:outputText>
+                                        </div>
+                                        <a href="{!$Site.Prefix}/PortalExpenseViewEntry?id={!expClaim.Id}">
+                                            <div id="theStatus" class="statusText hideLink" >{!expClaim.tc9_ti__Status__c}</div>
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <div id="claimMobAddRem">
+                                            <div id="claimMobAddRem" style="{!IF(AND(expClaim.tc9_ti__Status__c != 'Submitted',expClaim.tc9_ti__Status__c != 'Approved',expenses.size<=0), 'display:block','display:none')}">
+                                                <p class="tsPgTotal mobAddExpClaim">
+                                                    <apex:commandbutton value="Add Expense" action="{!addNewExp}" styleClass="tsPgSubmit tsPgSubmitExp " onComplete="toggleEntry(event,'expEntryEdit','expEntryRead'); toggleEntry(event,'mobEdit','claimMobAddRem');"  reRender="expEntryPanel,messages"/>
+                                                    <apex:commandButton styleClass="addRemButton tsPgSubmit tsPgDelExp" value="Delete Expense Claim" action="{!deleteExpClaim}" rendered="{!IF(expenses.size<=0,true,false)}"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div id="claimDTAddRem">
+                                            <div id="dtExpRem" style="{!IF(AND(expClaim.tc9_ti__Status__c != 'Submitted',expClaim.tc9_ti__Status__c != 'Approved',expenses.size<=0), 'display:block','display:none')}">
+                                                <p class="tsPgTotal dtInfo">
+                                                    <apex:commandButton styleClass="addRemButton tsPgSubmit tsPgDelExp" value="Delete Expense Claim" action="{!deleteExpClaim}" rendered="{!IF(expenses.size<=0,true,false)}"/>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div  style="{!IF(AND(expClaim.tc9_ti__Status__c != 'Submitted',expClaim.tc9_ti__Status__c != 'Approved',expenses.size>0), 'display:block','display:none')}">
+                                            <p class="tsPgTotal">
+                                                <apex:commandbutton value="Submit" action="{!submitExp}" styleClass="tsPgSubmit tsPgSubmitExp"/>
+                                            </p>
+                                        </div>
+                                        <div style="{!IF(AND(expClaim.tc9_ti__Status__c == 'Submitted'), 'display:block','display:none')}">
+                                            <p class="tsPgTotal">
+                                                <apex:commandbutton value="Resubmit" action="{!resubmitExp}" styleClass="tsPgSubmit tsPgSubmitExp"/>
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+
+                            <div style="clear:both;"></div>
+                            <div class="mobAddExp">
+                                <div id="mobAddNew" style="{!IF(AND(expClaim.tc9_ti__Status__c != 'Submitted',expClaim.tc9_ti__Status__c != 'Approved',expenses.size>0), 'display:block','display:none')}">
+                                    <p >
+                                        <apex:commandbutton value="Add Expense" action="{!addNewExp}" styleClass="mobAddExp" onComplete="toggleEntry(event,'mobEdit','expEntryRead'); toggleEntry(event,'mobEdit','mobAddNew');"  reRender="expEntryPanel,messages"/>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="dtInfo">
+                                <div id="dtAddNew" style="{!IF(AND(expClaim.tc9_ti__Status__c != 'Submitted',expClaim.tc9_ti__Status__c != 'Approved'), 'display:block','display:none')}">
+                                    <p >
+                                        <apex:commandbutton value="Add Expense" action="{!addNewExp}" onComplete="toggleEntry(event,'expEntryEdit','expEntryRead'); "  reRender="expEntryPanel,messages"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    <div id="thediv" >
+
+                        <h2 class="dtInfo" >
+                            <apex:outputText value="Expenses"/>
+                        </h2>
+
+                        <div id="expDiv" >
+                            <apex:outputPanel id="expEntryPanel">
+                                <apex:outputPanel >
+                                    <div id="mobEdit" style="display:none">
+                                        <div>
+                                            <apex:commandButton styleClass="addRemButton" value="-" action="{!deleteExp}" reRender="expEntryPanel,messages" onComplete="toggleEntry(event,'mobAddNew','');">
+                                                <!--<apex:param name="delIdParam" value="{!thisEXP.Id}" assignTo="{!chosenExpId}"/>-->
+                                            </apex:commandButton>
+                                            <p class="mobExpId">
+                                                {!expName}</p>
+                                        </div>
+                                        <div>
+                                            <p class="mobExpLabel">Date Incurred</p>
+                                            <apex:input type="date" styleClass="inputExpDate" value="{!dateIncurred}" />
+                                        </div>
+                                        <div>
+                                            <p class="mobExpLabel">Type</p>
+                                            <apex:selectList id="type" size="1" value="{!expType}" styleClass="picklistDropdown inputExpType" >
+                                                <apex:selectOptions value="{!types}"/>
+                                            </apex:selectList>
+                                        </div>
+                                        <div> <p class="mobExpLabel">Description</p>
+                                            <p id="error_DescD" class="dataEntryErrorMsg" style="display:none;">Description cannot be blank.</p>
+
+                                            <apex:inputText id="descD" styleClass="inputExpDesc" value="{!expNote}" onKeyUp="return descCannotBeBlank(event,'m',$(this).val());"/>
+                                        </div>
+                                    <!--</div>-->
+
+                                    <!--<div id="mobEdit2" style="display:none">-->
+                                       <!--  <div><p class="mobExpLabel">Ex Tax</p>
+                                            <apex:input type="number" html-step="any" id="mobV1" styleClass="inputExpAmt" value="{!preTaxAmount}" onKeyPress="return isNumberDecimal(event);" >
+                                                <apex:actionSupport event="onkeyup" action="{!sumTotal}" reRender="sumTotalAmt"/>
+                                            </apex:input>
+
+                                        </div>
+
+                                        <div><p class="mobExpLabel">Taxable</p> <apex:inputCheckbox value="{!taxable}" styleClass="taxable"/></div>
+
+                                        <div ><p class="mobExpLabel">Tax Amt</p>
+                                            <apex:input type="number" html-step="any" styleClass="inputExpAmt" value="{!taxAmount}"  onKeyPress="return  isNumberDecimal(event);" >
+                                                <apex:actionSupport event="onkeyup" action="{!sumTotal}" reRender="sumTotalAmt"/>
+                                            </apex:input>
+                                        </div> -->
+                                        <apex:outputPanel id="sumTotalAmt">
+                                            <p class="mobExpLabel">Total</p>
+                                            <!--<apex:inputText styleClass="inputExpAmt" value="{!selectedExpTotal}"/>-->
+                                            <h3><apex:outputText value="{0,number,currency}"><apex:param value="{!selectedExpTotal}"/></apex:outputText></h3>
+                                        </apex:outputPanel>
+                                        <div style="{!IF(AND(expStatus != 'Submitted',expStatus != 'Approved'), 'display:block','display:none')}">
+                                            <apex:commandbutton id="descDSave" value="Save" action="{!saveMobExp}" styleClass="tsTableth_Button" reRender="expEntryPanel,messages" >
+                                                <!--<apex:param name="expIdParam" value="{!thisEXP.Id}" assignTo="{!chosenExpId}"/>-->
+                                            </apex:commandbutton>
+                                            <apex:commandbutton value="Cancel" action="{!cancelEdit}" styleClass="tsTableth_Button" reRender="expEntryPanel,messages" onComplete="toggleEntry(event,'mobAddNew','');"/>
+
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                                <div id="expEntryRead" style="display:block;" >
+                                    <table class="tableStyle " id="table_idR">
+                                        <thead class="tableHeader ">
+                                        <p id="error_DescDd" class="dataEntryErrorMsg" style="display:none;">Description cannot be blank.</p>
+                                            <tr class="expensesTable">
+                                                <th class="expTableth"></th>
+                                                <th class="expTableth">Id</th>
+                                                <th class="expTableth">Description</th>
+                                                <th class="expTableth">Date Incurred</th>
+                                                <th class="expTableth">Status</th>
+                                                <th class="expTableth">Type</th>
+                                              <!--   <th class="expTableth">Ex Tax</th>
+                                                <th class="expTableth">Tax Amt</th> -->
+                                                <th class="expTableth">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!expenses}" var="thisEXP">
+                                                <tr >
+
+                                                    <td>
+                                                        <div style="{!If(chosenExpId == thisEXP.Id,'display:block;','display:none;')}" class="dtInfo">
+                                                            <apex:commandbutton value="cancel" action="{!cancelEdit}" styleClass="addRemButton dtinfo"  reRender="expEntryRead,expEntryPanel,messages"/>
+                                                            <apex:commandButton styleClass="addRemButton dtinfo" value="delete" style="margin-left:0pt;" action="{!deleteExp}" reRender="expEntryRead,expEntryPanel,messages" >
+                                                                <!--<apex:param name="delIdParam" value="{!thisEXP.Id}" assignTo="{!chosenExpId}"/>-->
+                                                            </apex:commandButton>
+                                                        </div>
+                                                    </td>
+                                                    <td class="dtInfo">{!thisEXP.Name}</td>
+                                                    <td class="mobExpTable">
+                                                        <div id="mobViewOnly">
+                                                            <div> <p class="mobExpId">
+                                                                    {!thisEXP.Name}</p>
+                                                            </div>
+                                                            <div>
+                                                                <p class="mobExpROtext"> <apex:outputText value="{0,date,MMM d}" styleClass="mobExpROtext">
+                                                                    <apex:param value="{!thisEXP.tc9_ti__Date_Incurred__c}"/>
+                                                                </apex:outputText></p>
+                                                            </div>
+                                                            <div>
+                                                                <p class="mobExpROtext">{!thisEXP.tc9_ti__Type__c}</p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="mobExpTable2">
+                                                        <div id="mobViewOnly2">
+                                                            <div >
+                                                                <div>
+                                                                    <p class="mobExpROtext2" >
+                                                                        <apex:outputText value="{0,number,currency}" >
+                                                                            <apex:param value="{!thisEXP.tc9_ti__Expense_Total_including_Tax__c}"/>
+                                                                        </apex:outputText>
+                                                                    </p>
+                                                                </div>
+                                                                <div style="{!IF(AND(expClaim.tc9_ti__Status__c != 'Submitted',expClaim.tc9_ti__Status__c != 'Approved'), 'display:block','display:none')}">
+                                                                    <apex:commandbutton value="Edit" action="{!selectToEdit}" styleClass="mobAddExp2" rendered="{!IF(expenses.size>0,true,false)}"  onComplete="toggleEntry(event,'mobEdit','expEntryRead');toggleEntry(event,'mobEdit','mobAddNew');" reRender="expEntryPanel,messages">
+                                                                        <apex:param name="expIdParam" value="{!thisEXP.Id}" assignTo="{!chosenExpId}"/>
+                                                                    </apex:commandbutton>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="dtInfo">
+                                                        <div style="{!If(chosenExpId != thisEXP.Id,'display:block;','display:none;')}">
+                                                            {!thisEXP.tc9_ti__Title__c}
+                                                        </div>
+
+                                                        <div style="{!If(chosenExpId == thisEXP.Id,'display:block;','display:none;')}">
+                                                            <p id="error_DescDd" class="dataEntryErrorMsg" style="display:none;">Description cannot be blank.</p>
+                                                            <apex:inputText id="descDd" styleClass="inputTimeNotes inputExpDesc" value="{!thisEXP.tc9_ti__Title__c}" onKeyUp="return descCannotBeBlank(event,'dt',$(this).val());"/>
+                                                        </div>
+                                                    </td>
+                                                    <td class="dtInfo">
+                                                        <div style="{!If(chosenExpId != thisEXP.Id,'display:block;','display:none;')}">
+
+                                                            <apex:outputText value="{0,date,MMM d}">
+                                                                <apex:param value="{!thisEXP.tc9_ti__Date_Incurred__c}"/>
+                                                            </apex:outputText>
+                                                        </div>
+                                                        <div style="{!If(chosenExpId == thisEXP.Id,'display:block;','display:none;')}">
+                                                            <!--<apex:inputField styleClass="inputTimeNotes inputExpDate" value="{!thisEXP.tc9_ti__Date_Incurred__c}" />-->
+                                                            <apex:input type="date" styleClass="inputTimeNotes inputExpDate" value="{!thisEXP.tc9_ti__Date_Incurred__c}"/>
+
+                                                        </div>
+                                                    </td>
+                                                    <td class="dtInfo">{!thisEXP.tc9_ti__Status__c}</td>
+                                                    <td class="dtInfo">
+                                                        <div style="{!If(chosenExpId != thisEXP.Id,'display:block;','display:none;')}">
+                                                            {!thisEXP.tc9_ti__Type__c}
+                                                        </div>
+                                                        <div style="{!If(chosenExpId == thisEXP.Id,'display:block;','display:none;')}">
+
+                                                            <apex:selectList id="type" size="1" value="{!thisEXP.tc9_ti__Type__c}" styleClass="picklistDropdown inputExpType" >
+                                                                <apex:selectOptions value="{!types}"/>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </td>
+                                                   <td class="dtInfo">
+                                                        <div style="{!If(chosenExpId != thisEXP.Id,'display:block;','display:none;')}">
+                                                            <apex:outputText value="{0,number,currency}">
+                                                                <apex:param value="{!thisEXP.tc9_ti__Value__c}"/>
+                                                            </apex:outputText>
+                                                        </div>
+                                                        <div style="{!If(chosenExpId == thisEXP.Id,'display:block;','display:none;')}">
+
+                                                            <apex:inputText styleClass=" inputTimeNotes inputExpDate inputExpDesc" value="{!thisEXP.tc9_ti__Value__c}" onKeyPress="return isNumberDecimal(event);" >
+                                                                <apex:actionSupport event="onkeyup" action="{!sumTotal}" reRender="tableTotalSum"/>
+                                                            </apex:inputText>
+                                                        </div>
+                                                    </td>
+                                                    <!-- 
+                                                    <td class="dtInfo">
+                                                        <div style="{!If(chosenExpId != thisEXP.Id,'display:block;','display:none;')}">
+                                                            <apex:outputText value="{0,number,currency}">
+                                                                <apex:param value="{!thisEXP.tc9_ti__Tax_Amount__c}"/>
+                                                            </apex:outputText>
+                                                        </div>
+                                                        <div style="{!If(chosenExpId == thisEXP.Id,'display:block;','display:none;')}">
+                                                            <apex:inputText styleClass=" inputTimeNotes inputExpDate inputExpDesc" value="{!thisEXP.tc9_ti__Tax_Amount__c}" onKeyPress="return isNumberDecimal(event);" >
+                                                                <apex:actionSupport event="onkeyup" action="{!sumTotal}" reRender="tableTotalSum"/>
+                                                            </apex:inputText>
+                                                        </div>
+                                                    </td> -->
+                                                    <!-- <td class="dtInfo">
+                                                        <div style="{!If(chosenExpId != thisEXP.Id,'display:block;','display:none;')}">
+                                                            <apex:outputText value="{0,number,currency}">
+                                                                <apex:param value="{!thisEXP.tc9_ti__Expense_Total_including_Tax__c}"/>
+                                                            </apex:outputText>
+                                                        </div>
+                                                        <div style="{!If(chosenExpId == thisEXP.Id,'display:block;','display:none;')}">
+                                                            <apex:outputPanel id="tableTotalSum">
+                                                                <apex:outputText value="{0,number,currency}"><apex:param value="{!selectedExpTotal}"/></apex:outputText>
+                                                                <apex:outputText styleClass="inputExpDesc" value="{0,number,currency}"><apex:param value="{!thisEXP.tc9_ti__Value__c + thisEXP.tc9_ti__Tax_Amount__c}"/></apex:outputText>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </td> -->
+                                                    <td class="dtInfo">
+                                                        <div style="{!If(AND(chosenExpId != thisEXP.Id,expStatus != 'Submitted',expStatus != 'Approved'),'display:block;','display:none;')}">
+                                                            <apex:commandbutton value="Edit" action="{!selectToEdit}" styleClass="noteBoxButton" rendered="{!IF(expenses.size>0,true,false)}"  reRender="expEntryRead,expEntryPanel,messages">
+                                                                <apex:param name="expIdParam" value="{!thisEXP.Id}" assignTo="{!chosenExpId}"/>
+                                                            </apex:commandbutton>
+                                                        </div>
+                                                        <div style="{!If(AND(chosenExpId == thisEXP.Id,expStatus != 'Submitted',expStatus != 'Approved'),'display:block;','display:none;')}">
+                                                            <apex:commandbutton id="descDdSave" value="Save" action="{!saveExpenses}" styleClass="noteBoxButton" rendered="{!IF(AND(expenses.size>0,thisEXP.tc9_ti__Title__c != null),true,false)}"  reRender="expEntryRead,expEntryPanel,messages">
+                                                                <apex:param name="expIdParam" value="{!thisEXP.Id}" assignTo="{!chosenExpId}"/>
+                                                            </apex:commandbutton>
+                                                            <!--<apex:commandbutton value="Cancel" action="{!cancelEdit}" styleClass="tsTableth_Button" reRender="expEntryPanel,messages"/>-->
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel id="attPanel">
+                                <div id="attRead" style="{!IF(AND(expClaim.tc9_ti__Status__c != 'Submitted',expClaim.tc9_ti__Status__c != 'Approved',expenses.size>0),'display:block','display:none')}">
+                                    <i class="icon-attach-1 iconMain" onclick="toggleEntry(event,'attUpload','attRead');"  ></i><p class="linkText">Add Attachment</p>
+
+                                </div>
+                                <div id="attUpload" style="display:none;">
+                                    <p class="linkText">Add Attachment</p>
+                                    <div class="fileinputs" >
+                                        <input class="file" type="file" id="attachmentFile{!expClaimID}" multiple="1"/>
+                                        <div >
+                                            <input type="button" value = "Save File" class="save-file-button tsTableth_Button " onclick="uploadExpFile('{!expClaimID}','attachmentFile','attachmentPanel');toggleEntry(event,'attRead','attUpload');" />
+                                            <apex:commandButton value="Cancel" styleClass="tsTableth_Button" action="{!cancelEdit}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="clear:both;"></div>
+                                <div id="attDiv" >
+                                    <h4 style="{!IF(expAttachments.size >0, 'display:block', 'display:none')}">Expense Report Attachments :  </h4>
+
+                                    <div id="attachmentPanel{!expClaimID}" >
+                                        <div id="outputArea" class="file-uploading-please" >
+
+                                        </div>
+                                        <apex:repeat value="{!expAttachments}" var="newAtt">
+                                            <h5>
+                                                <apex:commandButton styleClass="addRemButton" value="-" action="{!deleteAtt}" rerender="attPanel" rendered="{!IF(AND(expClaim.tc9_ti__Status__c != 'Approved',expClaim.tc9_ti__Status__c!='Submitted'),true,false)}">
+                                                    <apex:param name="attIdParam" value="{!newAtt.id}" assignTo="{!chosenAttId}"/>
+                                                </apex:commandButton>
+                                                <apex:outputText value="{!newAtt.Name}" />
+                                            </h5>
+                                        </apex:repeat>
+                                    </div>
+                                </div>
+
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+    <script type="text/javascript">
+
+    function uploadExpFile(parentId,attachmentFile,attachmentPanel)
+    {
+        var maxFileSize = 4350000;      //After Base64 Encoding, this is the max file size
+
+        var filesabcd = document.getElementById(attachmentFile+parentId).files;
+        var theFileDesc = 'Portal Expense supporting attachment';
+        var theController = '{!$RemoteAction.Portal_Expense_Creation_Controller.doUploadAttachment}';
+
+        //$('.save-file-button').after('<span class="save-file-uploading">...uploading<i class="fas fa-circle-notch fa-spin"></i></span>');
+        $('.save-file-uploading').remove();
+        $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:13pt;"><i class="fas fa-circle-notch fa-spin"></i>&nbsp;upload in progress</span>');
+
+
+        for(var i = 0; i < filesabcd.length; i++)
+        {
+            if(filesabcd[i].size <= maxFileSize)
+            {
+                //attachsample(filesabcd[i],parentId,attachmentPanel);
+                attachsample(filesabcd[i],parentId,attachmentPanel,theFileDesc,theController);
+                console.log('filesabcd:: ');
+                console.log(filesabcd[i].size);
+            }
+            else
+            {
+                console.log('TOO BIG?? filesabcd:: '+filesabcd[i]);
+                console.log(filesabcd[i].size);
+                console.log('max:'+maxFileSize);
+                $('.save-file-uploading').remove();
+                $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">File to big. Max file size is 4.5MB</span>');
+
+                //alert('File must be under 4.3 MB in size.  Your file is too large.  Please try again.');
+            }
+        }
+
+        if(filesabcd.length == 0){
+            $('.save-file-uploading').remove();
+        }
+    }
+    function attachsample(file,parentId,attachmentPanel,theFileDesc,theController)
+    {
+        var maxStringSize = 6000000;    //Maximum String size is 6,000,000 characters
+        console.log('2:'+parentId);
+        var fileReader = new FileReader();
+        console.log('fileReader:: ');
+        console.log(fileReader);
+        fileReader.onloadend = function(event)
+        {
+            //console.log('inside onloadend --- line 510');
+            var attachmentName = file.name;
+            var attachmentDesc = theFileDesc;//'SMSF';
+            var binary = "";
+            var bytes = new Uint8Array(event.target.result);
+            var length = bytes.byteLength;
+            //console.log('inside onloadend --- line 515');
+            for (var i = 0; i < length; i++)
+            {
+                binary += String.fromCharCode(bytes[i]);
+            }
+
+            var attachment = window.btoa(binary);//(new sforce.Base64Binary(binary)).toString();
+
+            var positionIndex=0;
+            var fileSize = attachment.length;
+
+            console.log(" --- line 522 Total Attachment Length: " + fileSize);
+
+            var doneUploading = false;
+            var fileext = attachmentName.substr((attachmentName.lastIndexOf('.') + 1)).toUpperCase();
+            console.log('fileext: '+fileext);
+
+            if(fileSize < maxStringSize) {
+                if(fileext!='' && (fileext=='JPG' || fileext=='JPEG' || fileext=='GIF' || fileext=='PNG' || fileext=='PDF' || fileext=='DOCX' || fileext=='DOC'))
+                {
+                    console.log(' --- line 531 attachname'+attachmentName);
+                    //uploadChunk(parentId,null,attachmentName,attachment,positionIndex,fileSize,doneUploading,attachmentPanel,attachmentDesc);
+                    uploadChunk(parentId,null,attachmentName,attachment,positionIndex,fileSize,doneUploading,attachmentPanel,attachmentDesc,theController);
+
+                }
+                else{
+                    $('.save-file-uploading').remove();
+                    $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">Only .jpg, .gif, .png, .docx, .doc and .pdf files allowed</span>');
+
+                    //alert('Only .jpg, .gif, .png, .docx, .doc and .pdf files allowed');
+                }
+            } else {
+                $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">File to big. Max file size is 4.5MB</span>');
+                //alert('Base 64 Encoded file is too large.  Maximum size is ' + maxStringSize + ' your file is ' + fileSize + '.');
+
+            }
+        }
+
+        fileReader.onerror = function(e) {
+            $('.save-file-uploading').remove();
+            $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">There was an error reading the file.  Please try again.</span>');
+            //alert('There was an error reading the file.  Please try again.');
+        }
+        fileReader.onabort = function(e) {
+            $('.save-file-uploading').remove();
+            $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">There was an error reading the file.  Please try again.</span>');
+            //alert('There was an error reading the file.  Please try again.');
+        }
+
+        fileReader.readAsArrayBuffer(file);  //Read the body of the file
+    }
+
+    //Method to send a file to be attached to the parent
+    //Sends parameters: Parent Id, Attachment (body), Attachment Name, and the Id of the Attachment if it exists to the controller
+    function uploadChunk(parentId, fileId, attachmentName, attachment, positionIndex,fileSize,doneUploading,attachmentPanel,attachmentDesc,theController) {
+        var chunkSize = 950000;
+        //console.log(' --- line 560 came inside'+attachmentName);
+        var attachmentBody = "";
+
+        if(fileSize <= positionIndex + chunkSize) {
+            attachmentBody = attachment.substring(positionIndex);
+            doneUploading = true;
+        } else {
+            attachmentBody = attachment.substring(positionIndex, positionIndex + chunkSize);
+        }
+        //console.log(" --- line 569 Uploading " + parentId+":"+fileId+":"+ attachmentBody.length + " chars of " + fileSize);
+
+            Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.Portal_Expense_Creation_Controller.doUploadAttachment}',
+            parentId, attachmentBody, attachmentName, fileId,attachmentDesc,
+            function(result, event) {
+            //console.log(result);
+            if(event.type === 'exception') {
+                console.log(" --- line 577 exception");
+                console.log(event);
+            } else if(event.status) {
+                if(result.substring(0,3) == '00P') {
+
+                    if(doneUploading == true) {
+                        //console.log(" --- line 509 --- result");
+                        $('.save-file-uploading').remove();
+
+                        //window.location.reload();
+
+                        document.location.reload(true);
+
+                        $('#outputArea').prepend('<h5 >'+attachmentName+' has uploaded successfully!</h5>');
+                        //extra css line so that this works on mobile also
+                        $('#outputArea').css("display","block");
+
+                        $('#attdiv').style('display:block;');
+
+                        //console.log(" --- line 513 --- result");
+                    } else {
+                        positionIndex += chunkSize;
+                        uploadChunk(parentId,result,attachmentName,attachment,positionIndex,fileSize,doneUploading,attachmentPanel,attachmentDesc);
+                    }
+                }
+            } else {
+                $('.save-file-uploading').remove();
+                $('.file-uploading-please').after('<span class="save-file-uploading" style="font-size:10pt;color:red;">Could not upload file!</span>');
+                //alert('Could not upload file!');
+                //alert('Could not upload file!');
+                //console.log(event.message);
+                //console.log('all done?  --- line 601')
+            }
+            $('.file-input-opacity').val('');
+            $('.file-area label.jcf-fake-input span em').html('');
+        },
+        {buffer: false, escape: true, timeout: 120000}
+        );
+    }
+    </script>
+</apex:page>

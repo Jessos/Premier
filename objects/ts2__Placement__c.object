@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Account_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>ts2__Client__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Account Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Expenses_Entry_Method__c</fullName>
+        <description>Are Expenses able to be claimed</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates if an Expense is able to be claimed, and will be payable by the Client</inlineHelpText>
+        <label>Expenses Entry Method</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Not Available</fullName>
+                    <default>true</default>
+                    <label>Not Available</label>
+                </value>
+                <value>
+                    <fullName>Portal</fullName>
+                    <default>false</default>
+                    <label>Portal</label>
+                </value>
+                <value>
+                    <fullName>Available</fullName>
+                    <default>false</default>
+                    <label>Available</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Payee__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Payee</label>
+        <referenceTo>tc9_p__Payee__c</referenceTo>
+        <relationshipLabel>Placements</relationshipLabel>
+        <relationshipName>Placements</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Use_2c9_Portal_Agreement_Logic__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>If checked the Portal will use logic to validate whether a Payee can complete a timesheet depending on the 2c9 Portal Placement Agreement status being set to Complete</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box if you wish to enforce the 2c9 Portal to validate whether this Payee can complete a timesheet depending on the Complete status of the Agreements listed on this Placement record.</inlineHelpText>
+        <label>Use 2c9 Portal Agreement Logic</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>X2c9_Portal_Placement_Agreement_Status__c</fullName>
+        <description>The overall status of Agreements listed for this Placement is captured in this field. If no Agreements exist OR all Agreements are Complete then this status is Complete, else, status is Incomplete</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The overall status of Agreements listed for this Placement is captured in this field. If no Agreements exist OR all Agreements are Complete then this status is Complete, else, status is Incomplete</inlineHelpText>
+        <label>2c9 Portal Placement Agreement Status</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Complete</fullName>
+                    <default>true</default>
+                    <label>Complete</label>
+                </value>
+                <value>
+                    <fullName>Incomplete</fullName>
+                    <default>false</default>
+                    <label>Incomplete</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>X2c9_Portal_Placement_Agreement_Visible__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>If set to TRUE the Agreements listed on this Payee record will be visible on the 2c9 Portal for this Payee.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If set to TRUE the Agreements listed on this Payee record will be visible on the 2c9 Portal for this Payee.</inlineHelpText>
+        <label>2c9 Portal Placement Agreement Visible</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+</CustomObject>

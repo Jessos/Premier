@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Bank_Details_Provided__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To keep track of this Portal Users Bank Details</description>
+        <externalId>false</externalId>
+        <label>Bank Details Provided</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Bank_Type_Selected__c</fullName>
+        <externalId>false</externalId>
+        <label>Bank Type Selected</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Australian</fullName>
+                    <default>false</default>
+                    <label>Australian</label>
+                </value>
+                <value>
+                    <fullName>International</fullName>
+                    <default>false</default>
+                    <label>International</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Fund_Option_Selected__c</fullName>
+        <externalId>false</externalId>
+        <label>Fund Option Selected</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>APRA/RSA</fullName>
+                    <default>false</default>
+                    <label>APRA/RSA</label>
+                </value>
+                <value>
+                    <fullName>SMSF</fullName>
+                    <default>false</default>
+                    <label>SMSF</label>
+                </value>
+                <value>
+                    <fullName>Employer Nominated</fullName>
+                    <default>false</default>
+                    <label>Employer Nominated</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Has_Own_TFN__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checkbox used to control the users ability to enter their TFN or indicate reason for not having TFN. If payee has TFN this checkbox will be ticked.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Checkbox used  to control the users ability to enter their TFN or indicate reason for not having TFN. If payee has TFN this checkbox will be ticked</inlineHelpText>
+        <label>Has Own TFN</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>No_TFN_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>No TFN Reason</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Separate Application made to ATO</fullName>
+                    <default>false</default>
+                    <label>Separate Application made to ATO</label>
+                </value>
+                <value>
+                    <fullName>Under 18</fullName>
+                    <default>false</default>
+                    <label>Under 18</label>
+                </value>
+                <value>
+                    <fullName>Receipt of Pension, Benefit or Allowance</fullName>
+                    <default>false</default>
+                    <label>Receipt of Pension, Benefit or Allowance</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Portal_Tax_Declaration_Complete__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Tax Declaration Complete</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Portal_Tax_Declaration_Date__c</fullName>
+        <description>Stamped when the user in the portal ticks the Tax Declaration Complete checkbox</description>
+        <externalId>false</externalId>
+        <label>Portal Tax Declaration Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Super_Details_Provided__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To keep track of the Portal Users Super completion</description>
+        <externalId>false</externalId>
+        <label>Super Details Provided</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>TFN_Provided__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To keep track of the Portal Users TFN status</description>
+        <externalId>false</externalId>
+        <label>TFN Provided</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Use_2c9_Portal_Agreement_Logic__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>If checked the Portal will use logic to validate whether a Payee can complete a timesheet depending on the 2c9 Portal Payee Agreement status being set to Complete</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check this box if you wish to enforce the 2c9 Portal to validate whether this Payee can complete a timesheet depending on the Complete status of the Agreements listed on this Payee record.</inlineHelpText>
+        <label>Use 2c9 Portal Agreement Logic</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>X2c9_Portal_Payee_Agreement_Status__c</fullName>
+        <description>The overall status of Agreements listed for this Payee is captured in this field. If no Agreements exist OR all Agreements are Complete then this status is Complete, else, status is Incomplete</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The overall status of Agreements listed for this Payee is captured in this field. If no Agreements exist OR all Agreements are Complete then this status is Complete, else, status is Incomplete</inlineHelpText>
+        <label>2c9 Portal Payee Agreement Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Complete</fullName>
+                    <default>true</default>
+                    <label>Complete</label>
+                </value>
+                <value>
+                    <fullName>Incomplete</fullName>
+                    <default>false</default>
+                    <label>Incomplete</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>X2c9_Portal_Payee_Agreement_Visible__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>If set to TRUE the Agreements listed on this Payee record will be visible on the 2c9 Portal for this Payee.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If set to TRUE the Agreements listed on this Payee record will be visible on the 2c9 Portal for this Payee.</inlineHelpText>
+        <label>2c9 Portal Payee Agreement Visible</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+</CustomObject>

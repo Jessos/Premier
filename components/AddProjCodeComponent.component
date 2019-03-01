@@ -1,0 +1,166 @@
+<apex:component controller="Ctrl_ClientProjectCode" allowDML="true">
+	
+	 <script>
+                function addProjectCode(i){
+                    document.getElementById('{!$Component.formId.delIndex}').value=parseInt(i);
+                    checkCodeStatus();
+                }
+                
+                function confirmAddition(check){                    
+                    var isCheck = check;
+                    if(isCheck == 'true') {
+                        if(confirm("Do you want to add the selected Project code to the Job?")){
+                            addProjectCodefn();
+                        }                       
+                    }                                      
+                    if(isCheck == 'false'){
+                        alert("You cannot select an Inactive Project Code. Please contact your support administrator or add a New Project Code.");
+                    }
+                }
+                
+                function displaySuccessMsg(){
+                	//alert('here');
+                    document.getElementById('{!$Component.formId.createProjectCode.successMsg}' ).style.display="block"; 
+                }
+                
+                /*function displayNew(){
+                    document.getElementById('{!$Component.formId.createProjectCode}' ).style.display="block"; 
+                }*/
+            </script>
+                     
+            <apex:form Id="formId"> 
+                <apex:pagemessages id="pgMsgId" />             
+                <apex:inputHidden id="delIndex" value="{!rowNumber}"/>
+                <apex:actionFunction action="{!addProjectCode}" name="addProjectCodefn" status="searchProcessImg" oncomplete="getprojCodeList();" reRender="projectCodeTable,pgMsgId"/> 
+                <apex:actionFunction action="{!checkStatus}" name="checkCodeStatus" status="searchProcessImg" reRender="pgMsgId" oncomplete="confirmAddition('{!isActive}');"/>
+                
+                
+                <div id="thediv" class="panel panel-default">
+			    	<div id="innerPannel" class="panel-heading"><h4 align="center"><span class="text-muted">Project Codes</span></h4></div>
+			             <div id="thistabs" class="bs-example">
+						        <div class="tabbable"> <!-- Only required for left/right tabs -->
+						            <ul class="nav nav-pills nav-justified">
+						            <li class="active"><a href="#tab1" data-toggle="tab">{!$Label.Search_Existing_Add_Project_Code_Page}</a></li>
+						            <li><a href="#tab2" data-toggle="tab">{!$label.Create_New_Tab_Name_Add_Proj_Code_Page}</a></li>
+						            <!-- <li><a href="#tab3" data-toggle="tab">Section 3</a></li> -->
+						            </ul>
+						            <div class="tab-content">
+						                <div class="tab-pane active" id="tab1">
+						                <!-------------------------------------------------- Section To Add A Project Code ------------------------------------------> 
+						                    <br/>
+						                    <apex:outputPanel >
+					                            <div>
+					                            	<div align="center">
+					                                	<apex:outputLabel value="Search Existing Client Project Code" styleClass="text-muted"/>
+					                                </div>
+					                                
+						                                <div class="col-lg-12" style="padding-left: 33%;padding-right: 33%;">
+														    <div class="input-group">
+														    	<span class="input-group-addon" style="background-color: white;" id="searchglify"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+														      	<apex:inputText styleClass="form-control" value="{!searchString}" id="theSearchstring"/>
+														      <span class="input-group-btn">
+														      	<apex:commandButton value="Go" id="submitButton1" style="width:30" reRender="projectCodeTable,pgMsgId" action="{!searchProjectCodes}" status="searchProcessImg" styleClass="btn btn-default"/>
+														      </span>
+														    </div><!-- /input-group -->
+														  </div><!-- /.col-lg-6 -->
+					                            	
+					                            </div>
+					                            
+					                            <br/>
+					                            <br/>
+					                            
+					                            <div align="center">
+					                                <apex:outputLabel value="Select Project codes" styleClass="text-muted"/>
+					                                <br/>
+					                                <apex:outputPanel id="projectCodeTable">
+					                                    <apex:outputLabel value="Recently Created Project Codes" rendered="{!isRecent}" styleClass="text-muted"/>
+					                                    <br/>
+					                                    <table border="1" style="width:60% !important;" class="table table-condensed table-bordered">                                           
+					                                        <tr>
+					                                            <th class="text-muted">Project Code</th>
+					                                            <th class="text-muted">Status</th>
+					                                        </tr> 
+					                                        <apex:variable var="codeNumber" value="{!0}"/>
+					                                        <apex:repeat var="pCode" value="{!listOfProjectCodes}" rendered="{!listOfProjectCodes.size > 0}" id="repeatListr">
+					                                            <tr id="{!pCode.Id}" onclick="addProjectCode({!codeNumber});" reRender="pgMsgId">
+					                                                <td id="{!pCode.Id}_name" class="text-muted">{!pCode.Name}</td>
+					                                                <td id="{!pCode.Id}_status" class="text-muted">{!pCode.tc9_ti__Status__c}</td>                                               
+					                                            </tr>
+					                                            <apex:variable var="codeNumber" value="{!codeNumber+1}"/>
+					                                        </apex:repeat>
+					                                        <tr style="{!IF(listOfProjectCodes.size==0,'','display:none')}"><td colspan="2">No records available</td></tr> 
+					                                        <tr> 
+					                                            <td colspan="2"> 
+					                                            	<apex:outputpanel rendered="{!IF(totalRecs==0,'true','false')}" styleClass="fcLabel3">
+					                                                     {!index}-{!sumEvents} of {!totalRecs}
+					                                                 </apex:outputpanel> 
+					                                                <apex:outputpanel rendered="{!IF(AND(totalRecs>0, totalRecs>=sumEvents),'true','false')}" styleClass = "fcLabel3">
+					                                                     {!index+1}-{!sumEvents} of {!totalRecs}
+					                                                 </apex:outputpanel> 
+					                                                 &nbsp;                   
+					                                                 <apex:outputPanel >
+					                                                     <apex:commandButton value="<<" rerender="projectCodeTable" action="{!beginning}" disabled="{!prev}" styleClass="btn btn-default btn-sm"/>
+					                                                     <apex:commandButton value="<" rerender="projectCodeTable" action="{!previous}" disabled="{!prev}" styleClass="btn btn-default btn-sm"/>
+					                                                     <apex:commandButton value=">" rerender="projectCodeTable" action="{!next}" disabled="{!nxt}" styleClass = "btn btn-default btn-sm"/>
+					                                                     <apex:commandButton value=">>" rerender="projectCodeTable" action="{!end}" disabled="{!nxt}" styleClass = "btn btn-default btn-sm"/>                           
+					                                                 </apex:outputPanel> 
+					                                            </td>
+					                                        </tr>                                        
+					                                    </table>
+					                                    <br/>                                   
+					                                </apex:outputPanel>
+					                            </div>
+						                     </apex:outputPanel>  
+						                </div>
+							            <div class="tab-pane" id="tab2">
+							                    <!------------------------------------- Section To Create a New Project Code ------------------------------------------->
+							                	<apex:outputPanel id="panelId">
+						                   
+						                            <div>
+						                                <apex:outputPanel id="createProjectCode" >
+						                                   <br/>
+						                                   <apex:outputPanel id="successMsg" style="display:{!IF(successAlert,'','none')}">
+						                                   		<div class="alert alert-success" role="alert">Project Code has been saved successfully.</div>
+						                                   </apex:outputPanel>
+						                                   <div align="center">
+							                                	<apex:outputLabel value="Create a new Client Project Code" styleClass="text-muted"/>
+							                                </div>
+						                                   <div align="center">
+							                                   <table style="width:35% !important;" class="table table-condensed">
+							                                       <tr>
+							                                        <td><apex:outputLabel value="Project Name" styleClass="text-muted"/></td>
+							                                           <td align="right"><apex:inputField styleClass="form-control" value="{!oProject.Name}" /></td>
+							                                       </tr>
+							                                       <tr>
+							                                           <td align="right">
+							                                           </td>
+							                                           <td align="right"><apex:commandButton value="Save" rerender="createProjectCode,pgMsgId" action="{!saveProjectCode}" oncomplete="getprojCodeList();displaySuccessMsg();" styleClass="btn btn-primary" status="searchProcessImg"/><!-- &nbsp;&nbsp;&nbsp;<apex:commandButton value="Cancel" action="{!aDummyCall}" rerender="createProjectCode,pgMsgId" styleClass="btn btn-default"/>-->
+							                                           </td>
+							                                       </tr>
+							                                   </table>
+						                                   </div>
+						                                </apex:outputPanel>
+						                            </div>
+						                            <br/>
+						                            <br/>
+						                        </apex:outputPanel>
+							                </div>
+						                <!-- <div class="tab-pane" id="tab3">
+						                    <p>Data 3.</p>
+						                </div> -->
+						            </div>
+						       </div>
+						    </div> 
+					<div>
+	                	<h6 align="center">
+	                		<apex:actionStatus id="searchProcessImg">
+		                        <apex:facet name="start">
+		                            <img src="/img/loading.gif" />
+		                        </apex:facet>
+		                     </apex:actionStatus>
+	                	</h6>
+	                </div>	    
+			    </div>
+            </apex:form>
+            
+</apex:component>

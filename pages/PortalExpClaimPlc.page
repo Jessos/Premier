@@ -1,0 +1,98 @@
+<!--
+ Created by Adelaide Greenaway on 22/12/17.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Expenses Placement Selection Page --- Portal_Expense_Controller
+ *
+ -->
+
+<apex:page id="PortalExpClaimPlc" title="2cloudnine Community Portal" docType="html-5.0" controller="Portal_Expense_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false">
+
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+            <body>
+                <div class="sideBar">
+                    <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks "><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks sidebarHighlight"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalContracts" class="sideBarLinks"><i class="icon-ContractG"></i>Contracts</a>
+                    <a href="{!$Site.Prefix}/PortalPolicies" class="sideBarLinks "><i class="icon-ContractG"></i>Policies</a>
+                    <a href="{!$Site.Prefix}/PortalPaymentHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Payment History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks "><i class="icon-profilegrey"></i>My Profile</a>
+                </div>
+
+            <apex:form >
+                <div id="main" class="pageContent ">
+
+                    <h1>Expense Claims</h1>
+                    <apex:pageMessages id="messages" />
+                    <h2 >
+                        <apex:outputText value="Please select the Placement that the Expense Claim will be applied to"/>
+                    </h2>
+                <apex:outputPanel id="thePanel">
+                    <div id="thediv" >
+                        <table id="plcTable" class="tsPgDate">
+                            <thead class="tableHeader">
+                            <tr >
+                                <th class="expTableth dtInfo"><apex:outputText value="Placement"/></th>
+                                <th class="expTableth dtInfo"><apex:outputText value="Client Name"/></th>
+                                <th class="expTableth dtInfo"><apex:outputText value="Job"/></th>
+                                <th class="expTableth dtInfo"><apex:outputText value="Start - End"/></th>
+                                <th class="expTableth dtInfo"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--<apex:variable value="{!0}" var="plcIndex"/>-->
+                            <apex:repeat value="{!listOfPlc}" var="thisPLC">
+                                <tr >
+                                    <td class="plcTable onlyMob">
+                                        <div class="mobileTSInfoSE">
+                                            {!thisPLC.Name}
+                                        </div>
+                                        <div class="mobileTSinfoDate">
+                                            {!thisPLC.ts2__Client__r.Name}
+                                        </div>
+                                        <div class="mobileTSinfoSE">
+                                                {!thisPLC.ts2__Job__r.Name}
+                                        </div>
+                                        <div class="mobileTSinfoDate">
+                                            <apex:outputText value="{0,date,MMM d}"><apex:param value="{!thisPLC.ts2__Start_Date__c}"/></apex:outputText>&nbsp;-&nbsp;
+                                            <apex:outputText value="{0,date,MMM d}"><apex:param value="{!thisPLC.ts2__End_Date__c}"/></apex:outputText>
+                                        </div>
+                                    </td>
+                                    <td  class="plcTable onlyMob">
+                                        <div>
+                                            <apex:commandButton value="Select" action="{!createNew}" styleClass="tsTableth_Button selectButton" reRender="thePanel">
+                                                <apex:param name="plcIdParam" assignTo="{!chosenPlcId}" value="{!thisPLC.Id}" />
+                                            </apex:commandButton>
+                                        </div>
+                                    </td>
+                                    <td class="dtInfo"><apex:outputText value="{!thisPLC.Name}" styleClass="text-muted"/></td>
+                                    <td class="dtInfo"><apex:outputText value="{!thisPLC.ts2__Client__r.Name}" styleClass="text-muted"/></td>
+                                    <td class="dtInfo"><apex:outputText value="{!thisPLC.ts2__Job__r.Name}" styleClass="text-muted"/></td>
+                                    <td class="dtInfo wider"><apex:outputText value="{0,date,MMM d}"><apex:param value="{!thisPLC.ts2__Start_Date__c}"/></apex:outputText>
+                                        &nbsp;-&nbsp;<apex:outputText value="{0,date,MMM d, YYYY}"><apex:param value="{!thisPLC.ts2__End_Date__c}"/></apex:outputText></td>
+                                    <td  class="dtInfo">
+                                        <div>
+                                            <apex:commandButton value="Select" action="{!createNew}" styleClass="tsTableth_Button selectButton" reRender="thePanel">
+                                                <apex:param name="plcIdParam" assignTo="{!chosenPlcId}" value="{!thisPLC.Id}" />
+                                            </apex:commandButton>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--<apex:variable value="{!plcIndex + 1}" var="plcIndex"/>-->
+                            </apex:repeat>
+                            </tbody>
+                        </table>
+                    </div>
+                </apex:outputPanel>
+
+                </div>
+            </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+
+</apex:page>

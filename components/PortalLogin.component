@@ -1,0 +1,33 @@
+<!--
+ Created by Adelaide Greenaway on 10/01/18.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Login Component --- Portal_Base_Controller
+ * Created custom login page to avoid confusion with standard SF communities pages
+ *
+ -->
+
+<apex:component controller="Portal_Login_Controller" id="loginComponent">
+    <apex:form id="loginForm" forceSSL="true">
+        <apex:outputPanel layout="block" styleClass="loginPanel">
+            <apex:pageMessages id="error"/>
+            <apex:panelGrid columns="2" style="margin-top:1em;">
+                <apex:outputLabel value="{!$Label.site.username}" for="username"/>
+                <apex:inputText id="username" value="{!username}"/>
+                <apex:outputLabel value="{!$Label.site.password}" for="password"/>
+                <apex:inputSecret id="password" value="{!password}"/>
+                <apex:outputText value=""/>
+                <apex:commandButton action="{!login}" value="{!$Label.site.login_button}" id="loginButton"/>
+                <!--<apex:outputText value=""/>-->
+                <!--<apex:outputText value=""/>-->
+                <apex:outputText value=""/>
+                <apex:panelGroup id="theLinks">
+                    <!--<apex:outputLink value="{!$Page.PortalForgotPassword}"> {!$Label.site.forgot_your_password_q}</apex:outputLink>-->
+                    <apex:outputLink value="{!$Site.Prefix}/PortalForgotPassword"> Forgot Your Password?</apex:outputLink>
+                </apex:panelGroup>
+            </apex:panelGrid>
+        </apex:outputPanel>
+    </apex:form>
+</apex:component>

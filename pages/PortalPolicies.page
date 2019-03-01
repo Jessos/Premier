@@ -1,0 +1,59 @@
+<!--
+Created by Adelaide Greenaway on 9/01/18.
+*
+* Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+* Not to be distributed without authorisation
+*
+* 2c9 Custom Portal Policies --- Portal_Home_Controller
+*
+-->
+
+<apex:page id="PortalPolicies" title="2cloudnine Community Portal" docType="html-5.0" controller="Portal_Home_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false">
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+            <body>
+            <div class="sideBar">
+                <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                <a href="{!$Site.Prefix}/PortalContracts" class="sideBarLinks"><i class="icon-ContractG"></i>Contracts</a>
+                <a href="{!$Site.Prefix}/PortalPolicies" class="sideBarLinks sidebarHighlight"><i class="icon-ContractG"></i>Policies</a>
+                <a href="{!$Site.Prefix}/PortalPaymentHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Payment History</a>
+                <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks"><i class="icon-profilegrey"></i>My Profile</a>
+            </div>
+            <apex:form >
+                <div class="pageContent">
+                    <h1>Policies</h1>
+                    <apex:outputPanel rendered="{!payeeAgreementsExist}">
+                        <apex:outputPanel >
+
+                            <apex:repeat value="{!incompletePayeeAgreementWrapperList}" var="payic">
+                                <div class="notificationBox">
+                                    <apex:commandButton onClick="openModal('{!payic.payeeAgreement.Current_Signing_URL__c}');" value="View Agreement" styleClass="noteBoxButton"/>
+                                    <!--<h2>Policy/Document</h2>-->
+                                    <h3>{!payic.payeeAgreement.Name}</h3>
+                                    <p><b>Status: </b>{!payic.payeeAgreement.echosign_dev1__Status__c}</p>
+                                </div>
+                            </apex:repeat>
+
+                            <apex:repeat value="{!completePayeeAgreementWrapperList}" var="payc">
+                                <div class="notificationBox">
+                                    <apex:commandButton onClick="openModal('{!payc.payeeAgreement.echosign_dev1__SignedPDF__c}');" value="View Agreement" styleClass="noteBoxButton"/>
+                                    <h3>{!payc.payeeAgreement.Name}</h3>
+                                    <p><b>Status: </b>{!payc.payeeAgreement.echosign_dev1__Status__c}</p>
+                                </div>
+                                <div id="dialog" style="display:none;">
+
+                                </div>
+                            </apex:repeat>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{! !payeeAgreementsExist}">
+                        <h2>You currently do not have any past or future Policies.</h2>
+                    </apex:outputPanel>
+                </div>
+            </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+</apex:page>

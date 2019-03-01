@@ -1,0 +1,206 @@
+<!--
+Created by Adelaide Greenaway on 21/11/17.
+*
+* Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+* Not to be distributed without authorisation
+*
+* 2c9 Custom Portal Profile Personal Details --- Portal_ProfilePersonal_Controller
+* NOTE: Refer to SiteTemplate and customPortalJS for any scripts that are used on this page
+*
+-->
+
+<apex:page id="PortalProfileTaxDetails" controller="Portal_ProfileTaxDetails_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false" docType="html-5.0">
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+            <body>
+                <div class="sideBar">
+                    <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks "><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalContracts" class="sideBarLinks"><i class="icon-ContractG"></i>Contracts</a>
+                    <a href="{!$Site.Prefix}/PortalPolicies" class="sideBarLinks "><i class="icon-ContractG"></i>Policies</a>
+                    <a href="{!$Site.Prefix}/PortalPaymentHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Payment History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks sidebarHighlight"><i class="icon-profilegrey"></i>My Profile</a>
+                </div>
+                <apex:form >
+                    <div class="pageContent">
+                        <div>
+                            <h1> My Profile </h1>
+                            <apex:pageMessages id="messages" />
+                            <ul class="tab dtInfo">
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfilePersonalDetails" >Personal Details</a>
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileBankDetails" >Bank Details</a>
+                                <a class="tabPadding" href="{!$Site.Prefix}/PortalProfileSuperDetails" >Superannuation Details</a>
+                                <a href="#" class="active tabPadding" >Tax Details</a>
+                            </ul>
+                        </div>
+                        <div id="TaxDetailsM">
+                            <div>
+                                <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="tsTabBack">
+                                    <i class="icon-chevronblue iconMain iconHInv"></i><p class="linkText">Back to My Profile</p>
+                                </a>
+                                <!--<div id="contentToToggle" style="display:{!IF(showContent,"block","none")};">-->
+                                <div id="readBlock">
+                        <!--<div id="contentToToggle" style="display:{!IF(showContent,"block","none")};">-->
+                            <!--<div>-->
+                                    <apex:outputPanel rendered="{!decComplete}">
+                                        <apex:outputPanel rendered="{!hasTFN}" >
+                                            <apex:outputLabel value="Tax File Number"/>
+                                            <p class="roText">{!theTFN}</p>
+                                        </apex:outputPanel>
+
+                                        <apex:outputPanel rendered="{! !hasTFN}" >
+                                            <apex:outputLabel value="TFN not provided because:" />
+                                            <apex:outputPanel rendered="{!IF(tfnTypeSelected == 'Under 18',true,false)}">
+                                                <p class="noteText">I am claiming an exemption because I am under 18 years of age and do not earn enough money to pay tax.</p> </apex:outputPanel>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(tfnTypeSelected == 'Separate Application made to ATO',true,false)}">
+                                                <p class="noteText">I have made a separate application to the ATO for a new or existing TFN.</p>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(tfnTypeSelected == 'Receipt of Pension, Benefit or Allowance',true,false)}">
+                                                <p class="noteText">I am claiming an exemption because I am in receipt of a pension, benefit of allowance.</p>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        <div >
+                                            <h2>Tax Declaration</h2>
+                                            <apex:outputPanel rendered="{!IF(areYouSelection == 'aus',true,false)}">
+                                                <p class="noteText">I am an Australian resident for tax purposes.</p>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(areYouSelection == 'foreign',true,false)}">
+                                                <p class="noteText">I am a foreign resident for tax purposes.</p>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!IF(areYouSelection == 'workingHol',true,false)}">
+                                                <p class="noteText">I am a working holiday maker.</p>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!claimTaxFree}">
+                                                <p class="noteText">Yes. I am claiming tax-free threshold from this payer.</p>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{! !claimTaxFree}">
+                                                <p class="noteText">No. I am not claiming tax-free threshold from this payer.</p>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!helpDebt}">
+                                                <p class="noteText">Yes. I have a Higher Education Loan Program (HELP), Student Start-up Loan (SSL) or Trade Support Loan (TSL) debt.</p>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!!helpDebt}">
+                                                <p class="noteText">No. I do not have a Higher Education Loan Program (HELP), Student Start-up Loan (SSL) or Trade Support Loan (TSL) debt.</p>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!afsDebt}">
+                                                <p class="noteText">Yes. I have a Financial Supplement debt.</p>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!!afsDebt}">
+                                                <p class="noteText">No. I do not have a Financial Supplement debt.</p>
+                                            </apex:outputPanel>
+                                            <div>
+                                                <h3>Declaration by payee:</h3>
+                                                <p class="noteText"><apex:inputCheckbox onClick="return false;" value="{!decComplete}"/>
+                                                    I declare that the information I have given is true and correct.</p>
+                                                <p class="noteText"><b>Declaration Completed: {!localDecCompDate}</b></p>
+                                                <p class="note">There are penalties for deliberately making a false or misleading statement.</p>
+                                            </div>
+                                            <apex:commandbutton rendered="{!AND(decComplete,theTFN!='111111111')}" value="Update Details" action="{!loadSelectionDetails}" styleClass="pageButton" onComplete="toggleEntry(event, 'editBlock', 'readBlock');"/>
+                                        </div>
+                                        <div >
+                                            <apex:outputPanel rendered="{!OR(AND(!hasTFN,theTFN == '111111111'),!decComplete)}">
+                                                <div class="vImpMsgBox">
+                                                    <p class="vimpMessage">Our records indicate that you have not completed your Tax Declaration and/or provided your TFN.</p>
+                                                    <p class="note">Please provide all tax details to be able to complete your timesheets and receive your pay.</p>
+                                                    <div >
+                                                        <apex:commandbutton value="Provide Details" action="{!loadSelectionDetails}" styleClass="pageButton" onComplete="toggleEntry(event, 'editBlock', 'readBlock');"/>
+                                                    </div>
+                                                </div>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div id="editBlock">
+                                <!--<div id="contentToToggle" style="display:{!IF(showContent,"none","block")};">-->
+                                    <div>
+                                        <div >
+                                            <h2>Do you have a Tax File Number? </h2>
+                                            <apex:selectRadio layout="lineDirection" id="tfnRadio" value="{!hasTFNSelected}" >
+                                            <apex:selectOption itemLabel="Yes" itemValue="yes" />
+                                            <apex:selectOption itemLabel="No" itemValue="no"/>
+                                            </apex:selectRadio>
+                                        </div>
+                                        <div id="div_hasTFN">
+                                            <div>
+                                                <apex:outputLabel value="Tax File Number"/>
+                                            </div>
+                                            <div id="tfn">
+                                                <div id="tfnEntryError">
+                                                    <p class="vimpMessage">The TFN you have entered has failed validation, please check your TFN and re-enter.</p>
+                                                </div>
+
+                                                <apex:input type="number" id="tfn" styleClass="pageInput" value="{!theTFN}" onBlur="return validateTFN(this, jQuery('[id$=showSave]'), jQuery('[id$=tfnEntryError]'));"/>
+                                            </div>
+
+                                        </div>
+                                        <div id="div_reasonTFN">
+                                            <h3>Please select one of the following: </h3>
+                                            <apex:selectRadio layout="pageDirection" id="tfnReasonRadio" value="{!tfnTypeSelected}" >
+                                            <apex:selectOption itemLabel="I have made a separate application to the ATO for a new or existing TFN" itemValue="newApp" />
+                                            <apex:selectOption itemLabel="I am claiming an exemption because I am under 18 years of age and do not earn enough money to pay tax" itemValue="under18"/>
+                                            <apex:selectOption itemLabel="I am claiming an exemption because I am in receipt of a pension, benefit of allowance" itemValue="exemptClaim"/>
+                                            </apex:selectRadio>
+                                        </div>
+                                        <div id="div_DecForm">
+                                            <h2>Tax Declaration</h2>
+                                            <h3>Are you: </h3>
+                                            <apex:selectRadio layout="pageDirection" value="{!areYouSelection}"  >
+                                                <apex:selectOption itemLabel="An Australian resident for tax purposes" itemValue="ausres" />
+                                                <apex:selectOption itemLabel="A foreign resident for tax purposes" itemValue="forres"/>
+                                                <apex:selectOption itemLabel="A working holiday maker" itemValue="workhol"/>
+                                            </apex:selectRadio>
+                                            <h3>Do you want to claim the tax-free threshold from this payer? </h3>
+                                            <p class="impMessage">Only claim the tax-free threshold from one payer at a time, unless your total income from all sources for the financial year will be less than the tax-free threshold.</p>
+                                            <p class="impMessage">Answer <b>no</b> here if you are a foreign resident or working holiday maker, except if you are a foreign resident in receipt of an Australian Government pension or allowance.</p>
+                                            <apex:selectRadio layout="lineDirection" value="{!taxFreeSelect}"  >
+                                                <apex:selectOption itemLabel="Yes" itemValue="yes" />
+                                                <apex:selectOption itemLabel="No" itemValue="no"/>
+                                            </apex:selectRadio>
+                                            <h3>Do you have a Higher Education Loan Program (HELP), Student Start-up Loan (SSL) or Trade Support Loan (TSL) debt?</h3>
+                                            <apex:selectRadio layout="lineDirection" value="{!loanSelect}" id="loanRadio" >
+                                                <apex:selectOption itemLabel="Yes" itemValue="yes" />
+                                                <apex:selectOption itemLabel="No" itemValue="no"/>
+                                            </apex:selectRadio>
+                                            <div id="div_Loan">
+                                                <p class="impMessage">Your payer will withhold additional amounts to cover any compulsory repayment that may be raised on your notice of assessment.</p>
+                                            </div>
+                                            <h3>Do you have a Financial Supplement debt?</h3>
+                                            <apex:selectRadio layout="lineDirection" value="{!debtSelect}" id="debtRadio" >
+                                                <apex:selectOption itemLabel="Yes" itemValue="yes" />
+                                                <apex:selectOption itemLabel="No" itemValue="no"/>
+                                            </apex:selectRadio>
+                                            <div id="div_Debt">
+                                                <p class="impMessage">Your payer will withhold additional amounts to cover any compulsory repayment that may be raised on your notice of assessment.</p>
+                                            </div>
+                                            <div>
+                                                <h2>Declaration by payee:</h2>
+                                                <p class="impMessage"><apex:inputCheckbox value="{!declaration}">
+                                                    <!--<apex:inputCheckbox value="{!decComplete}">-->
+                                                    <apex:actionSupport event="onchange" reRender="div_showDate, div_Buttons" action="{!setDatetime}"/>
+                                                </apex:inputCheckbox><b>I declare that the information I have given is true and correct.</b></p>
+
+                                                <apex:outputPanel id="div_showDate">
+                                                    <apex:outputPanel rendered="{!IF(decCompDate != null,true,false)}">
+                                                        <p class="impMessage"><b> Declaration Completed: {!localDecCompDate}</b><br />
+                                                        There are penalties for deliberately making a false or misleading statement.</p>
+                                                    </apex:outputPanel>
+                                                </apex:outputPanel>
+                                            </div>
+                                        </div>
+                                        <apex:outputPanel id="div_Buttons">
+                                            <apex:commandButton action="{!cancel}" value="Cancel" styleClass="pageButton"/>&nbsp;&nbsp;
+                                            <apex:commandButton id="showSave" action="{!submit}" value="Save Updated Details" rendered="{!IF(decCompDate != null,true,false)}" styleClass="pageButton"/>
+                                        </apex:outputPanel>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                 </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+</apex:page>

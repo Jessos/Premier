@@ -1,0 +1,86 @@
+<!--
+ Created by Adelaide Greenaway on 30/10/17.
+ *
+ * Copyright © 2017 2cloudnine Pty Ltd - Strictly Confidential.
+ * Not to be distributed without authorisation
+ *
+ * 2c9 Custom Portal Home --- Portal_Home_Controller
+ * Updated by Jesse Windebank 14/10/2018 to remove code not required for Premier
+ -->
+
+<apex:page id="PortalHome" title="Premier Community Portal" docType="html-5.0" controller="Portal_Home_Controller" showHeader="false" sideBar="false" standardStylesheets="false" applyHtmlTag="false">
+<head>
+    <title>Premier Timesheet Portal</title>
+</head>
+
+    <apex:composition template="{!$Site.Prefix}/PortalTemplate">
+        <apex:define name="body">
+            <body>
+            <div class="sideBar ">
+                <a href="{!$Site.Prefix}/PortalHome" class="sideBarLinks sidebarHighlight"><i class="icon-homegrey"></i>   Home</a>
+                    <a href="{!$Site.Prefix}/PortalTimesheetsHome" class="sideBarLinks"><i class="icon-timesheetgrey"></i>Timesheets</a>
+                    <a href="{!$Site.Prefix}/PortalExpensesHome" class="sideBarLinks"><i class="icon-expensegrey"></i>Expenses</a>
+                    <a href="{!$Site.Prefix}/PortalPlacementHistory" class="sideBarLinks"><i class="icon-paygrey"></i>Placement History</a>
+                    <a href="{!$Site.Prefix}/PortalProfilePersonalDetails" class="sideBarLinks "><i class="icon-profilegrey"></i>My Profile</a>
+                    <a href="https://access.paylocity.com/" target="_blank" class="sideBarLinks"> <i class="icon-ContractG"></i>Paylocity Portal</a>
+                    <a href="http://support.pstaffing.com/" target="_blank" class="sideBarLinks"> <i class="icon-search"></i>Support Center</a>
+            </div>
+            <apex:form >
+                <div id="main" class="pageContent">
+                    <apex:pageMessages id="messages" />
+
+                    <!-- <apex:outputPanel rendered="{!detailsIncomplete}"> -->
+                        <div class="notificationBox">
+                                <apex:outputPanel rendered="{!personalIncomplete}">
+                                <h2 class="boxHeading"> My Profile </h2>
+                                <apex:commandbutton value="Go to Personal Details" action="{!$Site.Prefix}/PortalProfilePersonalDetails" styleClass="noteBoxButton"/>
+                                <p class="impMessage">Outstanding: Please complete your <b>personal</b> details.</p>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel rendered="{!tsoutstanding}">
+                                <h2 class="boxHeading"> Late Timesheets </h2>
+                                <apex:commandbutton value="Go to Timesheets" action="{!$Site.Prefix}/PortalTimesheetsHome" styleClass="noteBoxButton"/>
+                                <p class="impMessage">You seem to have late timesheets, to avoid missing a pay cycle - please submit them now! </p>
+                                </apex:outputPanel>
+
+                                <apex:outputPanel rendered="{!empnumnull}">
+                                <h2 class="boxHeading"> Paylocity Onboarding</h2>
+                                <apex:commandLink action="{!paylocityonboarding}" target="_blank">
+                                <apex:commandbutton value="Go to Paylocity Onboarding" action="https://onboarding.paylocity.com/onboarding/" styleClass="noteBoxButton"/>
+                                <p class="impMessage">{!empnummsg}</p>
+                                </apex:commandLink>
+                                </apex:outputPanel>
+                                
+                                <h2 class="boxHeading"> Paylocity Self Service Portal</h2>
+                                <apex:commandLink action="{!paylocityportal}" target="_blank">
+                                <apex:commandbutton value="Go to Paylocity Portal" styleClass="noteBoxButton"/>
+                                </apex:commandLink>
+                                <p class="impMessage">After you complete onboarding in Paylocity, you'll be able to log into your Employee Self Service portal. Your Employee Self Service portal will generate after your first paycheck is processed.
+
+                                <div>You will use the Paylocity Portal for:</div>
+                                <ul>
+                                <li>Pay stubs</li>
+                                <li>Direct deposit</li>
+                                <li>Tax status</li>
+                                <li>Benefits (if eligible)</li>
+                                </ul>  
+                                <p><div>Paylocity Company ID: 18147</div>
+                                You can find more information in our <a href="http://support.pstaffing.com/customer/en/portal/articles/2410164-how-do-i-log-into-my-paylocity-employee-self-service-portal-" target="_blank">Support Center.</a></p>
+                                </p>
+
+                                <h2 class="boxHeading">Sick Leave Balance</h2>
+                                <p class="impMessage">Your balance is {!contractor.Available_Sick_Leave_Balance__c} hours.<br/><br/>
+                                You're available to use your sick time as of &nbsp; 
+                                <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                <apex:param value="{!contractor.Sick_Pay_Eligibility_Date__c}" /> 
+                                </apex:outputText>.</p>
+                        </div>
+                    <!-- </apex:outputPanel> -->
+
+                </div>
+            </apex:form>
+            </body>
+        </apex:define>
+    </apex:composition>
+    <!--</html>-->
+</apex:page>
